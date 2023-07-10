@@ -42,7 +42,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                     <span class="material-symbols-sharp" translate="no">analytics</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Tipo de Cita</h3>
+                            <h3>Tipo de Citass</h3>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
                                 Primera Visita : <b> <?php echo $PORCENTAJES['porcentaje_primera_visita']; ?>%</b>
