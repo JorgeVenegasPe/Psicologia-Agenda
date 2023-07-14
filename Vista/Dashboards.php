@@ -11,38 +11,36 @@ if (isset($_SESSION['NombrePsicologo'])){
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css" />
+    <link rel="stylesheet" href="../Issets/css/Dashboard.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.0/svg.min.js"></script>
 </head>
 <body>
 <?php
-
 require_once("../Controlador/Paciente/ControllerPaciente.php");
 require_once("../Controlador/Cita/citaControlador.php");
     $PORC=new usernameControlerCita();
     $Pac=new usernameControlerPaciente();
+    $Citas=$PORC->showByFecha($_SESSION['IdPsicologo']);
     $datos=$Pac->MostrarPacientesRecientes($_SESSION['IdPsicologo']);
     $PORCENTAJES=$PORC->mostrarVista($_SESSION['IdPsicologo']);
 ?>
     <div class="container">
-    <?php
-        require_once '../Issets/views/Menu.php';
-    ?>    
+        <?php
+            require_once '../Issets/views/Menu.php';
+        ?>    
         <!----------- end of aside -------->
         <main>
             <h2>Dashboard</h2>
-
             <div class="date">
                 <input type="date">                
             </div>
 
-            <div class="insights">
+            <div class="insights">  
                 <div class="sales">
-                    <span class="material-symbols-sharp" translate="no">analytics</span>
+                    <span class="material-symbols-sharp a" translate="no">analytics</span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Tipo de Cita</h3>
+                            <h3>Tipo de Citass</h3>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
                                 Primera Visita : <b> <?php echo $PORCENTAJES['porcentaje_primera_visita']; ?>%</b>
@@ -98,7 +96,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                 </div>
                 <!------------------- Final del Sales -------------------->
                 <div class="expenses">
-                    <span class="material-symbols-sharp" translate="no">bar_chart</span>
+                    <span class="material-symbols-sharp a" translate="no">bar_chart</span>
                     <div class="middle">
                         <div class="left">
                             <h3>Canal de Atraccion</h3>
@@ -157,7 +155,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                 </div>
                 <!------------------- Final del expenses -------------------->
                 <div class="income">
-                    <span class="material-symbols-sharp" translate="no">stacked_line_chart</span>
+                    <span class="material-symbols-sharp a" translate="no">stacked_line_chart</span>
                     <div class="middle">
                         <div class="left">
                             <h3>Estado de Cita</h3>
@@ -213,35 +211,44 @@ require_once("../Controlador/Cita/citaControlador.php");
                     </div>           
                 </div>
                 <!------------------- Final del income -------------------->
-                
             </div>
-            <br>
             <!----------------- END OF INSIGHTS --------------->
             <div class="recent-orders">
-                <h2>Citas de Hoy</h2>
-                <table>
+                <h2>Citas de la Semana</h2>
+                <table class="tabla-dash">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Fecha Registro</th>
+                            <th>Paciente</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
                             <th>Fecha de Inicio</th>
-                            <th>Fecha de Fin</th>
-                            <th>Nombre de P.</th>
-                            <th>Nombre de D.</th>
-                            <th>Eliminar</th>
-                            <th>Editar</th>
+                            <th>Duracion</th>
+                            <th>Tipo</th>
+                            <th>Canal</th>
+                            <th>Etiquetas</th>
+                            <th >1º Mensaje</th>
+                            <th >2º Mensaje</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <?php if ($Citas) :?>
+                        <?php foreach ($Citas as $Cita): ?>
                         <tr>
-                            <td>foldable mini drone</td>
-                            <td>foldable mini drone</td>
-                            <td class="warning">peding</td>
-                            <td class="primary">Details</td>
+                            <td><?=$Cita[0]?></td>
+                            <td><?=$Cita[1]?></td>
+                            <td><?=$Cita[2]?></td>
+                            <td><?=$Cita[3]?></td>
+                            <td><?=$Cita[4]?></td>
+                            <td style="color:green"><?=$Cita[5]?></td>
+                            <td><?=$Cita[6]?></td>
+                            <td><?=$Cita[9]?></td>
                         </tr>
+                        <?php endforeach;?>
+                    <?php endif;?>
                     </tbody>
                 </table>
-                <a href="">Show All </a>
+                <a href="">Agregar nueva cita</a>
             </div>
         </main>
         <!------ End of Main -->
@@ -265,21 +272,20 @@ require_once("../Controlador/Cita/citaControlador.php");
             <div class="recent-updates">
                 <h2>Pacientes Recientes</h2>
                 <div class="updates">
-                    <?php if ($datos) : ?>
-                        <?php foreach ($datos as $key) : ?>
-                            <div class="update">
+                    <div class="update">
+                        <?php if ($datos) : ?>
+                            <?php foreach ($datos as $key) : ?>
                                 <div class="message">
                                     <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?></b> <?= $key['Edad'] ?> años</p>
                                     <small class="text-muted">Registrado el: <?= $key['Fecha'] ?></small>
                                     <br>
                                     <small class="text-muted">Hora: <?= $key['Hora'] ?></small>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <p>No hay Pacientes</p>
-                    <?php endif; ?>
+                                </div>                                
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
+                <a href="RegDatosPaciente.php">Agregar Paciente</a>
             </div>
         </div>
     </div>

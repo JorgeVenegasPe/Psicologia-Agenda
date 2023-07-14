@@ -8,7 +8,7 @@ class usernameControlerPaciente{
     }
     public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos){
         $id=$this->model->GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos);
-        return ($id!=false) ? header("Location:../../Vista/DatosPaciente.php") : header("Location:../../Vista/DatosPaciente.php");
+        return ($id!=false) ? header("Location:../../Vista/RegDatosPaciente.php?enviado=true") : header("Location:../../Vista/RegDatosPaciente.php?enviado=true");
     }
     public function ver($IdPsicologo) {
         return ($this->model->ver($IdPsicologo)) ?: false;

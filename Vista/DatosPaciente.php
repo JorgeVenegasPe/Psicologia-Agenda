@@ -10,9 +10,9 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/FormularioDatos.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
+    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>

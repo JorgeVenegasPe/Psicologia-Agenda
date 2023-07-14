@@ -12,6 +12,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="../issets/css/formulario.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <script src="../Issets/js/jquery-3.6.0.min.js"></script>
     <title>Datos del Paciente</title>
 </head>
 <body>    
@@ -24,10 +25,9 @@ if (isset($_SESSION['NombrePsicologo'])){
     <?php
     require_once '../Issets/views/Info.php';
     ?> 
-    <div class="container-form">
       <div class="recent-updates">
-        <h2>Datos del Paciente</h2>
         <form action="../Crud/Paciente/guardarPaciente.php" method="post" >
+        <h4>Datos del Paciente</h4>
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">
             <div class="input-group2">
@@ -40,6 +40,7 @@ if (isset($_SESSION['NombrePsicologo'])){
 				          <input id="Dni" type="text" name="Dni" class="input" required/>
 				       </div>
             </div>
+            <div style="margin-left:2em" id="respuesta"> </div>
             <div class="input-group">
   		        <h3 for="ApPaterno">Apellido Paterno</h3>
   	        	<input id="ApPaterno" type="text" name="ApPaterno" class="input" required/>
@@ -49,13 +50,13 @@ if (isset($_SESSION['NombrePsicologo'])){
   	        	<input id="ApMaterno" type="text" name="ApMaterno" class="input" required/>
             </div>
             <div class="input-group2">
-  	          <div class="input-group">
+  	          <div style=" width:190px;" class="input-group">
   		            <h3 for="FechaNacimiento">Fecha de nacimiento</h3>
-  		            <input type="date" id="FechaNacimiento" name="FechaNacimiento" value="<?php echo date('Y-m-d'); ?>" placeholder="Ingrese su Fecha de Nacimiento" onchange="calcularEdad()" />
+  		            <input type="date" id="FechaNacimiento"  name="FechaNacimiento" value="<?php echo date('Y-m-d'); ?>" onchange="calcularEdad()" />
               </div>
   	          <div class="input-group">
   		            <h3 for="Edad">Edad</h3>
-  		            <input type="number" style="width: 40%;"  id="Edad" name="Edad" readonly/>
+  		            <input type="text" id="Edad" name="Edad" readonly/>
   	          </div>
             </div>
             <div class="input-group2">
@@ -72,7 +73,7 @@ if (isset($_SESSION['NombrePsicologo'])){
   	          <div class="input-group">
   		          <h3 for="EstadoCivil">Estado civil</h3>
   		          <select class="input" id="EstadoCivil" name="EstadoCivil" required>
-                  <option value="">Seleccione un Estado Civil</option>
+                  <option value="">Seleccionar</option>
                   <option value="soltero">Soltero/a</option>
                   <option value="casado">Casado/a</option>
                   <option value="divorciado">Divorciado/a</option>
@@ -82,7 +83,7 @@ if (isset($_SESSION['NombrePsicologo'])){
               <div class="input-group">
   		          <h3 for="Genero">Género</h3>
   		          <select class="input" id="Genero" name="Genero" required>
-                  <option value="">Seleccione un Genero</option>
+                  <option value="">Seleccionar</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
@@ -90,15 +91,17 @@ if (isset($_SESSION['NombrePsicologo'])){
   	          </div>
             </div>
             <div class="input-group">
-  		          <h3 for="Telefono">Celular</h3>
-  		          <input type="tel" id="Telefono" class="input" name="Telefono"  required/>
-  	          </div>
+  		        <h3 for="Telefono">Celular</h3>
+  		        <input type="tel" id="Telefono" class="input" name="Telefono" placeholder="Ejemp. 955888222"  required/>
+  	        </div>
+            <div style="margin-left:2em" id="respuesta2"> </div>
           </div>
           <div class="checkout-information">
-            <div style=" width:290px" class="input-group">
+            <div  class="input-group">
   		          <h3 for="Email">Correo Electronico</h3>
   		          <input type="Email" id="Email" class="input" name="Email" required/>
   	        </div>
+            <div style="margin-left:2em" id="respuesta3"> </div>
             <div class="input-group">
   		          <h3 for="Direccion">Dirección</h3>
   		          <input type="text" id="Direccion" class="input" name="Direccion" required/>
@@ -122,13 +125,143 @@ if (isset($_SESSION['NombrePsicologo'])){
             <button id="submitButton" class="button">Registrar</button>
           </div>
         </form>
-      </div>
+    </div>
+    <div id="notification" style="display: none;" class="notification">
+      <p id="notification-text"></p>
+      <span class="notification__progress"></span>
     </div>
   </main>
-  <script src="../issets/js/Dashboard.js"></script>
-  
-</body>
+  <script src="../Issets/js/Dashboard.js"></script>
 <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notification-text');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const enviado = urlParams.get('enviado');
+
+    if (enviado === 'true') {
+        notification.style.display = 'block';
+        notificationText.textContent = 'Enviado Correctamente ✔️';
+        history.replaceState(null, null, window.location.pathname);
+    }
+});
+  // Solo acepta 8 digitos en el input dni
+  $('input#Dni').keypress(function (event) {
+    if (event.which < 48 || event.which > 57 || this.value.length === 8) {
+      return false;
+    }
+  });
+
+  // Solo permite 9 digitos en el numero y que comience con 9
+  $('input#Telefono').keypress(function(event) {
+    var keyCode = event.which;
+    var inputValue = String.fromCharCode(keyCode);
+
+    // Permitir solo números y una longitud máxima de 9 dígitos
+    if (keyCode < 48 || keyCode > 57 || this.value.length === 9) {
+        return false;
+    }
+
+    // Asegurarse de que comience con el número 9
+    if (this.value.length === 0 && inputValue !== "9") {
+        return false;
+    }
+
+  });
+ 
+  // Captura el valor del dni y contar la Longitud
+  $("#Dni").on("keyup", function() {
+    var Dni = $("#Dni").val(); 
+    var longitudDni = $("#Dni").val().length; 
+    
+    // Valido la longitud 
+    if(longitudDni >= 3){
+      var dataString = 'Dni=' + Dni;
+    
+      $.ajax({
+        url: 'Fetch/vereficardni.php',
+        type: "GET",
+        data: dataString,
+        dataType: "JSON",
+        success: function(datos){
+          if(datos.success == 1){
+            $("#respuesta").html(datos.message);
+            $("input").attr('disabled',true); 
+            $("input#Dni").attr('disabled',false); 
+            $("#submitButton").attr('disabled',true); 
+          
+          }else{
+            $("#respuesta").html(datos.message);
+            $("input").attr('disabled',false); 
+            $("#submitButton").attr('disabled',false); 
+          
+          }
+        }
+      });
+    }
+  });
+
+  // Captura el valor del telefono y contar la Longitud
+  $("#Telefono").on("keyup", function() {
+    var Telefono = $("#Telefono").val(); 
+    var longitudTelefono = $("#Telefono").val().length; 
+
+    //Valido la longitud 
+    if(longitudTelefono >= 3){
+      var dataString = 'Telefono=' + Telefono;
+
+      $.ajax({
+        url: 'Fetch/vereficarcelular.php',
+        type: "GET",
+        data: dataString,
+        dataType: "JSON",
+        success: function(datos){
+          if(datos.success == 1){
+            $("#respuesta2").html(datos.message);
+            $("input").attr('disabled',true); 
+            $("input#Telefono").attr('disabled',false); 
+            $("#submitButton").attr('disabled',true); 
+          }else{
+            $("#respuesta2").html(datos.message);
+            $("input").attr('disabled',false); 
+            $("#submitButton").attr('disabled',false); 
+          }
+        }
+      });
+    }
+  });
+
+  // Captura el valor del email y contar la Longitud
+  $("#Email").on("keyup", function() {
+    var Email = $("#Email").val(); 
+    var longitudEmail = $("#Email").val().length; 
+
+    if(longitudEmail >= 3){
+      var dataString = 'Email=' + Email;
+
+      $.ajax({
+        url: 'Fetch/vereficaremail.php',
+        type: "GET",
+        data: dataString,
+        dataType: "JSON",
+        success: function(datos){
+          if(datos.success == 1){
+            $("#respuesta3").html(datos.message);
+            $("input").attr('disabled',true); //Desabilito el input nombre
+            $("input#Email").attr('disabled',false); //Habilitando el input cedula
+            $("#submitButton").attr('disabled',true); //Desabilito el Botton
+          }else{
+            $("#respuesta3").html(datos.message);
+            $("input").attr('disabled',false); //Habilito el input nombre
+            $("#submitButton").attr('disabled',false); //Habilito el Botton
+          }
+        }
+      });
+    }
+  });
+
+  // Calcular la edad segun la fecha de nacimiento
   function calcularEdad() {
     var fechaNacimiento = document.getElementById('FechaNacimiento').value;
     var fechaActual = new Date();
@@ -138,10 +271,11 @@ if (isset($_SESSION['NombrePsicologo'])){
     if (fechaActual.getMonth() < new Date(fechaNacimiento).getMonth() || (fechaActual.getMonth() === new Date(fechaNacimiento).getMonth() && fechaActual.getDate() < new Date(fechaNacimiento).getDate())) {
       edad--;
     }
-    
     document.getElementById('Edad').value = edad;
   }
+
 </script>
+</body>
 </html>
 <?php
 }else{
