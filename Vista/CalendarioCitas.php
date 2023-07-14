@@ -28,20 +28,23 @@ if (isset($_SESSION['NombrePsicologo'])){
 <body>
 <div class="container-calendario">
 <?php
-    require_once '../Issets/views/Menu.php';
+    require_once 'Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once '../Issets/views/Info.php';
+    require_once 'Info.php';
     ?> 
     <!----------- Calendario ------------------>
     <div class="container-fluid2">
+    <h2 class="title">Calendario de Citas</h2>
       <div id="Calendario1"></div>
+      
     </div>
 
     <!-- Formulario de Eventos -->
     <div class="modal fade" id="FormularioEventos" tabindex="-1" role="dialog">
+    
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <a  class="close" data-bs-dismiss="modal" aria-label="Close">&times;</a>
@@ -196,17 +199,7 @@ document.addEventListener("DOMContentLoaded", function(){
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
       editable: true,
-      events: {
-    url: '../Modelo/Cita/datoseventos.php',
-    method: 'GET',
-    extraParams: {
-      accion: 'listar',
-      idPsicologo: <?=$_SESSION['IdPsicologo']?>,
-    },
-    failure: function() {
-      alert('Error al cargar los eventos');
-    }
-  },
+      events: '../Modelo/Cita/datoseventos.php?accion=listar',
       dateClick: function(info){
         limpiarFormulario();
         $('#BotonAgregar').show();

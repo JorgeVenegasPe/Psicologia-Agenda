@@ -18,16 +18,16 @@ if (isset($_SESSION['NombrePsicologo'])){
 <body>    
 <div class="containerTotal">
   <?php
-    require_once '../Issets/views/Menu.php';
+    require_once 'Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once '../Issets/views/Info.php';
+    require_once 'Info.php';
     ?> 
     <div class="container-form">
       <div class="recent-updates">
-        <h2>Atencion al Paciente</h2>
+        <h2 class="title">Atencion al Paciente</h2>
         <form action="../Crud/Paciente/guardarAtencPaciente.php" method="post">
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">

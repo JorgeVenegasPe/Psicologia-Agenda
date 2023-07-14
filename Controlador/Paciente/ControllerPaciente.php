@@ -23,23 +23,23 @@ class usernameControlerPaciente{
     public function show($IdPaciente){
             return ($this->model->show($IdPaciente) != false) ? $this->model->show($IdPaciente):header("Location:../../Vista/DatosPaciente.php");
         }
-        public function MostrarPacientesRecientes($idPsicologo) {
-            $pacientesRecientes = $this->model->MostrarPacientesRecientes($idPsicologo);
-            if ($pacientesRecientes !== false) {
-                foreach ($pacientesRecientes as &$paciente) {
-                    $fecha = date('Y-m-d', strtotime($paciente['FechaRegistro']));
-                    $hora = date('H:i:s', strtotime($paciente['FechaRegistro']));
-                    
-                    $paciente['Fecha'] = $fecha;
-                    $paciente['Hora'] = $hora;
-                }
-            } else {
-                $pacientesRecientes = array(); // Asignar un arreglo vacío
+    public function MostrarPacientesRecientes() {
+        $pacientesRecientes = $this->model->MostrarPacientesRecientes();
+        if ($pacientesRecientes != false) {
+            foreach ($pacientesRecientes as &$paciente) {
+                // Separar la fecha y la hora
+                $fecha = date('Y-m-d', strtotime($paciente['FechaRegistro']));
+                $hora = date('H:i:s', strtotime($paciente['FechaRegistro']));
+                
+                // Agregar los valores separados al paciente
+                $paciente['Fecha'] = $fecha;
+                $paciente['Hora'] = $hora;
             }
-            
-            return $pacientesRecientes;
+        } else {
+            header("Location: ../../Vista/Dashboards.php");
+            exit();
         }
-        
-        
+        return $pacientesRecientes;
+    }
 }
 ?>

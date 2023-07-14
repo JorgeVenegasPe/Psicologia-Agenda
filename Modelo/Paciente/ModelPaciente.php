@@ -88,12 +88,10 @@ class userModelPaciente{
         $statement->bindParam(":MedicamentosPrescritos",$MedicamentosPrescritos);
         return ($statement->execute())? $this->PDO->lastInsertId():false;
     }
-    public function MostrarPacientesRecientes($idPsicologo) {
-        $statement = $this->PDO->prepare("SELECT NomPaciente, ApMaterno, ApPaterno, Edad, FechaRegistro FROM paciente 
-        WHERE IdPsicologo = :idPsicologo
-        ORDER BY IdPaciente DESC LIMIT 4");
-        $statement->bindParam(":idPsicologo", $idPsicologo);        
-        return ($statement->execute()) ? $statement->fetchAll() : false;
-    }    
+    public function MostrarPacientesRecientes() {
+        $statement = $this->PDO->prepare("SELECT NomPaciente ,ApMaterno,ApPaterno, Edad, FechaRegistro FROM paciente ORDER BY IdPaciente DESC LIMIT 4");
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }
 ?>

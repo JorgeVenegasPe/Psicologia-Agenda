@@ -10,25 +10,69 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../issets/css/Dashboard.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.0/svg.min.js"></script>
+
 </head>
 <body>
-<?php
-
-require_once("../Controlador/Paciente/ControllerPaciente.php");
+    <?php
 require_once("../Controlador/Cita/citaControlador.php");
     $PORC=new usernameControlerCita();
-    $Pac=new usernameControlerPaciente();
-    $datos=$Pac->MostrarPacientesRecientes();
     $PORCENTAJES=$PORC->mostrarVista();
 ?>
     <div class="container">
-    <?php
-        require_once 'Menu.php';
-    ?>    
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="" alt="">
+                    <h2>Psicologa</h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-sharp" translate="no">close</span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="Dashboards.php" >
+                    <span class="material-symbols-sharp" translate="no">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="CalendarioCitas.php">
+                    <span class="material-symbols-sharp" translate="no">calendar_month</span>
+                    <h3>Calendario</h3>
+                </a>
+                <a href="RegDatosPaciente.php">
+                    <span class="material-symbols-sharp" translate="no">receipt_long</span>
+                    <h3>Pacientes</h3>
+                </a>
+                <a href="citas.php">
+                    <span class="material-symbols-sharp" translate="no">contacts</span>
+                    <h3>Citas</h3>
+                </a>
+                <a href="RegFamiliar.php">
+                    <span class="material-symbols-sharp" translate="no">receipt_long</span>
+                    <h3>Registro Familiar</h3>
+                </a>
+                <a href="AtenPaciente.php">
+                    <span class="material-symbols-sharp" translate="no">mail</span>
+                    <h3>Atencion al Paciente</h3>
+                    <span class="message-count">26</span>
+                </a>
+                <a href="DatosPaciente.php">
+                    <span class="material-symbols-sharp" translate="no">inventory</span>
+                    <h3>Historial</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-sharp" translate="no">settings</span>
+                    <h3>Ajustes</h3>
+                </a>
+                <a href="../issets/views/Salir.php">
+                    <span class="material-symbols-sharp" translate="no">logout</span>
+                    <h3>Salir</h3>
+                </a>
+            </div>
+        </aside>   
+
         <!----------- end of aside -------->
         <main>
             <h1>Dashboard</h1>
@@ -45,11 +89,11 @@ require_once("../Controlador/Cita/citaControlador.php");
                             <h3>Tipo de Cita</h3>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
-                                Primera Visita : <b> <?php echo $PORCENTAJES['porcentaje_primera_visita']; ?>%</b>
+                                Primera Visita : <b><?php echo $PORCENTAJES['porcentaje_primera_visita']; ?>%</b>
                             </p>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#9274b3" class="material-symbols-sharp no-style">arrow_right</span>
-                                Visita de Control : <b> <?php echo $PORCENTAJES['porcentaje_visita_control'];?> %</b>
+                                Visita de Control: <b><?php echo $PORCENTAJES['porcentaje_visita_control'];?> %</b>
                             </p>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#b4d77b" class="material-symbols-sharp no-style">arrow_right</span>
@@ -104,15 +148,15 @@ require_once("../Controlador/Cita/citaControlador.php");
                             <h3>Canal de Atraccion</h3>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
-                                Cita Online : <b> <?php echo $PORCENTAJES['porcentaje_cita_online'];?> %  </b>
+                                Cita Online: <b> <?php echo $PORCENTAJES['porcentaje_cita_online'];?> %  </b>
                             </p>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#9274b3" class="material-symbols-sharp no-style">arrow_right</span>
-                                Marketing Directo : <b><?php echo $PORCENTAJES['porcentaje_marketing_directo'];?> %</b>
+                                Marketing Directo: <b><?php echo $PORCENTAJES['porcentaje_marketing_directo'];?> %</b>
                             </p>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#b4d77b" class="material-symbols-sharp no-style">arrow_right</span>
-                                Referidos : <b><?php echo $PORCENTAJES['porcentaje_referidos'];?>  %</b>
+                                Referidos: <b><?php echo $PORCENTAJES['porcentaje_referidos'];?>  %</b>
                             </p>
                         </div>
                         <div class="progress">
@@ -163,15 +207,15 @@ require_once("../Controlador/Cita/citaControlador.php");
                             <h3>Estado de Cita</h3>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
-                                Se requiere configuración : <b><?php echo $PORCENTAJES['porcentaje_se_requiere_confirmacion'];?> %</b>  
+                                Se requiere configuración: <b><?php echo $PORCENTAJES['porcentaje_se_requiere_confirmacion'];?> %</b>  
                             </p>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#9274b3" class="material-symbols-sharp no-style">arrow_right</span>
-                                Confirmado : <b><?php echo $PORCENTAJES['porcentaje_confirmado'];?> %</b>
+                                Confirmado: <b><?php echo $PORCENTAJES['porcentaje_confirmado'];?> %</b>
                             </p>
                             <p style="display: flex;align-items: center;">
                                 <span style="color:#b4d77b" class="material-symbols-sharp no-style">arrow_right</span>
-                                Ausencia del paciente : <b><?php echo $PORCENTAJES['porcentaje_ausencia_paciente'];?> %</b>
+                                Ausencia del paciente: <b><?php echo $PORCENTAJES['porcentaje_ausencia_paciente'];?> %</b>
                             </p>
                         </div>
                         <div class="progress">
@@ -215,7 +259,6 @@ require_once("../Controlador/Cita/citaControlador.php");
                 <!------------------- Final del income -------------------->
                 
             </div>
-            <br>
             <!----------------- END OF INSIGHTS --------------->
             <div class="recent-orders">
                 <h2>Citas de Hoy</h2>
@@ -256,25 +299,55 @@ require_once("../Controlador/Cita/citaControlador.php");
                 </div>
                 <div class="profile">
                     <div class="info">
-                        <p>Hola. <b><?=$_SESSION['Usuario']?></b></p>
+                        <p>Hola. <b><?=$_SESSION['NombrePsicologo']?></b></p>
                         <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="" alt="">
                     </div>
                 </div>
             </div>
+
             <!----------end of Top------->
             <div class="recent-updates">
                 <h2>Pacientes Recientes</h2>
                 <div class="updates">
-                <?php foreach ($datos as $key) { ?>
                     <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="">
+                        </div>
                         <div class="message">
-                            <p><b><?=$key['NomPaciente']?> <?=$key['ApPaterno']?> <?=$key['ApMaterno']?></b>  <?=$key['Edad']?> años</p>
-                            <small class="text-muted">Registrado el : <?=$key['Fecha']?></small>
-                            <br>
-                            <small class="text-muted">Hora : <?=$key['Hora']?></small>
+                            <p><b>Mike Tyson</b>asddddddddd</p>
+                            <small class="text-muted">2minutes ago</small>
                         </div>
                     </div>
-                <?php } ?>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Mike Tyson</b>asddddddddd</p>
+                            <small class="text-muted">2minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Mike Tyson</b>asddddddddd</p>
+                            <small class="text-muted">2minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b>Mike Tyson</b>asddddddddd</p>
+                            <small class="text-muted">2minutes ago</small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -284,6 +357,7 @@ require_once("../Controlador/Cita/citaControlador.php");
 </html>
 <?php
 }else{
-  header("Location: ../index.php");
+  header("Location: ../Index.php");
 }
 ?>
+

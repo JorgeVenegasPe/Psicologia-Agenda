@@ -28,21 +28,21 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
 ?>
 <div class="containerTotal">
 <?php
-    require_once '../issets/views/Menu.php';
+    require_once 'Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once '../issets/views/Info.php';
+    require_once 'Info.php';
     ?> 
-    <h2>Datos del Paciente</h2>
+    <h2 class="title">Datos del Paciente</h2>
     <div class="containerDatos">
     <div class="insightsDatos">
         <?php if ($rows): ?>
             <?php foreach ($rows as $row): ?>
                 <div class="card" data-id="<?=$row[0]?>">
                     <div class="card__body">
-                        <h1><?=$row[1]?> <?=$row[2]?></h1>
+                        <h2 class="title"><?=$row[1]?> <?=$row[2]?></h2>
                         <label>Id: </label><label class="id"><?=$row[0]?></label>
                         <br>
                         <label>Correo: </label><label class="correo"><?=$row[12]?></label>
