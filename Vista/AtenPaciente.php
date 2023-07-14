@@ -27,19 +27,19 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?> 
     <div class="container-form">
       <div class="recent-updates">
-        <h2>Atencion al Paciente</h2>
         <form action="../Crud/Paciente/guardarAtencPaciente.php" method="post">
+        <h4>Atencion al Paciente</h4>
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">
             <div class="input-group2">
-              <div class="input-group" style="flex-direction: column;">
+              <div class="input-group" >
                 <h3 for="IdPaciente">Id Paciente</h3>
                 <div style="display: flex;">
-                  <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente" class="input" required/>
+                  <input id="IdPaciente"  type="text" name="IdPaciente" class="input" required/>
                     <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
-              <div class="input-group" style="flex-direction: column;">
+              <div class="input-group" >
                 <h3 for="NomPaciente">Nombre Paciente</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
@@ -80,20 +80,28 @@ if (isset($_SESSION['NombrePsicologo'])){
 				      	<textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="UltimosObjetivos" name="UltimosObjetivos" placeholder="Observacion" required></textarea>
 				    </div>
             <div class="input-group2">
-              <div class="input-group" style="flex-direction: column;">
-                <h3 for="CodEnfermedad">DSM5/CEA10</h3>
+              <div class="input-group" >
+                <h3 for="CodEnfermedad">DSM5</h3>
                 <div style="display: flex;gap:5px;">
-                  <input id="CodEnfermedad" style="width: 80%;" type="text" name="CodEnfermedad" class="input" />
+                  <input id="CodEnfermedad"  type="text" name="CodEnfermedad" class="input" />
                     <a class="search codEnf"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
-              <div class="input-group" style="flex-direction: column;width: 140%;">
+              <div class="input-group" >
+                <h3 for="CodEnfermedad">CEA10</h3>
+                <div style="display: flex;gap:5px;">
+                  <input id="CodEnfermedad"  type="text" name="CodEnfermedad" class="input" />
+                    <a class="search codEnf"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                </div>
+              </div>
+              
+            </div>
+            <div class="input-group" style="flex-direction: column;width: 140%;">
                 <h3 for="DescripcionEnfermedad">Clasificacion</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="DescripcionEnfermedad" type="text" name="DescripcionEnfermedad" class="input" />
                 </div>
               </div>
-            </div>
             <div class="input-group" style="display: none;">
 					      <h3 for="IdEnfermedad" >IdEnfermedad</h3>
 					      <input id="IdEnfermedad" type="text" name="IdEnfermedad" class="input" readonly/>

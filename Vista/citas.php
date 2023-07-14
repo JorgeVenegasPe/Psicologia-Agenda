@@ -39,22 +39,22 @@ if (isset($_SESSION['NombrePsicologo'])){
     <?php
     require_once '../Issets/views/Info.php';
     ?>
-        <div class="container-form">
+    <h4 style="text-align:center;margin-bottom:-10px">Formulario de Citas</h4>
+        <div class="container-form-cita">
             <div class="recent-updates">
-                <h2>Formulario de Citas</h2>
                 <form action="../Crud/Cita/guardarCita.php" method="post">
                     <div class="checkout-information">
                         <div class="input-group2">
                             <div class="input-group">
                             <h3 for="IdPaciente">Id Paciente <b style="color:red">*</b></h3>
-                                <div style="display: flex;gap:5px;">
-                                    <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente"  required/>
+                                <div style="display: flex; gap:5px;"> 
+                                    <input id="IdPaciente" type="text" name="IdPaciente"  required/>
                                     <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                                 </div>
                             </div>
                             <div class="input-group">
                             <h3 for="NomPaciente">Nombre Paciente <b style="color:red">*</b></h3>
-                                <div style="display: flex; gap:4px;">
+                                <div style="display: flex; gap:5px;">
                                     <input id="NomPaciente" type="text" name="NomPaciente"  required/>
                                     <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                                 </div>
@@ -64,11 +64,11 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        	    <h3 for="Paciente" >Paciente <b style="color:red">*</b></h3>
 			        	    <input id="Paciente" type="text" name="Paciente"  readonly/>
 			            </div>
-			            <div class="input-group">
+			            <div style="display:none" class="input-group">
 			        	    <h3 for="correo" >correo<b style="color:red">*</b></h3>
 			        	    <input id="correo" type="text" name="correo"  readonly/>
 			            </div>
-			            <div class="input-group">
+			            <div  style="display:none" class="input-group">
 			        	    <h3 for="telefono" >telefono<b style="color:red">*</b></h3>
 			        	    <input id="telefono" type="text" name="telefono"  readonly/>
 			            </div>
@@ -76,19 +76,19 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        	    <h3 for="MotivoCita">Motivo de la Consutla <b style="color:red">*</b></h3>
 			        	    <textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="MotivoCita" name="MotivoCita"  required></textarea>
 			            </div>
-                        <div class="input-group2" style="gap:60px">
-  	                        <div class="input-group">
+                        <div class="input-group2">
+  	                        <div class="input-group" >
   		                        <h3 for="EstadoCita">Estado de la Cita <b style="color:red">*</b></h3>
-  		                        <select class="input" id="EstadoCita" name="EstadoCita" required>
-                                    <option value="">Seleccione un Estado </option>
+  		                        <select class="input" id="EstadoCita" name="EstadoCita"required>
+                                    <option value="">Seleccione un Estado</option>
                                     <option value="Se requiere confirmacion">Se requiere confirmacion</option>
                                     <option value="Confirmado">Confirmado</option>
                                     <option value="Ausencia del paciente">Ausencia del paciente</option>
                                 </select>
   	                        </div>
-                            <div class="input-group">
+                            <div class="input-group" style="width:40%">
                                 <h3 for="ColorFondo">Color de Cita <b style="color:red">*</b></h3>
-                                <input type="color" value="#f38238" id="ColorFondo" name="ColorFondo" list="colorOptions" style="height: 46px;">
+                                <input type="color" value="#f38238" id="ColorFondo" name="ColorFondo" list="colorOptions">
                                     <datalist id="colorOptions">
                                       <option value="#b4d77b">Rojo</option>
                                       <option value="#9274b3">Verde</option>
@@ -96,18 +96,18 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     </datalist>
                             </div>
                         </div>
-                        <div class="input-group2" style="gap:70px">
-                            <div class="input-group">
+                        <div class="input-group2">
+                            <div class="input-group" style="width:49%">
                                 <h3 for="FechaInicioCita">Fecha de Cita<b style="color:red">*</b></h3>
                                 <input  type="date" id="FechaInicioCita" name="FechaInicioCita" required>
                             </div>
-                            <div class="input-group">
+                            <div class="input-group" style="width:39%">
                                 <h3 for="HoraInicio">Hora de Cita <b style="color:red">*</b></h3>
                                 <input type="time" id="HoraInicio" name="HoraInicio" />
                             </div>
                         </div>
-                        <div class="input-group2" style="gap:100px">
-                            <div class="input-group">
+                        <div class="input-group2">
+                            <div class="input-group" style="width:49%">
   		                        <h3 for="TipoCita">Tipo de Cita <b style="color:red">*</b></h3>
   		                        <select class="input" id="TipoCita" name="TipoCita" required>
                                     <option value="">Seleccione un Tipo </option>
@@ -132,8 +132,8 @@ if (isset($_SESSION['NombrePsicologo'])){
                                 </select>
                             </div>
                         </div>
-                        <div class="input-group2" style="gap:10px">
-                            <div class="input-group">
+                        <div class="input-group2">
+                            <div class="input-group" style="width:58%">
   		                        <h3 for="CanalCita">Canal de Atraccion <b style="color:red">*</b></h3>
   		                        <select class="input" id="CanalCita" name="CanalCita" required>
                                     <option value="">Seleccione una Atraccion</option>
@@ -142,7 +142,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     <option value="Referidos">Referidos</option>
                                 </select>
   	                        </div>
-                            <div class="input-group">
+                            <div class="input-group" style="width:55%">
   		                        <h3 for="EtiquetaCita">Etiqueta <b style="color:red">*</b></h3>
   		                        <select class="input" id="EtiquetaCita" name="EtiquetaCita" required>
                                     <option value="">Seleccione una Etiqueta</option>
@@ -157,14 +157,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     	                    <input type="text" id="IdPsicologo"  name="IdPsicologo" value="<?=$_SESSION['IdPsicologo']?>" placeholder="Ingrese algun Antecedente Medico" />
     	                </div>
                         <br>
-                        <div class="button-container">
+                    </div>
+                    <br>
+                    <div class="button-container">
                           <button id="submitButton" class="button">Registrar</button>
                         </div>
-                    </div>
                 </form>
             </div>
-                <div class="recent-orders">
-                    <table class="table-cita">
+                <div class="recent-citas">
+                    <table>
                         <?php
                         $rowsPerPage = 7;
                         if (is_array($rows) && count($rows) > 0) {
@@ -284,9 +285,9 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     </div>
                                 <?php endforeach;?>
                             <?php else:?>
-                                    <tr>
-                                        <td colspan="7" class="text-center">No hay registro</td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="11">No hay registros</td>
+                                </tr>
                             <?php endif;?>
                         </tbody>
                     </table>
@@ -307,8 +308,8 @@ if (isset($_SESSION['NombrePsicologo'])){
     </main>
             
     <div id="notification" style="display: none;" class="notification">
-    <p id="notification-text"></p>
-    <span class="notification__progress"></span>
+        <p id="notification-text"></p>
+        <span class="notification__progress"></span>
     </div>
 
 </div>

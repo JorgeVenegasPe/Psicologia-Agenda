@@ -43,13 +43,13 @@ class UserModelCita{
 
     }
     public function showByFecha($id){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita FROM cita c
                                        INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                        INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
-                                       where IdCita=:id limit 1
-                                       order by c.FechaRegistro");
-        $statement->bindParam(":id",$id);
-        return($statement->execute())? $statement->fetch():false;
+                                       where c.IdPsicologo = :idUsua
+                                       AND WEEK(c.FechaRegistro)=WEEK(NOW())");
+        $statement->bindParam(":idUsua",$id);
+        return($statement->execute())? $statement->fetchaLL():false;
 
     }
     public function eliminar($id){
@@ -112,11 +112,11 @@ class UserModelCita{
         
         // Calcular el porcentaje con dos decimales
         $total_registros_canal = $count_cita_online + $count_marketing_directo + $count_referidos;
-$porcentaje_cita_online = ($total_registros_canal != 0) ? number_format(($count_cita_online / $total_registros_canal) * 100, 2) : 0;
-$porcentaje_marketing_directo = ($total_registros_canal != 0) ? number_format(($count_marketing_directo / $total_registros_canal) * 100, 2) : 0;
-$porcentaje_referidos = ($total_registros_canal != 0) ? number_format(($count_referidos / $total_registros_canal) * 100, 2) : 0;
+        $porcentaje_cita_online = ($total_registros_canal != 0) ? number_format(($count_cita_online / $total_registros_canal) * 100, 2) : 0;
+        $porcentaje_marketing_directo = ($total_registros_canal != 0) ? number_format(($count_marketing_directo / $total_registros_canal) * 100, 2) : 0;
+        $porcentaje_referidos = ($total_registros_canal != 0) ? number_format(($count_referidos / $total_registros_canal) * 100, 2) : 0;
 
-        
+
         // Consulta para contar los valores "Se requiere confirmacion"
         $sql_se_requiere_confirmacion = "SELECT COUNT(*) AS count FROM cita WHERE EstadoCita = 'Se requiere confirmacion' AND IdPsicologo = :idPsicologo";
         $stmt_se_requiere_confirmacion = $this->PDO->prepare($sql_se_requiere_confirmacion);

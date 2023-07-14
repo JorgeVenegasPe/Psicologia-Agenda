@@ -42,27 +42,8 @@ class usernameControlerCita{
             header("Location: ../../Vista/citas.php");
         }
     }
-    public function showbyFecha($id) {
-        $cita = $this->model->show($id);
-    
-        if ($cita != false) {
-            // Separar la fecha y la hora
-            $FechaCitaInicio = explode(" ", $cita['FechaInicioCita']);
-            $FechaInicio = $FechaCitaInicio[0];
-            $HoraInicio = $FechaCitaInicio[1];
-    
-            // Asignar los valores a las variables para usar en el formulario
-            $datos = [
-                'id' => $cita['IdCita'],
-                'FechaInicio' => $FechaInicio,
-                'HoraInicio' => $HoraInicio,
-                'ColorFondo' => $cita['ColorFondo'],
-            ];
-    
-            return $datos;
-        } else {
-            header("Location: ../../Vista/citas.php");
-        }
+    public function showByFecha($id) {
+        return ($this->model->showByFecha($id)) ?: false;
     }
     public function mostrarVista($idPsicologo)
     {
