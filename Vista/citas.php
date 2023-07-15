@@ -96,10 +96,15 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     </datalist>
                             </div>
                         </div>
+                        <?php
+                            /* FECHA LIMITE  */
+                            date_default_timezone_set('America/Lima');
+                            $fechamin = date("Y-m-d")
+                        ?>
                         <div class="input-group2">
                             <div class="input-group" style="width:49%">
                                 <h3 for="FechaInicioCita">Fecha de Cita<b style="color:red">*</b></h3>
-                                <input  type="date" id="FechaInicioCita" name="FechaInicioCita" required>
+                                <input  type="date" id="FechaInicioCita" name="FechaInicioCita" min="<?= $fechamin ?>" value="<?= $fechamin ?>">
                             </div>
                             <div class="input-group" style="width:39%">
                                 <h3 for="HoraInicio">Hora de Cita <b style="color:red">*</b></h3>

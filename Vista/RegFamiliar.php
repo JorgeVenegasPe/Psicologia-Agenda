@@ -80,11 +80,13 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        <div class="input-group2" >
                 <div class="input-group" >
                   <h3 for="CantHijos">Cantidad de Hijos</h3>
-                    <input id="CantHijos" type="number" name="CantHijos" class="input" required/>
+                    <input id="CantHijos" type="number" name="CantHijos" class="input" 
+                          min="0" pattern="^[0-9]+" required />
                 </div>
                 <div class="input-group" >
                   <h3 for="CantHermanos">Cantidad de Hermanos</h3>
-                    <input id="CantHermanos" type="number" name="CantHermanos" class="input" required/>
+                    <input id="CantHermanos" type="number" name="CantHermanos" class="input" 
+                          min="0" pattern="^[0-9]+" required />
                 </div>
               </div>
 			        <div class="input-group">
