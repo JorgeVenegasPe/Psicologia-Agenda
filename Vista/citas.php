@@ -64,6 +64,23 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        	    <h3 for="Paciente" >Paciente <b style="color:red">*</b></h3>
 			        	    <input id="Paciente" type="text" name="Paciente"  readonly/>
 			            </div>
+
+                        <!--MOSTRAR SOLO LOS PACIENTES DEL PSICOLOGO QUE INICIO LA SESSION-->
+                        <div>
+                        <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_SESSION['IdPsicologo'])) {
+    $idPsicologo = $_SESSION['IdPsicologo'];
+    echo "<script>var idPsicologo = " . $idPsicologo . ";</script>"; // Imprimir el valor de $idPsicologo en el bloque de script
+} else {
+    echo "<script>var idPsicologo = '';</script>"; // Establecer un valor predeterminado si no se ha iniciado sesión
+}
+?>
+
+                        </div>
 			            <div class="input-group">
 			        	    <h3 for="correo" >correo<b style="color:red">*</b></h3>
 			        	    <input id="correo" type="text" name="correo"  readonly/>
@@ -332,50 +349,60 @@ if (isset($_SESSION['NombrePsicologo'])){
         history.replaceState(null, null, window.location.pathname);
     }
 });
-  // Buscador del paciente según su id
-  $(document).ready(function() {
-    $('.id').click(function() {
-      var codigoPaciente = $('#IdPaciente').val();
+// Buscador del paciente según su id
+$(document).ready(function() {
+  $('.id').click(function() {
+    var codigoPaciente = $('#IdPaciente').val();
 
-      // Realizar la solicitud AJAX al servidor
-      $.ajax({
-        url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
-        method: 'POST',
-        data: { codigoPaciente: codigoPaciente },
-        success: function(response) {
-          if (response.error) {
-            $('#Paciente').val(response.error);
-          } else {
-            $('#Paciente').val(response.nombre);
-          }
-        },
-        error: function() {
-          $('#Paciente').val('Error al procesar la solicitud');
+    // Realizar la solicitud AJAX al servidor
+    $.ajax({
+      url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
+      method: 'POST',
+      data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo }, // Usar la variable idPsicologo
+      success: function(response) {
+        if (response.hasOwnProperty('error')) {
+          $('#Paciente').val(response.error);
+        } else {
+          $('#Paciente').val(response.nombre);
         }
-      });
+      },
+      error: function() {
+        $('#Paciente').val('Error al procesar la solicitud');
+      }
     });
   });
-  // Buscador paciente segun su nombre 
+});
+
+
+
+
+
+
+
+
+
+  // Buscador paciente según su nombre
 $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>; // Obtener el valor del IdPsicologo de la sesión
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente },
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo }, // Agregar el parámetro idPsicologo
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
           $('#IdPaciente').val('');
           $('#correo').val('');
           $('#telefono').val('');
         } else {
           $('#Paciente').val(response.nombre);
-		  $('#IdPaciente').val(response.id);
-		  $('#correo').val(response.correo);
-		  $('#telefono').val(response.telefono);
+          $('#IdPaciente').val(response.id);
+          $('#correo').val(response.correo);
+          $('#telefono').val(response.telefono);
         }
       },
       error: function() {
@@ -387,6 +414,13 @@ $(document).ready(function() {
     });
   });
 });
+
+
+
+
+
+
+
 //Funciones del modal
 function openModal(id) {
     document.getElementById('modal' + id).style.display = 'block';
