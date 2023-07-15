@@ -95,5 +95,47 @@ class userModelPaciente{
         $statement->bindParam(":idPsicologo", $idPsicologo);        
         return ($statement->execute()) ? $statement->fetchAll() : false;
     }    
+
+
+
+    function obtenerValoresProvincia()
+    {
+        $host = 'localhost';
+        $usuario = 'root';
+        $contrasena = '';
+        $baseDeDatos = 'psicologia';
+    
+        // Establecer conexión a la base de datos
+        $conexion = mysqli_connect($host, $usuario, $contrasena, $baseDeDatos);
+    
+        if (!$conexion) {
+            die('Error al conectar a la base de datos: ' . mysqli_connect_error());
+        }
+    
+        // Consulta para obtener los valores de la tabla 'provincia'
+        $consulta = 'SELECT * FROM provincia';
+    
+        // Ejecutar la consulta
+        $resultado = mysqli_query($conexion, $consulta);
+    
+        if (!$resultado) {
+            die('Error al obtener los valores de la tabla: ' . mysqli_error($conexion));
+        }
+    
+        // Guardar los valores de la tabla 'provincia' en un array
+        $valoresProvincia = [];
+    
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $valoresProvincia[] = $fila;
+        }
+    
+        // Cerrar la conexión
+        mysqli_close($conexion);
+    
+        // Devolver los valores de la tabla 'provincia'
+        return $valoresProvincia;
+    }
+    
+    
 }
 ?>

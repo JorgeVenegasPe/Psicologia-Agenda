@@ -275,9 +275,13 @@ require_once("../Controlador/Cita/citaControlador.php");
                                     <small class="text-muted">Hora: <?= $key['Hora'] ?></small>
                                 </div>
                             </div>
+                            <!--Agragamos la secccion para redirigir a la pagina Pacientes-->
                         <?php endforeach; ?>
                     <?php else : ?>
-                        <p>No hay Pacientes</p>
+                        <div style="display: flex; align-items: center;">
+                            <p style="margin-right: 10px;">No hay Pacientes</p>
+                            <a style="color: #9274b3; " href="RegDatosPaciente.php">Agregar nuevo paciente</a>
+                        </div>                        
                     <?php endif; ?>
                 </div>
             </div>

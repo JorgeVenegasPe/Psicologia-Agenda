@@ -98,7 +98,109 @@ if (isset($_SESSION['NombrePsicologo'])){
             <div style=" width:290px" class="input-group">
   		          <h3 for="Email">Correo Electronico</h3>
   		          <input type="Email" id="Email" class="input" name="Email" required/>
-  	        </div>
+  	        </div>     
+             
+
+
+            <?php
+// Conexión a la base de datos
+$conn = mysqli_connect('localhost', 'root', '', 'psicologia');
+
+// Verificar la conexión
+if (!$conn) {
+  die("Error al conectar con la base de datos: " . mysqli_connect_error());
+}
+
+// Consulta para obtener las provincias
+$query = "SELECT name, department_id FROM ubigeo_peru_provinces";
+$result = mysqli_query($conn, $query);
+
+// Arreglo para almacenar los datos de las provincias
+$provincias = [];
+while ($row = mysqli_fetch_assoc($result)) {
+  $provincias[] = [
+    'department_id' => $row['department_id'],
+    'name' => $row['name']
+  ];
+}
+
+// Cerrar la conexión
+mysqli_close($conn);
+?>
+
+<!--***** Agregamos los campos Distrito y Provincia: AGREGAR CAPOS EN LA BASE DE DATOS *****-->
+<div class="input-group2">
+  <div class="input-group">
+    <h3 for="Provincia">Provincia</h3>
+    <select class="text" id="provincia" name="provincia" required>
+    <?php
+      foreach ($provincias as $provincia) {
+        echo "<option value='" . $provincia['department_id'] . "'>" . $provincia['name'] . "</option>";
+      }
+    ?>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <h3 for="Distrito">Distrito</h3>
+    <select class="input" id="distrito" name="distrito" required>
+    </select>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#provincia').change(function() {
+    let provinciaSeleccionada = $(this).val();
+
+    // Limpiar las opciones de distrito
+    $('#distrito').html('');
+
+    // Mostrar los distritos correspondientes a la provincia seleccionada
+    <?php foreach ($provincias as $provincia) { ?>
+    if (provinciaSeleccionada == '<?php echo $provincia['department_id']; ?>') {
+      <?php
+      $conn = mysqli_connect('localhost', 'root', '', 'psicologia');
+      $query = "SELECT name FROM ubigeo_peru_districts WHERE department_id = '" . $provincia['department_id'] . "'";
+      $result = mysqli_query($conn, $query);
+      while ($row = mysqli_fetch_assoc($result)) {
+        echo "$('#distrito').append('<option value=\"\">{$row['name']}</option>');";
+      }
+      mysqli_close($conn);
+      ?>
+      // Romper el bucle una vez que se encuentre la provincia seleccionada
+      end;
+    }
+    <?php } ?>
+  });
+});
+</script>
+
+
+
+
+
+<!--
+ <div>
+  <script>
+$('#provincia').change(function() {
+                let provinciaSeleccionado = $(this).val();
+              
+              
+              if(provinciaSeleccionado == 2){
+  document.write('hola');
+}else{
+  document.write('chao');
+}});
+
+</script>
+</div> 
+-->
+
+
+
+            
             <div class="input-group">
   		          <h3 for="Direccion">Dirección</h3>
   		          <input type="text" id="Direccion" class="input" name="Direccion" required/>
@@ -111,6 +213,8 @@ if (isset($_SESSION['NombrePsicologo'])){
   		          <h3 for="MedicamentosPrescritos">Medicamentos Prescritos</h3>
   		          <input type="text" id="MedicamentosPrescritos" class="input" name="MedicamentosPrescritos"  required/>
   	        </div>
+
+
             <div class="input-group" style="display: none">
   		          <h3 for="IdPsicologo">IdPsicologo</h3>
   		          <input type="text" id="IdPsicologo" class="input" name="IdPsicologo" value="<?=$_SESSION['IdPsicologo']?>" />
@@ -148,3 +252,6 @@ if (isset($_SESSION['NombrePsicologo'])){
   header("Location: ../Index.php");
 }
 ?>
+
+
+

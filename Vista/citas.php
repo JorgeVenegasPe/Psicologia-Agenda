@@ -282,10 +282,15 @@ if (isset($_SESSION['NombrePsicologo'])){
                                             </form>        
                                         </div>
                                     </div>
+                                    <!--Agregamos la sección para recargar la pagina-->
                                 <?php endforeach;?>
                             <?php else:?>
                                     <tr>
-                                        <td colspan="7" class="text-center">No hay registro</td>
+                                        <td colspan="10" class="text-center"><div style="display: flex; align-items: center; width:100%;">
+                            <p style="margin-right: 10px; width:50%;">No hay Pacientes</p>
+                            <a style="color: #9274b3; width: 50%; " href="citas.php">Agregar nuevo paciente</a>
+                        </div>            </td>
+                                        
                                     </tr>
                             <?php endif;?>
                         </tbody>

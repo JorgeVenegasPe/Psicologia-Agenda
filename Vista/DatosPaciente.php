@@ -36,7 +36,7 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     require_once '../issets/views/Info.php';
     ?> 
     <h2>Datos del Paciente</h2>
-    <div class="containerDatos">
+<div class="containerDatos">
     <div class="insightsDatos">
         <?php if ($rows): ?>
             <?php foreach ($rows as $row): ?>
@@ -45,6 +45,12 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                         <h1><?=$row[1]?> <?=$row[2]?></h1>
                         <label>Id: </label><label class="id"><?=$row[0]?></label>
                         <br>
+                        <!--MOSTRAMOS EL CODIGO DEL PACIENTE-->
+                        <?php
+                            $user = $Pac->show($row[0]);
+                        ?>
+                        <label>Código Paciente: </label><label class="codigo"><?=$user['CodigoPaciente']?></label>
+                        <br>
                         <label>Correo: </label><label class="correo"><?=$row[12]?></label>
                         <br>
                         <br>
@@ -52,11 +58,12 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                         <br>
                         <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerHistorialFamiliar('<?=$row[0]?>')">Ver Datos Familiares</a>
                         <br>
-                        <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerDiagnostico('<?=$row[0]?>')">Ver Ulitma Session</a>
+                        <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerDiagnostico('<?=$row[0]?>')">Ver Última Sesión</a>
                         <br>
                         <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerHistorial('<?=$row[0]?>')">Ver Historial</a>
                     </div>
                 </div>
+
                 <?php
                     $user=$Pac->show($row[0]);
                 ?>
