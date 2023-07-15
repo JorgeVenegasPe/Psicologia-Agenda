@@ -67,18 +67,7 @@ if (isset($_SESSION['NombrePsicologo'])){
 
                         <!--MOSTRAR SOLO LOS PACIENTES DEL PSICOLOGO QUE INICIO LA SESSION-->
                         <div>
-                        <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
-if (isset($_SESSION['IdPsicologo'])) {
-    $idPsicologo = $_SESSION['IdPsicologo'];
-    echo "<script>var idPsicologo = " . $idPsicologo . ";</script>"; // Imprimir el valor de $idPsicologo en el bloque de script
-} else {
-    echo "<script>var idPsicologo = '';</script>"; // Establecer un valor predeterminado si no se ha iniciado sesión
-}
-?>
 
                         </div>
 			            <div class="input-group">
@@ -352,6 +341,7 @@ if (isset($_SESSION['IdPsicologo'])) {
 // Buscador del paciente según su id
 $(document).ready(function() {
   $('.id').click(function() {
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
     var codigoPaciente = $('#IdPaciente').val();
 
     // Realizar la solicitud AJAX al servidor
@@ -372,11 +362,6 @@ $(document).ready(function() {
     });
   });
 });
-
-
-
-
-
 
 
 

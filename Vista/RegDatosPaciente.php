@@ -124,57 +124,102 @@ while ($row = mysqli_fetch_assoc($result)) {
   ];
 }
 
+
+// Consulta para obtener las provincias
+$query = "SELECT name, id FROM ubigeo_peru_departments";
+$result = mysqli_query($conn, $query);
+
+// Arreglo para almacenar los datos de las provincias
+$departamentos = [];
+while ($row = mysqli_fetch_assoc($result)) {
+  $departamentos[] = [
+    'id' => $row['id'],
+    'name' => $row['name']
+  ];
+}
+
 // Cerrar la conexión
 mysqli_close($conn);
 ?>
 
 <!--***** Agregamos los campos Distrito y Provincia: AGREGAR CAPOS EN LA BASE DE DATOS *****-->
-<div class="input-group2">
-  <div class="input-group">
-    <h3 for="Provincia">Provincia</h3>
-    <select class="text" id="provincia" name="provincia" required>
-    <?php
-      foreach ($provincias as $provincia) {
-        echo "<option value='" . $provincia['department_id'] . "'>" . $provincia['name'] . "</option>";
-      }
-    ?>
-    </select>
-  </div>
 
-  <div class="input-group">
-    <h3 for="Distrito">Distrito</h3>
-    <select class="input" id="distrito" name="distrito" required>
-    </select>
-  </div>
+<div style="width: 290px" class="input-group">
+  <h3 for="Departamento">Departamento</h3>
+  <select class="text" id="departamento" name="departamento" required>
+    <?php
+    foreach ($departamentos as $departamento) {
+      echo "<option value='" . $departamento['id'] . "' data-department-id='" . $departamento['id'] . "'>" . $departamento['name'] . "</option>";
+    }
+    ?>
+  </select>
+</div>
+
+<div style="width: 290px" class="input-group">
+  <h3 for="Provincia">Provincia</h3>
+  <select class="text" id="provincia" name="provincia" required>
+    <!-- Las opciones de provincia se generarán dinámicamente mediante JavaScript -->
+  </select>
+</div>
+
+<div style="width: 290px" class="input-group">
+  <h3 for="Distrito">Distrito</h3>
+  <select class="input" id="distrito" name="distrito" required>
+    <!-- Las opciones de distrito se generarán dinámicamente mediante JavaScript -->
+  </select>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-  $('#provincia').change(function() {
-    let provinciaSeleccionada = $(this).val();
+  $(document).ready(function() {
+    // Cuando cambia el campo Departamento
+    $('#departamento').change(function() {
+      let departamentoSeleccionado = $(this).val();
 
-    // Limpiar las opciones de distrito
-    $('#distrito').html('');
+      // Limpiar las opciones de provincia y distrito
+      $('#provincia').html('');
+      $('#distrito').html('');
 
-    // Mostrar los distritos correspondientes a la provincia seleccionada
-    <?php foreach ($provincias as $provincia) { ?>
-    if (provinciaSeleccionada == '<?php echo $provincia['department_id']; ?>') {
-      <?php
-      $conn = mysqli_connect('localhost', 'root', '', 'psicologia');
-      $query = "SELECT name FROM ubigeo_peru_districts WHERE department_id = '" . $provincia['department_id'] . "'";
-      $result = mysqli_query($conn, $query);
-      while ($row = mysqli_fetch_assoc($result)) {
-        echo "$('#distrito').append('<option value=\"\">{$row['name']}</option>');";
+      // Mostrar las provincias correspondientes al departamento seleccionado
+      <?php foreach ($provincias as $provincia) { ?>
+        if (departamentoSeleccionado == '<?php echo $provincia['department_id']; ?>') {
+          $('#provincia').append('<option value="<?php echo $provincia['department_id']; ?>"><?php echo $provincia['name']; ?></option>');
+        }
+      <?php } ?>
+
+      // Actualizar los distritos al cargar la página (si ya hay un departamento seleccionado)
+      let departamentoActual = $('#departamento').val();
+      if (departamentoActual) {
+        $('#departamento').trigger('change');
       }
-      mysqli_close($conn);
-      ?>
-      // Romper el bucle una vez que se encuentre la provincia seleccionada
-      end;
-    }
-    <?php } ?>
+    });
+
+    // Cuando cambia el campo Provincia
+    $('#provincia').change(function() {
+      let provinciaSeleccionada = $(this).val();
+
+      // Limpiar las opciones de distrito
+      $('#distrito').html('');
+
+      // Mostrar los distritos correspondientes a la provincia seleccionada
+      <?php foreach ($provincias as $provincia) { ?>
+        if (provinciaSeleccionada == '<?php echo $provincia['department_id']; ?>') {
+          <?php
+          $conn = mysqli_connect('localhost', 'root', '', 'psicologia');
+          $query = "SELECT name FROM ubigeo_peru_districts WHERE department_id = '" . $provincia['department_id'] . "'";
+          $result = mysqli_query($conn, $query);
+          while ($row = mysqli_fetch_assoc($result)) {
+            echo "$('#distrito').append('<option value=\"\">" . $row['name'] . "</option>');";
+          }
+          mysqli_close($conn);
+          ?>
+
+          // Romper el bucle una vez que se encuentre la provincia seleccionada
+          end;
+        }
+      <?php } ?>
+    });
   });
-});
 </script>
 
 
