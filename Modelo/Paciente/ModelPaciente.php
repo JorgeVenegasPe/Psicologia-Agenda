@@ -8,47 +8,61 @@ class userModelPaciente{
         $this->PDO=$con->conexion();
 
     }
-    public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos) {
-        $NomPaciente = $_POST['NomPaciente'];
-        $ApPaterno = $_POST['ApPaterno'];
-        $ApMaterno = $_POST['ApMaterno'];
-        $Dni = $_POST['Dni'];
-        $FechaNacimiento = $_POST['FechaNacimiento'];
-        $Edad = $_POST['Edad'];
-        $GradoInstruccion = $_POST['GradoInstruccion'];
-        $Ocupacion = $_POST['Ocupacion'];
-        $EstadoCivil = $_POST['EstadoCivil'];
-        $Genero = $_POST['Genero'];
-        $Telefono = $_POST['Telefono'];
-        $Email = $_POST['Email'];
-        $Direccion = $_POST['Direccion'];
-        $AntecedentesMedicos = $_POST['AntecedentesMedicos'];
-        $IdPsicologo = $_POST['IdPsicologo'];
-        $MedicamentosPrescritos = $_POST['MedicamentosPrescritos'];
-        $statement=$this->PDO->prepare("INSERT INTO Paciente(NomPaciente, ApPaterno, ApMaterno, Dni, FechaNacimiento, Edad,
-         GradoInstruccion, Ocupacion, EstadoCivil, Genero,Telefono, Email, Direccion, AntecedentesMedicos,IdPsicologo,MedicamentosPrescritos) 
-         VALUES(:NomPaciente, :ApPaterno, :ApMaterno, :Dni, :FechaNacimiento, :Edad, :GradoInstruccion, 
-         :Ocupacion, :EstadoCivil, :Genero, :Telefono, :Email, :Direccion, :AntecedentesMedicos, :IdPsicologo,:MedicamentosPrescritos)");
-        $array = array($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos);
-        $statement->bindParam(":NomPaciente",$NomPaciente);
-        $statement->bindParam(":ApPaterno",$ApPaterno);
-        $statement->bindParam(":ApMaterno",$ApMaterno);
-        $statement->bindParam(":Dni",$Dni);
-        $statement->bindParam(":FechaNacimiento",$FechaNacimiento);
-        $statement->bindParam(":Edad",$Edad);
-        $statement->bindParam(":GradoInstruccion",$GradoInstruccion);
-        $statement->bindParam(":Ocupacion",$Ocupacion);
-        $statement->bindParam(":EstadoCivil",$EstadoCivil);
-        $statement->bindParam(":Genero",$Genero);
-        $statement->bindParam(":Telefono",$Telefono);
-        $statement->bindParam(":Email",$Email);
-        $statement->bindParam(":Direccion",$Direccion);
-        $statement->bindParam(":AntecedentesMedicos",$AntecedentesMedicos);
-        $statement->bindParam(":IdPsicologo",$IdPsicologo);
-        $statement->bindParam(":MedicamentosPrescritos",$MedicamentosPrescritos);
-    
-        return ($statement->execute())? $this->PDO->lastInsertId():false;
+
+    // Función para generar el código del paciente
+    private function generarCodigoPaciente($IdPaciente) {
+        $prefijo = 'PA';
+        $idPacienteFormateado = str_pad($IdPaciente, 4, '0', STR_PAD_LEFT);
+        $codigoPaciente = $prefijo . $idPacienteFormateado;
+        return $codigoPaciente;
     }
+
+    // Método para guardar un nuevo paciente con el código generado automáticamente
+    public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad, $GradoInstruccion, $Ocupacion, $EstadoCivil, $Genero, $Telefono, $Email, $Direccion, $AntecedentesMedicos, $IdPsicologo, $MedicamentosPrescritos)
+    {
+        $statement = $this->PDO->prepare("INSERT INTO Paciente(NomPaciente, ApPaterno, ApMaterno, Dni, FechaNacimiento, Edad,
+         GradoInstruccion, Ocupacion, EstadoCivil, Genero, Telefono, Email, Direccion, AntecedentesMedicos, IdPsicologo, MedicamentosPrescritos) 
+         VALUES(:NomPaciente, :ApPaterno, :ApMaterno, :Dni, :FechaNacimiento, :Edad, :GradoInstruccion, 
+         :Ocupacion, :EstadoCivil, :Genero, :Telefono, :Email, :Direccion, :AntecedentesMedicos, :IdPsicologo, :MedicamentosPrescritos)");
+
+        $statement->bindParam(":NomPaciente", $NomPaciente);
+        $statement->bindParam(":ApPaterno", $ApPaterno);
+        $statement->bindParam(":ApMaterno", $ApMaterno);
+        $statement->bindParam(":Dni", $Dni);
+        $statement->bindParam(":FechaNacimiento", $FechaNacimiento);
+        $statement->bindParam(":Edad", $Edad);
+        $statement->bindParam(":GradoInstruccion", $GradoInstruccion);
+        $statement->bindParam(":Ocupacion", $Ocupacion);
+        $statement->bindParam(":EstadoCivil", $EstadoCivil);
+        $statement->bindParam(":Genero", $Genero);
+        $statement->bindParam(":Telefono", $Telefono);
+        $statement->bindParam(":Email", $Email);
+        $statement->bindParam(":Direccion", $Direccion);
+        $statement->bindParam(":AntecedentesMedicos", $AntecedentesMedicos);
+        $statement->bindParam(":IdPsicologo", $IdPsicologo);
+        $statement->bindParam(":MedicamentosPrescritos", $MedicamentosPrescritos);
+
+        $id = ($statement->execute()) ? $this->PDO->lastInsertId() : false;
+
+        if ($id !== false) {
+            // Genera el código del paciente utilizando el IdPaciente
+            $codigoPaciente = $this->generarCodigoPaciente($id);
+
+            // Actualiza la columna CodigoPaciente en la base de datos con el código generado
+            $this->actualizarCodigoPaciente($id, $codigoPaciente);
+        }
+
+        return $id;
+    }
+
+    // Método para actualizar el código del paciente en la base de datos
+    private function actualizarCodigoPaciente($IdPaciente, $codigoPaciente) {
+        $statement = $this->PDO->prepare("UPDATE Paciente SET CodigoPaciente = :codigoPaciente WHERE IdPaciente = :IdPaciente");
+        $statement->bindParam(":IdPaciente", $IdPaciente);
+        $statement->bindParam(":codigoPaciente", $codigoPaciente);
+        return $statement->execute();
+    }
+
     public function ver($IdPsicologo) {
         $statement = $this->PDO->prepare("SELECT * FROM Paciente WHERE IdPsicologo = :IdPsicologo ");
         $statement->bindValue(':IdPsicologo', $IdPsicologo);

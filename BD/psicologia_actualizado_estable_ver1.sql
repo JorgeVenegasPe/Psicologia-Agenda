@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-07-2023 a las 21:10:57
+-- Tiempo de generación: 17-07-2023 a las 23:00:52
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -411,16 +411,17 @@ INSERT INTO `paciente` (`IdPaciente`, `NomPaciente`, `ApPaterno`, `ApMaterno`, `
 (3, 'Pedro', 'Ramírez', 'Sánchez', '45678912', '1985-09-15', '36', 'Técnico', 'Empleado', 'Soltero', 'Masculino', '321987654', 'pedro@example.com', 'Calle 789', 'Ninguno', 1, 'Ninguno', '2023-06-21 13:30:09', ''),
 (4, 'Ana', 'Pérez', 'Rodríguez', '78912345', '1998-03-20', '23', 'Secundario', 'Estudiante', 'Soltero', 'Femenino', '456123789', 'ana@example.com', 'Avenida 1234', 'Ninguno', 1, 'Ninguno', '2023-06-21 13:30:09', ''),
 (6, 'Cielo', 'Venegas', 'Francia', '76467291', '2001-02-02', '22', 'Barbero', 'Barbero', 'soltero', 'Femenina', '969445007', 'mariano.venegas.francia@gmail.com', 'Ancon', 'Vicio', 1, 'Jarabe', '2023-06-28 09:55:30', ''),
-(13, 'daniel', 'sd', 'sd', '99999999', '2023-07-14', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-14 19:13:25', 'PA001'),
-(17, 'Mario', 'AAAA', 'sd', '22222222', '2023-06-27', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:02:43', 'PA002'),
-(18, 'daniel', 'sd', 'sd', 's', '2023-06-27', '0', 'da', 'jh', 'soltero', 'Femenino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:03:26', 'PA003'),
-(19, 'ds', 'sd', 'sd', '99999999', '2023-07-13', '0', 'da', 'ad', 'casado', 'Femenino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:04:08', 'PA004'),
-(20, 'daniel', 'AAAA', 'sd', '99999999', '2023-06-28', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:04:49', 'PA005'),
-(21, 'daniel', 'AAAA', 'sd', '99999999', '2023-06-29', '0', '1', 'ad', 'soltero', 'Masculino', 's3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:05:23', 'PA006'),
-(22, 'ds', 'AAAA', 'sd', 's', '2023-07-04', '0', 'da', 'jh', 'soltero', 'Femenino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:05:53', 'PA007'),
-(23, 'daniel', 'sd', 'sd', 's', '2023-06-30', '0', 'da', 'ad', 'divorciado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:06:27', 'PA008'),
-(24, 'juan', 'sd', 'sd', '99999999', '2023-07-05', '0', 'da', 'jh', 'divorciado', 'Femenino', 's3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:07:17', 'PA009'),
-(25, 'juan', 'AAAA', 'sd', '99999999', '2023-06-27', '0', 'da', 'ad', 'casado', 'Femenino', 's3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:07:49', 'PA010');
+(13, 'daniel', 'sd', 'sd', '99999999', '2023-07-14', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-14 19:13:25', ''),
+(17, 'Mario', 'AAAA', 'sd', '22222222', '2023-06-27', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:02:43', ''),
+(18, 'daniel', 'sd', 'sd', 's', '2023-06-27', '0', 'da', 'jh', 'soltero', 'Femenino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:03:26', ''),
+(19, 'ds', 'sd', 'sd', '99999999', '2023-07-13', '0', 'da', 'ad', 'casado', 'Femenino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:04:08', ''),
+(20, 'daniel', 'AAAA', 'sd', '99999999', '2023-06-28', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:04:49', ''),
+(21, 'daniel', 'AAAA', 'sd', '99999999', '2023-06-29', '0', '1', 'ad', 'soltero', 'Masculino', 's3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:05:23', ''),
+(22, 'ds', 'AAAA', 'sd', 's', '2023-07-04', '0', 'da', 'jh', 'soltero', 'Femenino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:05:53', ''),
+(23, 'daniel', 'sd', 'sd', 's', '2023-06-30', '0', 'da', 'ad', 'divorciado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:06:27', ''),
+(24, 'juan', 'sd', 'sd', '99999999', '2023-07-05', '0', 'da', 'jh', 'divorciado', 'Femenino', 's3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:07:17', ''),
+(25, 'juan', 'AAAA', 'sd', '99999999', '2023-06-27', '0', 'da', 'ad', 'casado', 'Femenino', 's3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-15 14:07:49', ''),
+(28, 'daniel', 'sd', 'sd', '99999999', '2023-06-30', '0', 'da', 'ad', 'casado', 'Masculino', '3232', 'asd@gmail.com', 'jujkj', 'jjj', 2, 'jjj', '2023-07-17 15:52:53', 'PA0028');
 
 --
 -- Disparadores `paciente`
@@ -2709,7 +2710,7 @@ ALTER TABLE `enfermedad`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `IdPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `IdPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `psicologo`
