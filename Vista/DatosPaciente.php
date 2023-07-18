@@ -10,9 +10,9 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet" href="../issets/css/FormularioDatos.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
-    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>
@@ -28,21 +28,21 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
 ?>
 <div class="containerTotal">
 <?php
-    require_once '../issets/views/Menu.php';
+    require_once 'Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once '../issets/views/Info.php';
+    require_once 'Info.php';
     ?> 
-    <h2>Datos del Paciente</h2>
+    <h2 class="title">Datos del Paciente</h2>
     <div class="containerDatos">
     <div class="insightsDatos">
         <?php if ($rows): ?>
             <?php foreach ($rows as $row): ?>
                 <div class="card" data-id="<?=$row[0]?>">
                     <div class="card__body">
-                        <h1><?=$row[1]?> <?=$row[2]?></h1>
+                        <h2 class="title"><?=$row[1]?> <?=$row[2]?></h2>
                         <label>Id: </label><label class="id"><?=$row[0]?></label>
                         <br>
                         <label>Correo: </label><label class="correo"><?=$row[12]?></label>

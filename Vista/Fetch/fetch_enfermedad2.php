@@ -4,14 +4,14 @@
   $conn=$con->conexion();
 
   // Obtener el código enviado por AJAX
-  $CodEnfermedad = $_POST['CodEnfermedad'];
+  $CodEnfermedad2 = $_POST['CodEnfermedad2'];
 
   // Consultar la base de datos para obtener la enfermedad correspondiente
   $sql = "SELECT IdEnfermedad,Clasificacion, Gravedad 
   FROM Enfermedad 
-  WHERE DSM5 = :CodEnfermedad";
+  WHERE CEA10 = :CodEnfermedad2";
   $stmt = $conn->prepare($sql);
-  $stmt->bindParam(':CodEnfermedad', $CodEnfermedad);
+  $stmt->bindParam(':CodEnfermedad2', $CodEnfermedad2);
   $stmt->execute();
 
   // Obtener el resultado de la consulta
@@ -29,4 +29,4 @@
   // Devolver la respuesta en formato JSON
   header('Content-Type: application/json');
   echo json_encode($response);
-  ?>
+?>

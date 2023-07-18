@@ -1,4 +1,39 @@
 <?php
+require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Controlador/Cita/citaControlador.php");
+
+$obj = new usernameControlerCita();
+$FechaInicioCita = $_POST['FechaInicioCita'];
+$HoraInicio = $_POST['HoraInicio'];
+$FechaInicio = $FechaInicioCita . ' ' . $HoraInicio;
+
+$duracion = $_POST['DuracionCita'];
+
+$fechaInicioObj = new DateTime($FechaInicio);
+
+$obj->guardar($_POST['IdPaciente'],$_POST['MotivoCita'],$_POST['EstadoCita'],$FechaInicio,$_POST['DuracionCita'],$_POST['TipoCita'], $_POST['ColorFondo'], $_POST['IdPsicologo'], $_POST['CanalCita'], $_POST['EtiquetaCita']);
+
+require_once ('../../vendor/autoload.php'); // if you use Composer
+//require_once('ultramsg.class.php'); // if you download ultramsg.class.php
+	
+$token="6701xvlxp8x2vcg7"; // Ultramsg.com token
+$instance_id="instance53361"; // Ultramsg.com instance id
+$client = new UltraMsg\WhatsAppApi($token,$instance_id);
+	
+$to=$_POST['telefono']; 
+$body = '
+Hola ' . $_POST['Paciente'] . ',
+Gracias por reservar una cita con nosotros.
+Los detalles de su reserva son los siguientes:
+Fecha: ' . $_POST['FechaInicioCita'] . '
+Hora: ' . $_POST['HoraInicio'] . '
+Cuenta pacientes y reservas de citas en línea
+Utilice nuestra plataforma para reservar y administrar sus citas médicas:
+Acceso a la Pagina: https://gestion.contigo-voy.com
+';
+
+$api=$client->sendChatMessage($to,$body);
+print_r($api);
+
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -33,11 +68,11 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = '!!Felicidades!!';
     $mail->Body = '<body style="text-align: center; font-size: 20px;max-width: 300px; margin: 0 auto;">
-                    Querido ' . $_POST['TituloCompleto'] . ',
-                    <br>Gracias por reservar una cita con nosotros. 
+                    Querido ' . $_POST['Paciente'] . ',
+                    <br>Gracias por reservar una cita con nosotros.
                     <br>Los detalles de su reserva son los siguientes:
                     <br>
-                    <br>Fecha: ' . $_POST['FechaInicio'] . '
+                    <br>Fecha: ' . $_POST['FechaInicioCita'] . '
                     <br>Hora: ' . $_POST['HoraInicio'] . '
                     <br>
                     <br>"Saludos Cordiales, Contigo Voy"
@@ -47,10 +82,13 @@ try {
                     <br>
                     <br><a href="https://gestion.contigo-voy.com" style="background-color: #9274b3; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; cursor: pointer;">Acceso a la Pagina</a>
                     ';
-    // Envío del correo electrónico
     $mail->send();
-    echo json_encode(true);
+    header('Location: ../../Vista/citas.php?enviado=true');
+    exit;
 } catch (Exception $e) {
-    echo json_encode('Hubo un error al enviar el correo: ' . $mail->ErrorInfo);
+    header('Location: ../../Vista/citas.php?error=' . urlencode($mail->ErrorInfo));
+    exit;
 }
+
+
 ?>

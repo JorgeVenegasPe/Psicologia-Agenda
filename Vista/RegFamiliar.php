@@ -18,28 +18,28 @@ if (isset($_SESSION['NombrePsicologo'])){
 <body>    
 <div class="containerTotal">
 <?php
-    require_once '../Issets/views/Menu.php';
+    require_once 'Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once '../Issets/views/Info.php';
+    require_once 'Info.php';
     ?> 
     <div class="container-form">
       <div class="recent-updates">
+        <h2 class="title">Datos Familiares</h2>
         <form action="../Crud/Paciente/guardarAreaFamiliar.php" method="post">
-        <h4>Datos Familiares</h4>
           <div style="display:flex; flex-direction:row; gap:70px;">
 			      <div class="checkout-information">
 			        <div class="input-group2">
-                <div class="input-group">
+                <div class="input-group" style="flex-direction: column;">
                   <h3 for="IdPaciente">Id Paciente</h3>
                   <div style="display: flex;gap:5px;">
-                    <input id="IdPaciente" type="text" name="IdPaciente" class="input" required/>
-                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente" class="input" required/>
+                    <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                   </div>
                 </div>
-                <div class="input-group">
+                <div class="input-group" style="flex-direction: column;">
                   <h3 for="NomPaciente">Nombre Paciente</h3>
                   <div style="display: flex; gap:5px;">
                     <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
@@ -77,29 +77,30 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        </div>
             </div>
             <div class="checkout-information">
-			        <div class="input-group2" >
-                <div class="input-group" >
+			        <div class="input-group2" style=" width:310px">
+                <div class="input-group" style="flex-direction: column;">
                   <h3 for="CantHijos">Cantidad de Hijos</h3>
-                    <input id="CantHijos" type="number" name="CantHijos" class="input" 
-                          min="0" pattern="^[0-9]+" required />
+                  <div style="display: flex;gap:6px;">
+                    <input id="CantHijos" style="width: 50%;"type="number" name="CantHijos" class="input" required/>
+                  </div>
                 </div>
-                <div class="input-group" >
+                <div class="input-group" style="flex-direction: column;">
                   <h3 for="CantHermanos">Cantidad de Hermanos</h3>
-                    <input id="CantHermanos" type="number" name="CantHermanos" class="input" 
-                          min="0" pattern="^[0-9]+" required />
+                  <div style="display: flex; gap:5px;">
+                    <input id="CantHermanos" style="width: 60%;" type="number" name="CantHermanos" class="input" required/>
+                  </div>
                 </div>
               </div>
 			        <div class="input-group">
 			        	<h3 for="IntegracionFamiliar">Integracion Familiar</h3>
-			        	<textarea style="resize: none;height:100px; padding: 1em 1em;font-size: 14px;" type="text" id="IntegracionFamiliar" name="IntegracionFamiliar" placeholder="Integracion Familiar" required></textarea>
+			        	<textarea style="resize: none; padding: 1.8em 1em;font-family: 'Poppins', sans-serif;font-size: 14px;" type="text" id="IntegracionFamiliar" name="IntegracionFamiliar" placeholder="Integracion Familiar" required></textarea>
 			        </div>
               <div class="input-group">
 			        	<h3 for="HistorialFamiliar">Historial Familiar</h3>
-			        	<textarea style="resize: none;height:100px; padding: 1em 1em;font-size: 14px;" type="text" id="HistorialFamiliar" name="HistorialFamiliar" placeholder="Historial Marital" required></textarea>
+			        	<textarea style="resize: none; padding: 1.8em 1em;font-family: 'Poppins', sans-serif;font-size: 14px;" type="text" id="HistorialFamiliar" name="HistorialFamiliar" placeholder="Historial Marital" required></textarea>
 			        </div>
             </div>
 			    </div>
-          <br>
           <div class="button-container">
             <button id="submitButton" class="button">Registrar</button>
           </div>
@@ -111,17 +112,16 @@ if (isset($_SESSION['NombrePsicologo'])){
   </body>
 <script>
 	  $(document).ready(function() {
-  $('.id').click(function() {
+  $('.Id').click(function() {
     var IdPaciente = $('#IdPaciente').val();
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliar.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { IdPaciente: IdPaciente, idPsicologo: idPsicologo },
+      data: { IdPaciente: IdPaciente },
       success: function(response) {
-        if (response.hasOwnProperty('error')) {
+        if (response.error) {
           $('#Paciente').val(response.error);
         } else {
           $('#Paciente').val(response.nombre);
@@ -136,17 +136,16 @@ if (isset($_SESSION['NombrePsicologo'])){
 
 
 $(document).ready(function() {
-  $('.nom').click(function() {
+  $('.Nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliarNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
+      data: { NomPaciente: NomPaciente },
       success: function(response) {
-        if (response.hasOwnProperty('error')) {
+        if (response.error) {
           $('#Paciente').val(response.error);
 		      $('#IdPaciente').val('');
         } else {

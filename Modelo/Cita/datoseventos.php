@@ -7,36 +7,30 @@ require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/conexion/conexion
 
 switch ($_GET['accion']) {
 
-  case 'listar':
-    try {
-      $IdPsicologo = $_GET['idPsicologo']; 
-      $query = "SELECT c.IdCita as id,
-                c.IdPaciente as idpaciente,
-                p.NomPaciente AS textColor, 
-                CONCAT(p.NomPaciente, ' ', p.ApPaterno, ' ', p.ApMaterno) AS title,
-                c.FechaInicioCita AS start,
-                c.DuracionCita AS duracion,
-                c.MotivoCita as motivo,
-                c.EstadoCita as estado,
-                c.TipoCita as tipo,
-                c.ColorFondo AS backgroundColor,
-                c.CanalCita as canal,
-                c.EtiquetaCita as etiqueta
-      FROM cita c
-      INNER JOIN paciente p ON c.IdPaciente = p.IdPaciente
-      WHERE c.IdPsicologo = :IdPsicologo"; 
-      
-      $statement = $PDO->prepare($query);
-      $statement->bindParam(':IdPsicologo', $IdPsicologo, PDO::PARAM_INT);
-      $statement->execute();
-      
-      $resultado = $statement->fetchAll(PDO::FETCH_ASSOC);
-      echo json_encode($resultado);
-    } catch(PDOException $e) {
-      echo "Error al listar citas: " . $e->getMessage();
-      die();
-    }
-    break;
+    case 'listar':
+      try {
+        $query = "SELECT c.IdCita as id,
+                  c.IdPaciente as idpaciente,
+                  p.NomPaciente AS textColor, 
+                  CONCAT(p.NomPaciente, ' ', p.ApPaterno, ' ', p.ApMaterno) AS title,
+                  c.FechaInicioCita AS start,
+                  c.DuracionCita AS duracion,
+                  c.MotivoCita as motivo,
+                  c.EstadoCita as estado,
+                  c.TipoCita as tipo,
+                  c.ColorFondo AS backgroundColor,
+                  c.CanalCita as canal,
+                  c.EtiquetaCita as etiqueta
+        FROM cita c
+        INNER JOIN paciente p ON c.IdPaciente = p.IdPaciente";
+        $statement = $PDO->query($query);
+        $resultado = $statement->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($resultado);
+      } catch(PDOException $e) {
+        echo "Error al listar citas: " . $e->getMessage();
+        die();
+      }
+      break;
   
   case 'agregar':
     try {

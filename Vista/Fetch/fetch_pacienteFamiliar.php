@@ -5,17 +5,16 @@ $conn = $con->conexion();
 
 // Obtener el código enviado por AJAX
 $IdPaciente = $_POST['IdPaciente'];
-$idPsicologo = $_POST['idPsicologo']; // Obtener el valor del IdPsicologo
+
 
 // Consultar la base de datos para obtener la atención del paciente
-$sql = "SELECT p.NomPaciente,p.ApPaterno,p.ApMaterno
-        FROM paciente p
-        WHERE p.IdPaciente = :IdPaciente
-        AND IdPsicologo = :idPsicologo"; // Agregar la condición para el IdPsicologo
+$sql = "SELECT p.NomPaciente,p.ApPaterno,p.ApMaterno, af.NomPadre, af.NomMadre, af.IntegracionFamiliar
+        FROM Paciente p
+        LEFT JOIN AreaFamiliar af ON af.IdPaciente = p.IdPaciente
+        WHERE p.IdPaciente = :IdPaciente";
 
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':IdPaciente', $IdPaciente);
-$stmt->bindParam(':idPsicologo', $idPsicologo);
 $stmt->execute();
 
 // Obtener el resultado de la consulta
@@ -25,7 +24,15 @@ if ($row) {
   $NomPaciente = $row['NomPaciente'];
   $ApPaterno = $row['ApPaterno'];
   $ApMaterno = $row['ApMaterno'];
-  $response = array('nombre' => $NomPaciente." ".$ApPaterno." ".$ApMaterno);
+  $NomPadre = $row['NomPadre'];
+  $NomMadre = $row['NomMadre'];
+  $IntegracionFamiliar = $row['IntegracionFamiliar'];
+
+  if ($NomPadre && $NomMadre && $IntegracionFamiliar) {
+    $response = array('error' => 'Este paciente ya esta Registrado');
+  } else {
+    $response = array('nombre' => $NomPaciente." ".$ApPaterno." ".$ApMaterno);
+  }
 } else {
   $response = array('error' => 'No existe ese paciente');
 }

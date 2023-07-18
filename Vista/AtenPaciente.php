@@ -18,32 +18,32 @@ if (isset($_SESSION['NombrePsicologo'])){
 <body>    
 <div class="containerTotal">
   <?php
-    require_once '../Issets/views/Menu.php';
+    require_once 'Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once '../Issets/views/Info.php';
+    require_once 'Info.php';
     ?> 
     <div class="container-form">
       <div class="recent-updates">
+        <h2 class="title">Atencion al Paciente</h2>
         <form action="../Crud/Paciente/guardarAtencPaciente.php" method="post">
-        <h4>Atencion al Paciente</h4>
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">
             <div class="input-group2">
-              <div class="input-group" >
+              <div class="input-group" style="flex-direction: column;">
                 <h3 for="IdPaciente">Id Paciente</h3>
                 <div style="display: flex;">
-                  <input id="IdPaciente"  type="text" name="IdPaciente" class="input" required/>
+                  <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente" class="input" required/>
                     <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
-              <div class="input-group" >
+              <div class="input-group" style="flex-direction: column;">
                 <h3 for="NomPaciente">Nombre Paciente</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
-                    <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
             </div>
@@ -80,32 +80,27 @@ if (isset($_SESSION['NombrePsicologo'])){
 				      	<textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="UltimosObjetivos" name="UltimosObjetivos" placeholder="Observacion" required></textarea>
 				    </div>
             <div class="input-group2">
-              <div class="input-group" >
+              <div class="input-group" style="flex-direction: column;">
                 <h3 for="CodEnfermedad">DSM5</h3>
                 <div style="display: flex;gap:5px;">
-                  <input id="CodEnfermedad"  type="text" name="CodEnfermedad" class="input" />
+                  <input id="CodEnfermedad" style="width: 80%;" type="text" name="CodEnfermedad" class="input" />
                     <a class="search codEnf"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
-              <div class="input-group" >
-                <h3 for="CodEnfermedad">CEA10</h3>
+              <div class="input-group" style="flex-direction: column;">
+                <h3 for="CodEnfermedad2">CEA10</h3>
                 <div style="display: flex;gap:5px;">
-                  <input id="CodEnfermedad"  type="text" name="CodEnfermedad" class="input" />
+                  <input id="CodEnfermedad2" style="width: 80%;" type="text" name="CodEnfermedad2" class="input" />
                     <a class="search codEnf"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
-              
             </div>
-            <div class="input-group" style="flex-direction: column;width: 140%;">
+            <div class="input-group" style="flex-direction: column;width: 93.5%;">
                 <h3 for="DescripcionEnfermedad">Clasificacion</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="DescripcionEnfermedad" type="text" name="DescripcionEnfermedad" class="input" />
                 </div>
-              </div>
-            <div class="input-group" style="display: none;">
-					      <h3 for="IdEnfermedad" >IdEnfermedad</h3>
-					      <input id="IdEnfermedad" type="text" name="IdEnfermedad" class="input" readonly/>
-				    </div>
+            </div>
           </div>
         </div>
           <div class="button-container">
@@ -143,20 +138,44 @@ if (isset($_SESSION['NombrePsicologo'])){
       });
     });
   });
+
+// Buscador de la Enfermedad2
+$(document).ready(function() {
+    $('.codEnf').click(function() {
+      var CodEnfermedad2 = $('#CodEnfermedad2').val();
+      $.ajax({
+        url: 'Fetch/fetch_enfermedad2.php',
+        method: 'POST',
+        data: { CodEnfermedad2: CodEnfermedad2 },
+        success: function(response) {
+          if (response.error) {
+            $('#DescripcionEnfermedad').val('No existe esa enfermedad');
+            $('#IdEnfermedad').val('');
+          } else {
+            $('#DescripcionEnfermedad').val(response.nombre);
+		        $('#IdEnfermedad').val(response.id);
+          }
+        },
+        error: function() {
+          $('#DescripcionEnfermedad').val('Error al procesar la solicitud');
+          $('#IdEnfermedad').val('');
+        }
+      });
+    });
+  });
   
 //Buscador del paciente segun su id 
   $(document).ready(function() {
   $('.id').click(function() {
     var codigoPaciente = $('#IdPaciente').val();
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
+      data: { codigoPaciente: codigoPaciente },
       success: function(response) {
-        if (response.hasOwnProperty('error')) {
+        if (response.error) {
           $('#Paciente').val(response.error);
           $('#NomPaciente').val(response.error);
         } else {
@@ -176,20 +195,19 @@ if (isset($_SESSION['NombrePsicologo'])){
 $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
+      data: { NomPaciente: NomPaciente },
       success: function(response) {
-        if (response.hasOwnProperty('error')) {
+        if (response.error) {
           $('#Paciente').val(response.error);
           $('#IdPaciente').val('');
         } else {
           $('#Paciente').val(response.nombre);
-		      $('#IdPaciente').val(response.id);
+		        $('#IdPaciente').val(response.id);
         }
       },
       error: function() {
