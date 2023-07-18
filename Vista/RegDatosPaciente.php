@@ -11,11 +11,16 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="stylesheet" href="../issets/css/formulario.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
-    <script src="../Issets/js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos del Paciente</title>
 </head>
 <body>    
+  <?php
+    require("../Controlador/Paciente/ControllerPaciente.php");
+    $obj = new usernameControlerPaciente();
+    $departamentos = $obj->MostrarDepartamento();
+  ?>
 <div class="containerTotal">
 <?php
     require_once '../Issets/views/Menu.php';
@@ -50,9 +55,13 @@ if (isset($_SESSION['NombrePsicologo'])){
   	        	<input id="ApMaterno" type="text" name="ApMaterno" class="input" required/>
             </div>
             <div class="input-group2">
+            <?php
+              date_default_timezone_set('America/Lima');
+              $fechamin = date("2015-01-31")
+            ?>
   	          <div style=" width:190px;" class="input-group">
   		            <h3 for="FechaNacimiento">Fecha de nacimiento</h3>
-  		            <input type="date" id="FechaNacimiento"  name="FechaNacimiento" value="<?php echo date('Y-m-d'); ?>" onchange="calcularEdad()" />
+  		            <input type="date" id="FechaNacimiento"  name="FechaNacimiento" max="<?= $fechamin ?>" value="<?= $fechamin ?>" onchange="calcularEdad()" />
               </div>
   	          <div class="input-group">
   		            <h3 for="Edad">Edad</h3>
@@ -70,9 +79,9 @@ if (isset($_SESSION['NombrePsicologo'])){
   	          </div>
             </div>
             <div class="input-group2">
-  	          <div class="input-group">
+  	          <div style="width:190px"class="input-group">
   		          <h3 for="EstadoCivil">Estado civil</h3>
-  		          <select class="input" id="EstadoCivil" name="EstadoCivil" required>
+  		          <select style="text-align:center" class="input" id="EstadoCivil" name="EstadoCivil" required>
                   <option value="">Seleccionar</option>
                   <option value="soltero">Soltero/a</option>
                   <option value="casado">Casado/a</option>
@@ -80,9 +89,9 @@ if (isset($_SESSION['NombrePsicologo'])){
                   <option value="viudo">Viudo/a</option>
                 </select>
   	          </div>
-              <div class="input-group">
+              <div style=" width:190px;"class="input-group">
   		          <h3 for="Genero">Género</h3>
-  		          <select class="input" id="Genero" name="Genero" required>
+  		          <select style="text-align:center" class="input" id="Genero" name="Genero" required>
                   <option value="">Seleccionar</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
@@ -102,10 +111,35 @@ if (isset($_SESSION['NombrePsicologo'])){
   		          <input type="Email" id="Email" class="input" name="Email" required/>
   	        </div>
             <div style="margin-left:2em" id="respuesta3"> </div>
-            <div class="input-group">
+            <div  class="input-group2">
+              <div style="width: 190px" class="input-group">
+                <h3 for="Departamento">Departamento</h3>
+                <select style="text-align: center" class="input" id="Departamento" name="Departamento" required>
+                  <option value="">Seleccionar</option>
+                  <?php foreach ($departamentos as $departamento) : ?>
+                      <option value="<?php echo $departamento['id']; ?>" data-id="<?php echo $departamento['id']; ?>"><?php echo $departamento['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div style="width: 190px" class="input-group">
+                  <h3 for="Provincia">Provincia</h3>
+                  <select style="text-align: center" class="input" id="Provincia" name="Provincia" required>
+                      <option value="">Seleccionar</option>
+                  </select>
+              </div>
+            </div>
+            <div  class="input-group2">
+  	          <div style="width:190px" class="input-group">
+  		          <h3 for="Distrito">Distrito</h3>
+  		          <select style="text-align:center" class="input" id="Distrito" name="Distrito" required>
+                  <option value="">Seleccionar</option>
+                </select>
+  	          </div>
+              <div class="input-group">
   		          <h3 for="Direccion">Dirección</h3>
   		          <input type="text" id="Direccion" class="input" name="Direccion" required/>
   	        </div>
+            </div>
             <div class="input-group">
   		          <h3 for="AntecedentesMedicos">Antecedentes médicos</h3>
   		          <input type="text" id="AntecedentesMedicos" class="input" name="AntecedentesMedicos" required/>
@@ -133,6 +167,66 @@ if (isset($_SESSION['NombrePsicologo'])){
   </main>
   <script src="../Issets/js/Dashboard.js"></script>
 <script>
+
+$(document).ready(function() {
+  $('#Departamento').change(function() {
+    var departamentoId = $(this).find(':selected').data('id');
+    obtenerProvincias(departamentoId);
+  });
+
+  function obtenerProvincias(departamentoId) {
+    $.ajax({
+      url: 'Fetch/obtenerProvincias.php',
+      method: 'POST',
+      data: { departamentoId: departamentoId },
+      dataType: 'json',
+      success: function(provincias) {
+        // Llenar el select de provincias con los datos obtenidos
+        var selectProvincias = $('#Provincia');
+        selectProvincias.empty();
+        selectProvincias.append($('<option>', {
+          value: '',
+          text: 'Seleccionar'
+        }));
+        provincias.forEach(function(provincia) {
+          selectProvincias.append($('<option>', {
+            value: provincia.id,
+            text: provincia.name
+          }));
+        });
+      }
+    });
+  }
+});
+
+$('#Provincia').change(function() {
+  var provinciaId = $(this).val();
+  obtenerDistritos(provinciaId);
+});
+
+function obtenerDistritos(provinciaId) {
+  $.ajax({
+    url: 'Fetch/obtenerDistritos.php',
+    method: 'POST',
+    data: { provinciaId: provinciaId },
+    dataType: 'json',
+    success: function(distritos) {
+      // Llenar el select de distritos con los datos obtenidos
+      var selectDistritos = $('#Distrito');
+      selectDistritos.empty();
+      selectDistritos.append($('<option>', {
+        value: '',
+        text: 'Seleccionar'
+      }));
+      distritos.forEach(function(distrito) {
+        selectDistritos.append($('<option>', {
+          value: distrito.id,
+          text: distrito.name
+        }));
+      });
+    }
+  });
+}
     window.addEventListener('DOMContentLoaded', (event) => {
     const notification = document.getElementById('notification');
     const notificationText = document.getElementById('notification-text');

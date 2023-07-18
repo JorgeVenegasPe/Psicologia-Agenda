@@ -43,7 +43,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                 <h3 for="NomPaciente">Nombre Paciente</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
-                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
             </div>
@@ -148,14 +148,15 @@ if (isset($_SESSION['NombrePsicologo'])){
   $(document).ready(function() {
   $('.id').click(function() {
     var codigoPaciente = $('#IdPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { codigoPaciente: codigoPaciente },
+      data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
           $('#NomPaciente').val(response.error);
         } else {
@@ -175,19 +176,20 @@ if (isset($_SESSION['NombrePsicologo'])){
 $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente },
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
           $('#IdPaciente').val('');
         } else {
           $('#Paciente').val(response.nombre);
-		        $('#IdPaciente').val(response.id);
+		      $('#IdPaciente').val(response.id);
         }
       },
       error: function() {

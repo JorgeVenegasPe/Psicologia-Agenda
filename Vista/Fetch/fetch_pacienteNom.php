@@ -5,15 +5,18 @@ $conn = $con->conexion();
 
 // Obtener el código enviado por AJAX
 $NomPaciente = $_POST['NomPaciente'];
+$idPsicologo = $_POST['idPsicologo'];
 
 // Consultar la base de datos para obtener la atención del paciente
 $sql = "SELECT p.IdPaciente,p.NomPaciente,p.ApPaterno,p.ApMaterno, ap.Diagnostico, ap.Tratamiento, p.Email, p.Telefono
         FROM paciente p
         LEFT JOIN AtencionPaciente ap ON ap.IdPaciente = p.IdPaciente
-        WHERE p.NomPaciente = :NomPaciente";
+        WHERE p.NomPaciente = :NomPaciente
+        AND p.IdPsicologo = :idPsicologo";
 
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':NomPaciente', $NomPaciente);
+$stmt->bindParam(':idPsicologo', $idPsicologo);
 $stmt->execute();
 
 // Obtener el resultado de la consulta
