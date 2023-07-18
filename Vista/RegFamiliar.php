@@ -36,7 +36,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                   <h3 for="IdPaciente">Id Paciente</h3>
                   <div style="display: flex;gap:5px;">
                     <input id="IdPaciente" type="text" name="IdPaciente" class="input" required/>
-                    <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                   </div>
                 </div>
                 <div class="input-group">
@@ -111,16 +111,17 @@ if (isset($_SESSION['NombrePsicologo'])){
   </body>
 <script>
 	  $(document).ready(function() {
-  $('.Id').click(function() {
+  $('.id').click(function() {
     var IdPaciente = $('#IdPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliar.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { IdPaciente: IdPaciente },
+      data: { IdPaciente: IdPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
         } else {
           $('#Paciente').val(response.nombre);
@@ -135,16 +136,17 @@ if (isset($_SESSION['NombrePsicologo'])){
 
 
 $(document).ready(function() {
-  $('.Nom').click(function() {
+  $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliarNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente },
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
 		      $('#IdPaciente').val('');
         } else {

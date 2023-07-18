@@ -16,8 +16,8 @@ class usernameControlerCita{
     public function eliminar($id){
         return ($this->model->eliminar($id)) ?  header("Location:../../Vista/citas.php") : header("Location:../../Vista/citas.php");
     }
-    public function modificarCita($IdCita,$FechaInicio, $FechaFin ,$ColorFondo){
-        return ($this->model->modificarCita($IdCita,$FechaInicio, $FechaFin ,$ColorFondo)) !=false ? 
+    public function modificarCita($IdCita,$FechaInicio, $EstadoCita,$MotivoCita,$Duracioncita,$TipoCita,$CanalCita,$EtiquetaCita ,$ColorFondo){
+        return ($this->model->modificarCita($IdCita,$FechaInicio, $EstadoCita,$MotivoCita,$Duracioncita,$TipoCita,$CanalCita,$EtiquetaCita ,$ColorFondo)) !=false ? 
         header("Location:../../Vista/citas.php") : header("Location:../../Vista/citas.php");
         }
     public function show($id) {
@@ -35,6 +35,13 @@ class usernameControlerCita{
                 'FechaInicio' => $FechaInicio,
                 'HoraInicio' => $HoraInicio,
                 'ColorFondo' => $cita['ColorFondo'],
+                'MotivoCita' => $cita['MotivoCita'],
+                'EstadoCita' => $cita['EstadoCita'],
+                'TipoCita' => $cita['TipoCita'],
+                'CanalCita' => $cita['CanalCita'],
+                'EtiquetaCita' => $cita['EtiquetaCita'],
+                'Duracioncita' => $cita['Duracioncita'],
+                'Email' => $cita['Email'],
             ];
     
             return $datos;

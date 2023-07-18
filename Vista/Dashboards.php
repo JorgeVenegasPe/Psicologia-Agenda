@@ -245,7 +245,11 @@ require_once("../Controlador/Cita/citaControlador.php");
                             <td><?=$Cita[9]?></td>
                         </tr>
                         <?php endforeach;?>
-                    <?php endif;?>
+                            <?php else : ?>
+                                <tr>
+                                <td colspan="13" style="text-align: center;"><a href="citas.php"> No hay Citas Agregar nueva Cita </a> </td>
+                                </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
                 <a href="">Agregar nueva cita</a>
@@ -282,6 +286,8 @@ require_once("../Controlador/Cita/citaControlador.php");
                                     <small class="text-muted">Hora: <?= $key['Hora'] ?></small>
                                 </div>                                
                             <?php endforeach; ?>
+                            <?php else : ?>
+                                    <p style="text-align: center;">No hay Pacientes<a href="RegDatosPaciente.php"> Agregar nuevo paciente </a> </p>
                         <?php endif; ?>
                     </div>
                 </div>

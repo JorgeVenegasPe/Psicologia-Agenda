@@ -94,6 +94,11 @@ class userModelPaciente{
         ORDER BY IdPaciente DESC LIMIT 4");
         $statement->bindParam(":idPsicologo", $idPsicologo);        
         return ($statement->execute()) ? $statement->fetchAll() : false;
-    }    
+    }   
+    public function MostrarDepartamento(){
+        $statement = $this->PDO->prepare("SELECT * FROM departamento");  
+        return ($statement->execute()) ? $statement->fetchAll() : false;
+
+    }
 }
 ?>

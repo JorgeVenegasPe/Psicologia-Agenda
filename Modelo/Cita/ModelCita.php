@@ -34,7 +34,7 @@ class UserModelCita{
 
     }
     public function show($id){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,p.Email,c.EstadoCita,c.MotivoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
                                        INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                        INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
                                        where IdCita=:id limit 1");
@@ -58,13 +58,17 @@ class UserModelCita{
         return($statement->execute())? true:false;
         
     }
-    public function modificarCita($IdCita,$FechaInicio, $FechaFin ,$ColorFondo) {
+    public function modificarCita($IdCita,$FechaInicio, $EstadoCita,$MotivoCita,$Duracioncita,$TipoCita,$CanalCita,$EtiquetaCita ,$ColorFondo) {
       
-        $statement = $this->PDO->prepare("UPDATE cita SET FechaCitaInicio=:FechaCitaInicio,
-         FechaCitaFin=:FechaCitaFin,ColorFondo=:ColorFondo WHERE IdCita=:IdCita");
+        $statement = $this->PDO->prepare("UPDATE cita SET FechaInicioCita=:FechaInicioCita,EstadoCita=:EstadoCita,MotivoCita=:MotivoCita,Duracioncita=:Duracioncita,TipoCita=:TipoCita,CanalCita=:CanalCita,EtiquetaCita=:EtiquetaCita,ColorFondo=:ColorFondo WHERE IdCita=:IdCita");
         $statement->bindParam(":IdCita",$IdCita);
-        $statement->bindParam(":FechaCitaInicio",$FechaInicio);
-        $statement->bindParam(":FechaCitaFin",$FechaFin);
+        $statement->bindParam(":FechaInicioCita",$FechaInicio);
+        $statement->bindParam(":EstadoCita",$EstadoCita);
+        $statement->bindParam(":MotivoCita",$MotivoCita);
+        $statement->bindParam(":Duracioncita",$Duracioncita);
+        $statement->bindParam(":TipoCita",$TipoCita);
+        $statement->bindParam(":CanalCita",$CanalCita);
+        $statement->bindParam(":EtiquetaCita",$EtiquetaCita);
         $statement->bindParam(":ColorFondo",$ColorFondo);
     
         return ($statement->execute())? $this->PDO->lastInsertId():false;

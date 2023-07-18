@@ -37,6 +37,11 @@ a {
 }
 .fc-col-header-cell-cushion{
     color: #9274b3;
+    
+}
+.fc-col-header-cell-cushion:hover{
+    color: #000000;
+    
 }
 .fc-toolbar-title {
     text-transform: capitalize;
