@@ -107,7 +107,7 @@ if (isset($_SESSION['NombrePsicologo'])) {
                                 </div>
                                 <?php
                                 /* FECHA LIMITE  */
-                                $fechamin = date("2023-07-14")
+                                $fechamin = date("Y-m-d");
                                     ?>
                                 <div class="input-group2" style="gap:70px">
                                     <div class="input-group">
