@@ -69,7 +69,7 @@ try {
     $mail->Subject = '!!Felicidades!!';
     $mail->Body = '<body style="text-align: center; font-size: 20px;max-width: 300px; margin: 0 auto;">
                     Querido ' . $_POST['Paciente'] . ',
-                    <br>Gracias por reservar una cita con nosotros.
+                    <br>Se modifico su cita con nosotros. 
                     <br>Los detalles de su reserva son los siguientes:
                     <br>
                     <br>Fecha: ' . $_POST['FechaInicioCita'] . '

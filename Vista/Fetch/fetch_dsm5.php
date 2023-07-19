@@ -4,14 +4,14 @@
   $conn=$con->conexion();
 
   // Obtener el código enviado por AJAX
-  $CodEnfermedad2 = $_POST['CodEnfermedad2'];
+  $dsm5 = $_POST['dsm5'];
 
   // Consultar la base de datos para obtener la enfermedad correspondiente
-  $sql = "SELECT IdEnfermedad,Clasificacion, Gravedad 
+  $sql = "SELECT IdEnfermedad,Clasificacion, Gravedad, CEA10
   FROM Enfermedad 
-  WHERE CEA10 = :CodEnfermedad2";
+  WHERE DSM5 = :dsm5";
   $stmt = $conn->prepare($sql);
-  $stmt->bindParam(':CodEnfermedad2', $CodEnfermedad2);
+  $stmt->bindParam(':dsm5', $dsm5);
   $stmt->execute();
 
   // Obtener el resultado de la consulta
@@ -19,9 +19,10 @@
 
   if ($row) {
     $IdEnfermedad = $row['IdEnfermedad']; 
+    $CEA10 = $row['CEA10'];
     $Clasificacion = $row['Clasificacion'];
     $Gravedad = $row['Gravedad'];
-    $response = array('nombre' => $Clasificacion." - ".$Gravedad, 'id' => $IdEnfermedad);
+    $response = array('nombre' => $Clasificacion." - ".$Gravedad, 'id' => $IdEnfermedad,'cea10'=>$CEA10);
   } else {
     $response = array('error' => 'No existe esa enfermedad');
   }
@@ -29,4 +30,5 @@
   // Devolver la respuesta en formato JSON
   header('Content-Type: application/json');
   echo json_encode($response);
-?>
+  ?>
+

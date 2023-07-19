@@ -10,9 +10,9 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/FormularioDatos.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
+    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>
@@ -21,29 +21,36 @@ if (isset($_SESSION['NombrePsicologo'])){
 require_once("../Controlador/Paciente/ControllerPaciente.php");
 require_once("../Controlador/Paciente/ControllerAtencPaciente.php");
 require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
+require_once("../Controlador/Cita/citaControlador.php");
+    $PORC=new usernameControlerCita();
     $Fam=new usernameControlerAreaFamiliar();
     $Atenc=new usernameControlerAtencPaciente();
     $Pac=new usernameControlerPaciente();
     $rows=$Pac->ver($_SESSION['IdPsicologo']);
+    $Citas=$PORC->showByFecha($_SESSION['IdPsicologo']);
+    $datos=$Pac->MostrarPacientesRecientes($_SESSION['IdPsicologo']);
+    $PORCENTAJES=$PORC->mostrarVista($_SESSION['IdPsicologo']);
 ?>
 <div class="containerTotal">
 <?php
-    require_once 'Menu.php';
+    require_once '../Issets/views/Menu.php';
   ?> 
   <!----------- end of aside -------->
   <main>
     <?php
-    require_once 'Info.php';
+    require_once '../Issets/views/Info.php';
     ?> 
-    <h2 class="title">Datos del Paciente</h2>
+    <h2>Datos del Paciente</h2>
     <div class="containerDatos">
     <div class="insightsDatos">
         <?php if ($rows): ?>
             <?php foreach ($rows as $row): ?>
                 <div class="card" data-id="<?=$row[0]?>">
                     <div class="card__body">
-                        <h2 class="title"><?=$row[1]?> <?=$row[2]?></h2>
-                        <label>Id: </label><label class="id"><?=$row[0]?></label>
+                        <h1><?=$row[1]?> <?=$row[2]?></h1>
+                        <label style="display:none">Id: </label><label style="display:none"  class="id"><?=$row[0]?></label>
+                        <br>
+                        <label>Código Paciente: </label><label class="codigo"><?=$row[18]?></label>
                         <br>
                         <label>Correo: </label><label class="correo"><?=$row[12]?></label>
                         <br>
@@ -357,7 +364,18 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
         <?php endif; ?>
     </div>
     </div>
-  </main>
+    <div class="updates">
+        <div class="update">
+            <?php if ($datos) : ?>
+                
+            <?php else : ?>
+                <div class="test2">
+            <p class="test" style="text-align: center;">No hay Pacientes<a href="RegDatosPaciente.php"> Agregar nuevo paciente </a> </p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</main>
     <script src="../issets/js/Dashboard.js"></script>
 </div>
 </body>

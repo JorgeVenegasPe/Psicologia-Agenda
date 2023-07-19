@@ -1,23 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;700&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html{
-    font-size: 62.5%;
-	scroll-behavior: smooth;
-}
+
 html,
 body {
-	height: 60%;
-	scroll-behavior: smooth;
+	height: 90%;
 
 }
 body {
 	font-family: 'Poppins', sans-serif;
 	place-items: center;
-    font-size: 1.4rem;
     background-color: #fff;
 }
 input {
@@ -49,7 +43,7 @@ form {
     width: 96%;
     margin: 0 auto;
     gap: 1rem;
-    grid-template-columns: 15rem auto;
+    grid-template-columns: 17rem auto;
 }
 
 .containerDatos{

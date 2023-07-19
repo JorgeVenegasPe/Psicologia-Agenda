@@ -21,10 +21,11 @@ a {
 #Calendario1 .fc-event {
     background-color: inherit;
   }
+
 .container-fluid2{
     margin-inline: auto;
     width: 1200px;
-    margin-top: 2em;
+    margin-top: 1em;
     max-width: 1200px;
 }
 .container-calendario{
@@ -36,25 +37,34 @@ a {
 }
 .fc-col-header-cell-cushion{
     color: #9274b3;
+    
+}
+.fc-col-header-cell-cushion:hover{
+    color: #000000;
+    
 }
 .fc-toolbar-title {
     text-transform: capitalize;
     font-weight: bold;
-    color: #ae74b3;
+    color: #9274b3;
   }
 .fc-prev-button,
 .fc-prev-button.fc-button,
 .fc-prev-button.fc-button-primary {
+border-color: #f38238;
 background-color: #f38238;
 /* Otros estilos que desees aplicar */
 }
+
 .fc-next-button,
 .fc-next-button.fc-button,
 .fc-next-button.fc-button-primary {
-background-color: #f38238;
+border-color: #f38238;
+background-color: #9b8a7f;
 /* Otros estilos que desees aplicar */
 }
 .fc-today-button.fc-button.fc-button-primary {
+border-color: #f38238;
 background-color: #f38238;
 /* Otros estilos que desees aplicar */
 }
@@ -64,22 +74,22 @@ background-color: #8fab60;
 /* Otros estilos que desees aplicar */
 }
 .fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
-background-color: #f38238;
+background-color: #8fab60;
 /* Otros estilos que desees aplicar */
 }
 .fc-dayGridMonth-button.fc-button.fc-button-primary{
-background-color: #f38238;
+background-color: #b4d77b;
 
 }
 /* Cambiar color del botón timeGridWeek */
 .fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active{
-background-color: #f38238;
+background-color: #8fab60;
 /* Otros estilos que desees aplicar */
 }
 
 /* Cambiar color del botón timeGridDay */
 .fc-timeGridDay-button.fc-button.fc-button-primary.fc-button-active {
-background-color: #f38238;
+background-color: #8fab60;
 /* Otros estilos que desees aplicar */
 }
 
@@ -87,7 +97,7 @@ background-color: #f38238;
 .fc-timeGridWeek-button,
 .fc-timeGridWeek-button.fc-button,
 .fc-timeGridWeek-button.fc-button-primary {
-background-color: #f38238;
+background-color: #b4d77b;
 /* Otros estilos que desees aplicar */
 }
 
@@ -95,7 +105,7 @@ background-color: #f38238;
 .fc-timeGridDay-button,
 .fc-timeGridDay-button.fc-button,
 .fc-timeGridDay-button.fc-button-primary {
-background-color: #f38238;
+background-color: #b4d77b;
 /* Otros estilos que desees aplicar */
 }
 .modal-content{
