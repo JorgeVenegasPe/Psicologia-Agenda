@@ -9,9 +9,6 @@
     <button id="menu-btn">
         <span class="material-symbols-sharp" translate="no">menu</span>
     </button>
-    <div  >
-        <a href="../Issets/views/seguridad.php" class="button-seguridad">Seguridad</a>
-    </div>
     <div class="theme-toggler">
         <span class="material-symbols-sharp active" translate="no">light_mode</span>
         <span class="material-symbols-sharp" translate="no">dark_mode</span>

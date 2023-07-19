@@ -27,19 +27,26 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?> 
     <div class="container-form">
       <div class="recent-updates">
-        <h2>Datos Familiares</h2>
         <form action="../Crud/Paciente/guardarAreaFamiliar.php" method="post">
+        <h4>Datos Familiares</h4>
           <div style="display:flex; flex-direction:row; gap:70px;">
 			      <div class="checkout-information">
-			        <div class="input-group2">
-                <div class="input-group" style="flex-direction: column;">
+			        <div class="input-group2" >
+                <div class="input-group" style="display:none">
                   <h3 for="IdPaciente">Id Paciente</h3>
                   <div style="display: flex;gap:5px;">
-                    <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente" class="input" required/>
-                    <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    <input id="IdPaciente" type="text" name="IdPaciente" class="input" required/>
+                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                   </div>
                 </div>
-                <div class="input-group" style="flex-direction: column;">
+                <div class="input-group">
+                <h3 for="CodigoPaciente">Codigo Paciente <b style="color:red">*</b></h3>
+                    <div style="display: flex; gap:5px;"> 
+                        <input id="CodigoPaciente" type="text" name="CodigoPaciente"  required/>
+                        <a class="search Codigo"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    </div>
+                </div>
+                <div class="input-group">
                   <h3 for="NomPaciente">Nombre Paciente</h3>
                   <div style="display: flex; gap:5px;">
                     <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
@@ -77,30 +84,29 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        </div>
             </div>
             <div class="checkout-information">
-			        <div class="input-group2" style=" width:310px">
-                <div class="input-group" style="flex-direction: column;">
+			        <div class="input-group2" >
+                <div class="input-group" >
                   <h3 for="CantHijos">Cantidad de Hijos</h3>
-                  <div style="display: flex;gap:6px;">
-                    <input id="CantHijos" style="width: 50%;"type="number" name="CantHijos" class="input" required/>
-                  </div>
+                    <input id="CantHijos" type="number" name="CantHijos" class="input" 
+                          min="0" pattern="^[0-9]+" required />
                 </div>
-                <div class="input-group" style="flex-direction: column;">
+                <div class="input-group" >
                   <h3 for="CantHermanos">Cantidad de Hermanos</h3>
-                  <div style="display: flex; gap:5px;">
-                    <input id="CantHermanos" style="width: 60%;" type="number" name="CantHermanos" class="input" required/>
-                  </div>
+                    <input id="CantHermanos" type="number" name="CantHermanos" class="input" 
+                          min="0" pattern="^[0-9]+" required />
                 </div>
               </div>
 			        <div class="input-group">
 			        	<h3 for="IntegracionFamiliar">Integracion Familiar</h3>
-			        	<textarea style="resize: none; padding: 1.8em 1em;font-family: 'Poppins', sans-serif;font-size: 14px;" type="text" id="IntegracionFamiliar" name="IntegracionFamiliar" placeholder="Integracion Familiar" required></textarea>
+			        	<textarea style="resize: none;height:100px; padding: 1em 1em;font-size: 14px;" type="text" id="IntegracionFamiliar" name="IntegracionFamiliar" placeholder="Integracion Familiar" required></textarea>
 			        </div>
               <div class="input-group">
 			        	<h3 for="HistorialFamiliar">Historial Familiar</h3>
-			        	<textarea style="resize: none; padding: 1.8em 1em;font-family: 'Poppins', sans-serif;font-size: 14px;" type="text" id="HistorialFamiliar" name="HistorialFamiliar" placeholder="Historial Marital" required></textarea>
+			        	<textarea style="resize: none;height:100px; padding: 1em 1em;font-size: 14px;" type="text" id="HistorialFamiliar" name="HistorialFamiliar" placeholder="Historial Marital" required></textarea>
 			        </div>
             </div>
 			    </div>
+          <br>
           <div class="button-container">
             <button id="submitButton" class="button">Registrar</button>
           </div>
@@ -112,23 +118,30 @@ if (isset($_SESSION['NombrePsicologo'])){
   </body>
 <script>
 	  $(document).ready(function() {
-  $('.Id').click(function() {
-    var IdPaciente = $('#IdPaciente').val();
+  $('.Codigo').click(function() {
+    var CodigoPaciente = $('#CodigoPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliar.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { IdPaciente: IdPaciente },
+      data: { CodigoPaciente: CodigoPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
-          $('#Paciente').val(response.error);
-        } else {
-          $('#Paciente').val(response.nombre);
-        }
+        if (response.hasOwnProperty('error')) {
+            $('#Paciente').val(response.error);
+            $('#Paciente').val(response.error);
+            $('#NomPaciente').val('');
+          } else {
+            $('#Paciente').val(response.nombre);
+		        $('#IdPaciente').val(response.IdPaciente);
+            $('#NomPaciente').val(response.nom);
+          }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
+		    $('#IdPaciente').val('');
+        $('#NomPaciente').val('');
       }
     });
   });
@@ -136,26 +149,30 @@ if (isset($_SESSION['NombrePsicologo'])){
 
 
 $(document).ready(function() {
-  $('.Nom').click(function() {
+  $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliarNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente },
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
 		      $('#IdPaciente').val('');
+		      $('#CodigoPaciente').val('');
         } else {
           $('#Paciente').val(response.nombre);
 		      $('#IdPaciente').val(response.id);
+		      $('#CodigoPaciente').val(response.CodigoPaciente);
         }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
 		    $('#IdPaciente').val('');
+		    $('#CodigoPaciente').val('');
       }
     });
   });

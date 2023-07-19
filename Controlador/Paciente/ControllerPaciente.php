@@ -8,7 +8,7 @@ class usernameControlerPaciente{
     }
     public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos){
         $id=$this->model->GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos);
-        return ($id!=false) ? header("Location:../../Vista/DatosPaciente.php") : header("Location:../../Vista/DatosPaciente.php");
+        return ($id!=false) ? header("Location:../../Vista/RegDatosPaciente.php?enviado=true") : header("Location:../../Vista/RegDatosPaciente.php?enviado=true");
     }
     public function ver($IdPsicologo) {
         return ($this->model->ver($IdPsicologo)) ?: false;
@@ -19,26 +19,29 @@ class usernameControlerPaciente{
     public function modificarPaciente($IdPaciente,$NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$MedicamentosPrescritos){
         return ($this->model->modificarPaciente($IdPaciente,$NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$MedicamentosPrescritos)) !=false ? 
         header("Location:../../Vista/DatosPaciente.php") : header("Location:../../Vista/DatosPaciente.php");
-        }
+    }
     public function show($IdPaciente){
             return ($this->model->show($IdPaciente) != false) ? $this->model->show($IdPaciente):header("Location:../../Vista/DatosPaciente.php");
-        }
-        public function MostrarPacientesRecientes($idPsicologo) {
-            $pacientesRecientes = $this->model->MostrarPacientesRecientes($idPsicologo);
-            if ($pacientesRecientes !== false) {
-                foreach ($pacientesRecientes as &$paciente) {
-                    $fecha = date('Y-m-d', strtotime($paciente['FechaRegistro']));
-                    $hora = date('H:i:s', strtotime($paciente['FechaRegistro']));
-                    
-                    $paciente['Fecha'] = $fecha;
-                    $paciente['Hora'] = $hora;
-                }
-            } else {
-                $pacientesRecientes = array(); // Asignar un arreglo vacío
+    }
+    public function MostrarPacientesRecientes($idPsicologo) {
+        $pacientesRecientes = $this->model->MostrarPacientesRecientes($idPsicologo);
+        if ($pacientesRecientes !== false) {
+            foreach ($pacientesRecientes as &$paciente) {
+                $fecha = date('Y-m-d', strtotime($paciente['FechaRegistro']));
+                $hora = date('H:i:s', strtotime($paciente['FechaRegistro']));
+                
+                $paciente['Fecha'] = $fecha;
+                $paciente['Hora'] = $hora;
             }
-            
-            return $pacientesRecientes;
+        } else {
+            $pacientesRecientes = array(); // Asignar un arreglo vacío
         }
+        
+        return $pacientesRecientes;
+    }
+    public function MostrarDepartamento() {
+        return ($this->model->MostrarDepartamento()) ?: false;
+    }
         
         
 }

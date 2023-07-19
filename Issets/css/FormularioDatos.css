@@ -57,15 +57,14 @@ main .insightsDatos{
     gap:1.6rem;
 }
 
-
+/*Fondo Opaco*/
 main .insightsDatos > div {
-    background: var(--color-white);
     padding: var(--card-padding);
-    border-radius: var(--card-border-radius);
-    margin-top: 1rem;
+    margin-top: 0rem;
     box-shadow: var(--box-shadow);
     transition: all 200ms ease;
 }
+
 
 main .insightsDatos > div:hover{
     box-shadow: none;

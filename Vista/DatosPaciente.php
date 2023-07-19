@@ -10,9 +10,9 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/FormularioDatos.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
+    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>
@@ -36,20 +36,16 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     require_once '../issets/views/Info.php';
     ?> 
     <h2>Datos del Paciente</h2>
-<div class="containerDatos">
+    <div class="containerDatos">
     <div class="insightsDatos">
         <?php if ($rows): ?>
             <?php foreach ($rows as $row): ?>
                 <div class="card" data-id="<?=$row[0]?>">
                     <div class="card__body">
                         <h1><?=$row[1]?> <?=$row[2]?></h1>
-                        <label>Id: </label><label class="id"><?=$row[0]?></label>
+                        <label style="display:none">Id: </label><label style="display:none"  class="id"><?=$row[0]?></label>
                         <br>
-                        <!--MOSTRAMOS EL CODIGO DEL PACIENTE-->
-                        <?php
-                            $user = $Pac->show($row[0]);
-                        ?>
-                        <label>Código Paciente: </label><label class="codigo"><?=$user['CodigoPaciente']?></label>
+                        <label>Código Paciente: </label><label class="codigo"><?=$row[18]?></label>
                         <br>
                         <label>Correo: </label><label class="correo"><?=$row[12]?></label>
                         <br>
@@ -58,17 +54,16 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                         <br>
                         <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerHistorialFamiliar('<?=$row[0]?>')">Ver Datos Familiares</a>
                         <br>
-                        <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerDiagnostico('<?=$row[0]?>')">Ver Última Sesión</a>
+                        <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerDiagnostico('<?=$row[0]?>')">Ver Ulitma Session</a>
                         <br>
                         <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerHistorial('<?=$row[0]?>')">Ver Historial</a>
                     </div>
                 </div>
-
                 <?php
                     $user=$Pac->show($row[0]);
                 ?>
                 <!-- Ver Pacientes --> 
-                <div id="modalPaciente<?=$row[0]?>" class="modal">
+                <div id="modalPaciente<?=$row[0]?>" class="modal"     >
                     <div class="containerModal">
                         <a href="#" class="close" onclick="closeModalVerPaciente('<?=$row[0]?>')">&times;</a>
                         <form autocomplete="off"method="post">
@@ -88,10 +83,10 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                             <p>Direccion:  <label class="datos"><?=$user[13]?></label></p>
                             <p>Antecedentes Medicos:  <label class="datos"><?=$user[14]?></label></p>
                             <p>Medicamentos Prescritos:  <label class="datos"><?=$user[16]?></label></p>
-                            <div class="butonss">
-                            <a type="button" href="../Crud/Paciente/eliminarPaciente.php?id=<?=$row[0]?>" id="deleteBtn" class="btne"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                            <a type="button" id="editBtn" onclick="openModalEditar('<?=$row[0]?>')" class="btnm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            </div>
+                            <div class="container-buttons">
+                                    <a type="button"  href="../Crud/Paciente/eliminarPaciente.php?id=<?=$row[0]?>" id="deleteBtn" class="butonEliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a type="button" onclick="openModalEditar('<?=$row[0]?>')" class="butonEditar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -283,9 +278,9 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                                 <p>Numero de Hijos: <label class="datos"><?=$AtencAreaFamiliar[10]?></label></p>
                                 <p>Integracion Familiar: <label class="datos"><?=$AtencAreaFamiliar[11]?></label></p>
                                 <p>Historial Familiar: <label class="datos"><?=$AtencAreaFamiliar[12]?></label></p>
-                                <div class="butonss">
-                                    <a type="button" href="../Crud/Paciente/eliminarAreaFamiliar.php?id=<?=$AtencAreaFamiliar[0]?>" id="deleteBtn" class="btne"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    <a type="button" onclick="openModalModificarHistorialFamiliar('<?=$AtencAreaFamiliar[0]?>')"id="editBtn" class="btnm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <div class="container-buttons">
+                                    <a type="button" href="../Crud/Paciente/eliminarAreaFamiliar.php?id=<?=$AtencAreaFamiliar[0]?>" id="deleteBtn" class="butonEliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a type="button" onclick="openModalModificarHistorialFamiliar('<?=$AtencAreaFamiliar[0]?>')" class="butonEditar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 </div>
                             <?php 
                             } else { 
@@ -369,61 +364,137 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
 </div>
 </body>
 <script>
-// Paciente    
+//Animacion de entrada 
 function openModalVerPaciente(id) {
-document.getElementById('modalPaciente' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalPaciente' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalVerPaciente(id) {
     document.getElementById('modalPaciente' + id).style.display = 'none';
 }
+
 // Diagnostico
 function openModalVerDiagnostico(id) {
-    document.getElementById('modalDiagnostico' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalDiagnostico' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalVerDiagnostico(id) {
     document.getElementById('modalDiagnostico' + id).style.display = 'none';
 }
+
 // Diagnostico Dos
 function openModalVerDiagnosticoDos(id) {
-    document.getElementById('modalEditarDiagDos' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalEditarDiagDos' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalVerDiagnosticoDos(id) {
     document.getElementById('modalEditarDiagDos' + id).style.display = 'none';
 }
+
 // Historial
 function openModalVerHistorial(id) {
-    document.getElementById('modalHistorial' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalHistorial' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalVerHistorial(id) {
     document.getElementById('modalHistorial' + id).style.display = 'none';
-}// Historial Familiar
-function openModalVerHistorialFamiliar(id) {
-    document.getElementById('modalHistorialFamiliar' + id).style.display = 'block';
 }
+
+// Historial Familiar
+function openModalVerHistorialFamiliar(id) {
+  var modalElement = document.getElementById('modalHistorialFamiliar' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
+}
+
 function closeModalVerHistorialFamiliar(id) {
     document.getElementById('modalHistorialFamiliar' + id).style.display = 'none';
 }
+
 function openModalModificarHistorialFamiliar(id) {
-    document.getElementById('modalModificarHistorialFamiliar' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalModificarHistorialFamiliar' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalModificarHistorialFamiliar(id) {
     document.getElementById('modalModificarHistorialFamiliar' + id).style.display = 'none';
 }
+
 // Editar Paciente
 function openModalEditar(id) {
-    document.getElementById('modalEditar' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalEditar' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalEditar(id) {
     document.getElementById('modalEditar' + id).style.display = 'none';
 }
-// Editar Giagnostico 
+
+// Editar Diagnostico
 function openModalEditarDiag(id) {
-    document.getElementById('modalEditarDiag' + id).style.display = 'block';
+  var modalElement = document.getElementById('modalEditarDiag' + id);
+  modalElement.style.display = 'block';
+  modalElement.style.transform = 'translateY(-100%)';
+  modalElement.style.transition = 'transform 0.5s ease';
+
+  setTimeout(function() {
+    modalElement.style.transform = 'translateY(0)';
+  }, 10); // Ajusta la duración de la pausa según tus necesidades
 }
+
 function closeModalEditarDiag(id) {
     document.getElementById('modalEditarDiag' + id).style.display = 'none';
 }
+
 </script>
+
+
+
 </html>
 <?php
 }else{

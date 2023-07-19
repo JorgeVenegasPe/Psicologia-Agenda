@@ -8,15 +8,12 @@ class userModelPaciente{
         $this->PDO=$con->conexion();
 
     }
-
-    // Función para generar el código del paciente
     private function generarCodigoPaciente($IdPaciente) {
         $prefijo = 'PA';
         $idPacienteFormateado = str_pad($IdPaciente, 4, '0', STR_PAD_LEFT);
         $codigoPaciente = $prefijo . $idPacienteFormateado;
         return $codigoPaciente;
     }
-
     // Método para guardar un nuevo paciente con el código generado automáticamente
     public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad, $GradoInstruccion, $Ocupacion, $EstadoCivil, $Genero, $Telefono, $Email, $Direccion, $AntecedentesMedicos, $IdPsicologo, $MedicamentosPrescritos)
     {
@@ -54,7 +51,6 @@ class userModelPaciente{
 
         return $id;
     }
-
     // Método para actualizar el código del paciente en la base de datos
     private function actualizarCodigoPaciente($IdPaciente, $codigoPaciente) {
         $statement = $this->PDO->prepare("UPDATE Paciente SET CodigoPaciente = :codigoPaciente WHERE IdPaciente = :IdPaciente");
@@ -62,7 +58,6 @@ class userModelPaciente{
         $statement->bindParam(":codigoPaciente", $codigoPaciente);
         return $statement->execute();
     }
-
     public function ver($IdPsicologo) {
         $statement = $this->PDO->prepare("SELECT * FROM Paciente WHERE IdPsicologo = :IdPsicologo ");
         $statement->bindValue(':IdPsicologo', $IdPsicologo);
@@ -103,53 +98,16 @@ class userModelPaciente{
         return ($statement->execute())? $this->PDO->lastInsertId():false;
     }
     public function MostrarPacientesRecientes($idPsicologo) {
-        $statement = $this->PDO->prepare("SELECT NomPaciente, ApMaterno, ApPaterno, Edad, FechaRegistro FROM paciente 
+        $statement = $this->PDO->prepare("SELECT NomPaciente, ApMaterno, ApPaterno, Edad,CodigoPaciente, FechaRegistro FROM paciente 
         WHERE IdPsicologo = :idPsicologo
         ORDER BY IdPaciente DESC LIMIT 4");
         $statement->bindParam(":idPsicologo", $idPsicologo);        
         return ($statement->execute()) ? $statement->fetchAll() : false;
-    }    
+    }   
+    public function MostrarDepartamento(){
+        $statement = $this->PDO->prepare("SELECT * FROM departamento");  
+        return ($statement->execute()) ? $statement->fetchAll() : false;
 
-
-
-    function obtenerValoresProvincia()
-    {
-        $host = 'localhost';
-        $usuario = 'root';
-        $contrasena = '';
-        $baseDeDatos = 'psicologia';
-    
-        // Establecer conexión a la base de datos
-        $conexion = mysqli_connect($host, $usuario, $contrasena, $baseDeDatos);
-    
-        if (!$conexion) {
-            die('Error al conectar a la base de datos: ' . mysqli_connect_error());
-        }
-    
-        // Consulta para obtener los valores de la tabla 'provincia'
-        $consulta = 'SELECT * FROM provincia';
-    
-        // Ejecutar la consulta
-        $resultado = mysqli_query($conexion, $consulta);
-    
-        if (!$resultado) {
-            die('Error al obtener los valores de la tabla: ' . mysqli_error($conexion));
-        }
-    
-        // Guardar los valores de la tabla 'provincia' en un array
-        $valoresProvincia = [];
-    
-        while ($fila = mysqli_fetch_assoc($resultado)) {
-            $valoresProvincia[] = $fila;
-        }
-    
-        // Cerrar la conexión
-        mysqli_close($conexion);
-    
-        // Devolver los valores de la tabla 'provincia'
-        return $valoresProvincia;
     }
-    
-    
 }
 ?>

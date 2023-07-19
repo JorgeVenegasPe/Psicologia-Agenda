@@ -27,23 +27,30 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?> 
     <div class="container-form">
       <div class="recent-updates">
-        <h2>Atencion al Paciente</h2>
         <form action="../Crud/Paciente/guardarAtencPaciente.php" method="post">
+        <h4>Atencion al Paciente</h4>
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">
             <div class="input-group2">
-              <div class="input-group" style="flex-direction: column;">
-                <h3 for="IdPaciente">Id Paciente</h3>
-                <div style="display: flex;">
-                  <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente" class="input" required/>
-                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
-                </div>
+              <div class="input-group" style="display:none">
+              <h3 for="IdPaciente">Id Paciente <b style="color:red">*</b></h3>
+                  <div style="display: flex; gap:5px;"> 
+                      <input id="IdPaciente" type="text" name="IdPaciente"  required/>
+                      <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                  </div>
               </div>
-              <div class="input-group" style="flex-direction: column;">
+              <div class="input-group">
+              <h3 for="CodigoPaciente">Codigo Paciente <b style="color:red">*</b></h3>
+                  <div style="display: flex; gap:5px;"> 
+                      <input id="CodigoPaciente" type="text" name="CodigoPaciente"  required/>
+                      <a class="search Codigo"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                  </div>
+              </div>
+              <div class="input-group" >
                 <h3 for="NomPaciente">Nombre Paciente</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
-                    <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
             </div>
@@ -80,20 +87,28 @@ if (isset($_SESSION['NombrePsicologo'])){
 				      	<textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="UltimosObjetivos" name="UltimosObjetivos" placeholder="Observacion" required></textarea>
 				    </div>
             <div class="input-group2">
-              <div class="input-group" style="flex-direction: column;">
-                <h3 for="CodEnfermedad">DSM5/CEA10</h3>
+              <div class="input-group" >
+                <h3 for="dsm5 ">DSM5</h3>
                 <div style="display: flex;gap:5px;">
-                  <input id="CodEnfermedad" style="width: 80%;" type="text" name="CodEnfermedad" class="input" />
-                    <a class="search codEnf"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                  <input id="dsm5" type="text" name="dsm5" class="input" />
+                    <a class="search btndsm5"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                 </div>
               </div>
-              <div class="input-group" style="flex-direction: column;width: 140%;">
+              <div class="input-group" >
+                <h3 for="cea10">CEA10</h3>
+                <div style="display: flex;gap:5px;">
+                  <input id="cea10"  type="text" name="cea10" class="input" />
+                    <a class="search btncea10"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                </div>
+              </div>
+              
+            </div>
+            <div class="input-group" style="flex-direction: column;width: 140%;">
                 <h3 for="DescripcionEnfermedad">Clasificacion</h3>
                 <div style="display: flex; gap:5px;">
                   <input id="DescripcionEnfermedad" type="text" name="DescripcionEnfermedad" class="input" />
                 </div>
               </div>
-            </div>
             <div class="input-group" style="display: none;">
 					      <h3 for="IdEnfermedad" >IdEnfermedad</h3>
 					      <input id="IdEnfermedad" type="text" name="IdEnfermedad" class="input" readonly/>
@@ -111,25 +126,56 @@ if (isset($_SESSION['NombrePsicologo'])){
 
 </body>
 <script>
-// Buscador de la Enfermedad
+// Buscador de la dsm5
   $(document).ready(function() {
-    $('.codEnf').click(function() {
-      var CodEnfermedad = $('#CodEnfermedad').val();
+    $('.btndsm5').click(function() {
+      var dsm5 = $('#dsm5').val();
       $.ajax({
-        url: 'Fetch/fetch_enfermedad.php',
+        url: 'Fetch/fetch_dsm5.php',
         method: 'POST',
-        data: { CodEnfermedad: CodEnfermedad },
+        data: { dsm5: dsm5 },
         success: function(response) {
           if (response.error) {
             $('#DescripcionEnfermedad').val('No existe esa enfermedad');
+            $('#cea10').val('');
             $('#IdEnfermedad').val('');
           } else {
             $('#DescripcionEnfermedad').val(response.nombre);
+		        $('#cea10').val(response.cea10);
 		        $('#IdEnfermedad').val(response.id);
           }
         },
         error: function() {
           $('#DescripcionEnfermedad').val('Error al procesar la solicitud');
+          $('#cea10').val('');
+          $('#IdEnfermedad').val('');
+        }
+      });
+    });
+  });
+
+  // Buscador de la cea10
+$(document).ready(function() {
+    $('.btncea10').click(function() {
+      var cea10 = $('#cea10').val();
+      $.ajax({
+        url: 'Fetch/fetch_cea10.php',
+        method: 'POST',
+        data: { cea10: cea10 },
+        success: function(response) {
+          if (response.error) {
+            $('#DescripcionEnfermedad').val('No existe esa enfermedad');
+            $('#dsm5').val('');
+            $('#IdEnfermedad').val('');
+          } else {
+            $('#DescripcionEnfermedad').val(response.nombre);
+            $('#dsm5').val(response.dsm5);
+		        $('#IdEnfermedad').val(response.id);
+          }
+        },
+        error: function() {
+          $('#DescripcionEnfermedad').val('Error al procesar la solicitud');
+          $('#dsm5').val('');
           $('#IdEnfermedad').val('');
         }
       });
@@ -137,54 +183,64 @@ if (isset($_SESSION['NombrePsicologo'])){
   });
   
 //Buscador del paciente segun su id 
-  $(document).ready(function() {
-  $('.id').click(function() {
-    var codigoPaciente = $('#IdPaciente').val();
+$(document).ready(function() {
+    $('.Codigo').click(function() {
+      var codigoPaciente = $('#CodigoPaciente').val();
+      var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
-    // Realizar la solicitud AJAX al servidor
-    $.ajax({
-      url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
-      method: 'POST',
-      data: { codigoPaciente: codigoPaciente },
-      success: function(response) {
-        if (response.error) {
-          $('#Paciente').val(response.error);
-          $('#NomPaciente').val(response.error);
-        } else {
-          $('#Paciente').val(response.nombre);
-          $('#NomPaciente').val(response.nom);
+      // Realizar la solicitud AJAX al servidor
+      $.ajax({
+        url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
+        method: 'POST',
+        data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
+        success: function(response) {
+          if (response.hasOwnProperty('error')) {
+            $('#Paciente').val(response.error);
+            $('#IdPaciente').val('');
+            $('#NomPaciente').val('');
+            $('#correo').val('');
+          } else {
+            $('#Paciente').val(response.nombre);
+            $('#NomPaciente').val(response.nom);
+		        $('#IdPaciente').val(response.id);
+		        $('#correo').val(response.correo);
+          }
+        },
+        error: function() {
+          $('#Paciente').val('Error al procesar la solicitud');
+          $('#NomPaciente').val('');
+          $('#IdPaciente').val('');
         }
-      },
-      error: function() {
-        $('#Paciente').val('Error al procesar la solicitud');
-        $('#NomPaciente').val('Error al procesar la solicitud');
-      }
+      });
     });
   });
-});
 
 // Buscador paciente segun su nombre 
 $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente },
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
           $('#IdPaciente').val('');
+          $('#CodigoPaciente').val('');
         } else {
           $('#Paciente').val(response.nombre);
-		        $('#IdPaciente').val(response.id);
+		      $('#IdPaciente').val(response.id);
+		      $('#CodigoPaciente').val(response.CodigoPaciente);
         }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
         $('#IdPaciente').val('');
+        $('#CodigoPaciente').val('');
       }
     });
   });

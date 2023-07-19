@@ -39,22 +39,29 @@ if (isset($_SESSION['NombrePsicologo'])){
     <?php
     require_once '../Issets/views/Info.php';
     ?>
-        <div class="container-form">
+    <h4 style="text-align:center;margin-bottom:-10px">Formulario de Citas</h4>
+        <div class="container-form-cita">
             <div class="recent-updates">
-                <h2>Formulario de Citas</h2>
                 <form action="../Crud/Cita/guardarCita.php" method="post">
                     <div class="checkout-information">
                         <div class="input-group2">
-                            <div class="input-group">
+                            <div class="input-group" style="display:none">
                             <h3 for="IdPaciente">Id Paciente <b style="color:red">*</b></h3>
-                                <div style="display: flex;gap:5px;">
-                                    <input id="IdPaciente" style="width: 40%;" type="text" name="IdPaciente"  required/>
+                                <div style="display: flex; gap:5px;"> 
+                                    <input id="IdPaciente" type="text" name="IdPaciente"  required/>
                                     <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                                 </div>
                             </div>
                             <div class="input-group">
+                            <h3 for="CodigoPaciente">Codigo Paciente <b style="color:red">*</b></h3>
+                                <div style="display: flex; gap:5px;"> 
+                                    <input id="CodigoPaciente" type="text" name="CodigoPaciente"  required/>
+                                    <a class="search Codigo"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                                </div>
+                            </div>
+                            <div class="input-group">
                             <h3 for="NomPaciente">Nombre Paciente <b style="color:red">*</b></h3>
-                                <div style="display: flex; gap:4px;">
+                                <div style="display: flex; gap:5px;">
                                     <input id="NomPaciente" type="text" name="NomPaciente"  required/>
                                     <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                                 </div>
@@ -64,17 +71,11 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        	    <h3 for="Paciente" >Paciente <b style="color:red">*</b></h3>
 			        	    <input id="Paciente" type="text" name="Paciente"  readonly/>
 			            </div>
-
-                        <!--MOSTRAR SOLO LOS PACIENTES DEL PSICOLOGO QUE INICIO LA SESSION-->
-                        <div>
-
-
-                        </div>
-			            <div class="input-group">
+			            <div style="display:none" class="input-group">
 			        	    <h3 for="correo" >correo<b style="color:red">*</b></h3>
 			        	    <input id="correo" type="text" name="correo"  readonly/>
 			            </div>
-			            <div class="input-group">
+			            <div  style="display:none" class="input-group">
 			        	    <h3 for="telefono" >telefono<b style="color:red">*</b></h3>
 			        	    <input id="telefono" type="text" name="telefono"  readonly/>
 			            </div>
@@ -82,19 +83,19 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        	    <h3 for="MotivoCita">Motivo de la Consutla <b style="color:red">*</b></h3>
 			        	    <textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="MotivoCita" name="MotivoCita"  required></textarea>
 			            </div>
-                        <div class="input-group2" style="gap:60px">
-  	                        <div class="input-group">
+                        <div class="input-group2">
+  	                        <div class="input-group" >
   		                        <h3 for="EstadoCita">Estado de la Cita <b style="color:red">*</b></h3>
-  		                        <select class="input" id="EstadoCita" name="EstadoCita" required>
-                                    <option value="">Seleccione un Estado </option>
+  		                        <select class="input" id="EstadoCita" name="EstadoCita"required>
+                                    <option value="">Seleccione un Estado</option>
                                     <option value="Se requiere confirmacion">Se requiere confirmacion</option>
                                     <option value="Confirmado">Confirmado</option>
                                     <option value="Ausencia del paciente">Ausencia del paciente</option>
                                 </select>
   	                        </div>
-                            <div class="input-group">
+                            <div class="input-group" style="width:40%">
                                 <h3 for="ColorFondo">Color de Cita <b style="color:red">*</b></h3>
-                                <input type="color" value="#f38238" id="ColorFondo" name="ColorFondo" list="colorOptions" style="height: 46px;">
+                                <input type="color" value="#f38238" id="ColorFondo" name="ColorFondo" list="colorOptions">
                                     <datalist id="colorOptions">
                                       <option value="#b4d77b">Rojo</option>
                                       <option value="#9274b3">Verde</option>
@@ -102,18 +103,23 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     </datalist>
                             </div>
                         </div>
-                        <div class="input-group2" style="gap:70px">
-                            <div class="input-group">
+                        <?php
+                            /* FECHA LIMITE  */
+                            date_default_timezone_set('America/Lima');
+                            $fechamin = date("Y-m-d")
+                        ?>
+                        <div class="input-group2">
+                            <div class="input-group" style="width:49%">
                                 <h3 for="FechaInicioCita">Fecha de Cita<b style="color:red">*</b></h3>
-                                <input  type="date" id="FechaInicioCita" name="FechaInicioCita" required>
+                                <input  type="date" id="FechaInicioCita" name="FechaInicioCita" min="<?= $fechamin ?>" value="<?= $fechamin ?>">
                             </div>
-                            <div class="input-group">
+                            <div class="input-group" style="width:39%">
                                 <h3 for="HoraInicio">Hora de Cita <b style="color:red">*</b></h3>
                                 <input type="time" id="HoraInicio" name="HoraInicio" />
                             </div>
                         </div>
-                        <div class="input-group2" style="gap:100px">
-                            <div class="input-group">
+                        <div class="input-group2">
+                            <div class="input-group" style="width:49%">
   		                        <h3 for="TipoCita">Tipo de Cita <b style="color:red">*</b></h3>
   		                        <select class="input" id="TipoCita" name="TipoCita" required>
                                     <option value="">Seleccione un Tipo </option>
@@ -138,8 +144,8 @@ if (isset($_SESSION['NombrePsicologo'])){
                                 </select>
                             </div>
                         </div>
-                        <div class="input-group2" style="gap:10px">
-                            <div class="input-group">
+                        <div class="input-group2">
+                            <div class="input-group" style="width:58%">
   		                        <h3 for="CanalCita">Canal de Atraccion <b style="color:red">*</b></h3>
   		                        <select class="input" id="CanalCita" name="CanalCita" required>
                                     <option value="">Seleccione una Atraccion</option>
@@ -148,7 +154,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     <option value="Referidos">Referidos</option>
                                 </select>
   	                        </div>
-                            <div class="input-group">
+                            <div class="input-group" style="width:55%">
   		                        <h3 for="EtiquetaCita">Etiqueta <b style="color:red">*</b></h3>
   		                        <select class="input" id="EtiquetaCita" name="EtiquetaCita" required>
                                     <option value="">Seleccione una Etiqueta</option>
@@ -163,14 +169,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     	                    <input type="text" id="IdPsicologo"  name="IdPsicologo" value="<?=$_SESSION['IdPsicologo']?>" placeholder="Ingrese algun Antecedente Medico" />
     	                </div>
                         <br>
-                        <div class="button-container">
+                    </div>
+                    <br>
+                    <div class="button-container">
                           <button id="submitButton" class="button">Registrar</button>
                         </div>
-                    </div>
                 </form>
             </div>
-                <div class="recent-orders">
-                    <table class="table-cita">
+                <div class="recent-citas">
+                    <table>
                         <?php
                         $rowsPerPage = 7;
                         if (is_array($rows) && count($rows) > 0) {
@@ -230,7 +237,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     <div id="modalEliminar<?=$row[0]?>" class="modal">
                                         <div class="containerModalEliminar">
                                             <a href="#" class="close" style="margin-right:20px" onclick="closeModalEliminar('<?=$row[0]?>')">&times;</a>
-                                            <form class="form" style="margin-top: -25px;" autocomplete="off" method="post">
+                                            <form class="form" style="margin-top: -10px;" autocomplete="off" method="post">
                                                 <h2 class="title2" value="<?=$user[0]?>">Eliminar Cita</h2>
                                                 <br>    
                                                 <label class="Alertas" for="" value="<?=$user[0]?>">¿Estas seguro de eliminar esta cita?</label>
@@ -238,7 +245,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                                                 <div class="input-group">
                                                     <div>
                                                     <br>
-                                                    <a class="ButtonEliminar" style="margin-left: 20em;" href="../Crud/Cita/eliminarCita.php?id=<?=$row[0]?>">Eliminar</a>
+                                                    <a class="ButtonEliminar" style="margin-left: 18em;" href="../Crud/Cita/eliminarCita.php?id=<?=$row[0]?>">Eliminar</a>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -249,55 +256,111 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     <div id="modal<?=$row[0]?>" class="modal">
                                         <div class="containerModal">
                                             <a href="#" class="close" onclick="closeModal('<?=$row[0]?>')">&times;</a>
-                                            <form action="../Crud/Cita/ModificarCita.php" method="post" class="form">
-                                                <h2 class="title">Formulario Cita de <?=$row[4]?></h2>
-                                                <div class="checkout-information">
-                                                    <input style="display:none" type="text" value="<?=$user['id']?>">
-                                                    <div class="input-group">
-                                                        <label style="display:none" class="labelModal" for="IdCita">IdCita</label>
-                                                        <input style="display:none" type="text" id="IdCita" name="IdCita" value="<?=$user['id']?>"/>
-                                                    </div>
-                                                    <div class="input-group2"  style="gap:80px">
-                                                        <div class="input-group">
-                                                            <label style="color:black"for="FechaCitaInicio">Fecha de Inicio</label>
-                                                            <input  value="<?=$user['FechaInicio']?>" type="date" id="FechaCitaInicio" name="FechaCitaInicio" required>
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <label style="color:black"for="HoraInicio">Hora de Inicio</label>
-                                                            <input type="time" value="<?=$user['HoraInicio']?>" id="HoraInicio" name="HoraInicio" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group2" style="gap:80px">
-                                                        <div class="input-group">
-                                                            <label style="color:black"for="FechaCitaFin">Fecha de Fin</label>
-                                                            <input  value="<?=$user['FechaFin']?>" type="date" id="FechaCitaFin" name="FechaCitaFin" required>
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <label style="color:black"for="HoraFin">Hora de Fin</label>
-                                                            <input type="time"value="<?=$user['HoraFin']?>"  id="HoraFin" name="HoraFin" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <label style="color:black"for="ColorFondo">Color de Cita</label>
-                                                        <input type="color" value="<?=$user['ColorFondo']?>" value="#3788D8" id="ColorFondo" name="ColorFondo" style="height: 36px;" />
-                                                    </div>
-                                                    <div class="xd">
-                                                        <button class="button">Enviar</button>
+                                            <form action="../Crud/Cita/ModificarCita.php"style="margin-top: -20px;"  method="post" >
+                                                <h2 >Formulario Cita de <?=$row[1]?></h2>
+                                                <input style="display:none" type="text" value="<?=$user['id']?>">
+                                                <div class="input-group">
+                                                    <label style="display:none" class="labelModal" for="IdCita">IdCita</label>
+                                                    <input style="display:none" type="text" id="IdCita" name="IdCita" value="<?=$user['id']?>"/>
+                                                    <input style="display:none" type="text" id="Paciente" name="Paciente" value="<?=$row[1]?>"/>
+                                                </div>
+                                                <div class="input-group">
+			        	                            <h3 for="MotivoCita">Motivo de la Consutla <b style="color:red">*</b></h3>
+			        	                            <textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="MotivoCita" name="MotivoCita"  required><?=$user['MotivoCita']?></textarea>
+			                                    </div>
+                                                <div class="input-group2">
+  	                                                <div class="input-group" >
+  		                                                <h3 for="EstadoCita">Estado de la Cita <b style="color:red">*</b></h3>
+  		                                                <select class="input" id="EstadoCita" name="EstadoCita" required>
+                                                            <option value="Se requiere confirmacion" <?php if ($user['EstadoCita'] === "Se requiere confirmacion") echo "selected"; ?>>Se requiere confirmacion</option>
+                                                            <option value="Confirmado" <?php if ($user['EstadoCita'] === "Confirmado") echo "selected"; ?>>Confirmado</option>
+                                                            <option value="Ausencia del paciente" <?php if ($user['EstadoCita'] === "Ausencia del paciente") echo "selected"; ?>>Ausencia del paciente</option>
+                                                        </select>
+  	                                                </div>
+			                                        <div style="display:none" class="input-group">
+			        	                                <h3 for="correo" >correo<b style="color:red">*</b></h3>
+			        	                                <input id="correo" type="text" value="<?=$user['Email']?>" name="correo"  readonly/>
+			                                        </div>
+                                                    <div class="input-group" style="width:40%">
+                                                        <h3 for="ColorFondo">Color de Cita <b style="color:red">*</b></h3>
+                                                        <input type="color" value="#f38238" id="ColorFondo"  value="<?=$user['ColorFondo']?>" name="ColorFondo" list="colorOptions">
+                                                            <datalist id="colorOptions">
+                                                              <option value="#b4d77b">Rojo</option>
+                                                              <option value="#9274b3">Verde</option>
+                                                              <option value="#f38238">Azul</option>
+                                                            </datalist>
                                                     </div>
                                                 </div>
-                                            </form>        
+                                                <?php
+                                                    /* FECHA LIMITE  */
+                                                    date_default_timezone_set('America/Lima');
+                                                    $fechamin = date("Y-m-d")
+                                                ?>
+                                                <div class="input-group2">
+                                                    <div class="input-group" style="width:49%">
+                                                        <h3 for="FechaInicioCita">Fecha de Cita<b style="color:red">*</b></h3>
+                                                        <input  type="date" id="FechaInicioCita"  name="FechaInicioCita" min="<?= $fechamin ?>" value="<?=$user['FechaInicio']?>">
+                                                    </div>
+                                                    <div class="input-group" style="width:39%">
+                                                        <h3 for="HoraInicio">Hora de Cita <b style="color:red">*</b></h3>
+                                                        <input type="time" id="HoraInicio" value="<?=$user['HoraInicio']?>" name="HoraInicio" />
+                                                    </div>
+                                                </div>
+                                                <div class="input-group2">
+                                                    <div class="input-group" style="width:49%">
+  		                                                <h3 for="TipoCita">Tipo de Cita <b style="color:red">*</b></h3>
+  		                                                <select class="input" id="tipoCita" name="tipoCita">
+                                                            <option value="Primera Visita" <?php if ($user['TipoCita'] === "Primera Visita") echo "selected"; ?>>Primera Visita</option>
+                                                            <option value="Visita de control" <?php if ($user['TipoCita'] === "Visita de control") echo "selected"; ?>>Visita de control</option>
+                                                        </select>
+  	                                                   </div>
+                                                    <div class="input-group">
+                                                        <h3 for="DuracionCita">Duracion <b style="color:red">*</b></h3>
+  		                                                <select class="input" id="DuracionCita" name="DuracionCita" required>
+                                                            <option value="5" <?php if ($user['Duracioncita'] === 5) echo "selected"; ?>>5'</option>
+                                                            <option value="10"<?php if ($user['Duracioncita'] === 10) echo "selected"; ?>>10'</option>
+                                                            <option value="15"<?php if ($user['Duracioncita'] === 15) echo "selected"; ?>>15'</option>
+                                                            <option value="20"<?php if ($user['Duracioncita'] === 20) echo "selected"; ?>>20'</option>
+                                                            <option value="30"<?php if ($user['Duracioncita'] === 30) echo "selected"; ?>>30'</option>
+                                                            <option value="40"<?php if ($user['Duracioncita'] === 40) echo "selected"; ?>>40'</option>
+                                                            <option value="45"<?php if ($user['Duracioncita'] === 45) echo "selected"; ?>>45'</option>
+                                                            <option value="50"<?php if ($user['Duracioncita'] === 50) echo "selected"; ?>>50'</option>
+                                                            <option value="60"<?php if ($user['Duracioncita'] === 60) echo "selected"; ?>>60'</option>
+                                                            <option value="90"<?php if ($user['Duracioncita'] === 90) echo "selected"; ?>>90'</option>
+                                                            <option value="120"<?php if ($user['Duracioncita'] === 120) echo "selected"; ?>>120'</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group2">
+                                                    <div class="input-group" style="width:58%">
+  		                                                <h3 for="CanalCita">Canal de Atraccion <b style="color:red">*</b></h3>
+  		                                                <select class="input" id="CanalCita" name="CanalCita" required>
+                                                            <option value="Cita Online" <?php if ($user['CanalCita'] === "Cita Online") echo "selected"; ?>>Cita Online</option>
+                                                            <option value="Marketing Directo" <?php if ($user['CanalCita'] === "Marketing Directo") echo "selected"; ?>>Marketing Directo</option>
+                                                            <option value="Referidos" <?php if ($user['CanalCita'] === "Referidos") echo "selected"; ?>>Referidos</option>
+                                                        </select>
+  	                                                </div>
+                                                    <div class="input-group" style="width:55%">
+  		                                                <h3 for="EtiquetaCita">Etiqueta <b style="color:red">*</b></h3>
+  		                                                <select class="input" id="EtiquetaCita" name="EtiquetaCita" required>
+                                                            <option value="Consulta" <?php if ($user['EtiquetaCita'] === "Consulta") echo "selected"; ?>>Consulta</option>
+                                                            <option value="Familia Referida" <?php if ($user['EtiquetaCita'] === "Familia Referida") echo "selected"; ?>>Familia Referida</option>
+                                                            <option value="Prioridad" <?php if ($user['EtiquetaCita'] === "Prioridad") echo "selected"; ?>>Prioridad</option>
+                                                        </select>
+  	                                                </div>
+                                                </div>
+                                                <br>
+                                                <div class="button-container">
+                                                    <button class="button">Modificar</button>
+                                                </div>
+                                            </form>      
                                         </div>
                                     </div>
-                                    <!--Agregamos la sección para recargar la pagina-->
                                 <?php endforeach;?>
                             <?php else:?>
-                                    <tr>
-                                        <td colspan="10" class="text-center"><div style="display: flex; align-items: center; width:100%;">
-                            <p style="margin-right: 10px; width:50%;">No hay Pacientes</p>
-                            <a style="color: #9274b3; width: 50%; " href="citas.php">Agregar nuevo paciente</a>
-                        </div>            </td>
-                                        
-                                    </tr>
+                                <tr>
+                                    <td colspan="11">No hay registros</td>
+                                </tr>
                             <?php endif;?>
                         </tbody>
                     </table>
@@ -318,8 +381,8 @@ if (isset($_SESSION['NombrePsicologo'])){
     </main>
             
     <div id="notification" style="display: none;" class="notification">
-    <p id="notification-text"></p>
-    <span class="notification__progress"></span>
+        <p id="notification-text"></p>
+        <span class="notification__progress"></span>
     </div>
 
 </div>
@@ -338,74 +401,78 @@ if (isset($_SESSION['NombrePsicologo'])){
         history.replaceState(null, null, window.location.pathname);
     }
 });
-// Buscador del paciente según su id
-$(document).ready(function() {
-  $('.id').click(function() {
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
-    var codigoPaciente = $('#IdPaciente').val();
+  // Buscador del paciente según su id
+  $(document).ready(function() {
+    $('.Codigo').click(function() {
+      var codigoPaciente = $('#CodigoPaciente').val();
+      var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
-    // Realizar la solicitud AJAX al servidor
-    $.ajax({
-      url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
-      method: 'POST',
-      data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo }, // Usar la variable idPsicologo
-      success: function(response) {
-        if (response.hasOwnProperty('error')) {
-          $('#Paciente').val(response.error);
-        } else {
-          $('#Paciente').val(response.nombre);
+      // Realizar la solicitud AJAX al servidor
+      $.ajax({
+        url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
+        method: 'POST',
+        data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
+        success: function(response) {
+          if (response.hasOwnProperty('error')) {
+            $('#Paciente').val(response.error);
+            $('#IdPaciente').val('');
+            $('#NomPaciente').val('');
+            $('#correo').val('');
+            $('#telefono').val('');
+          } else {
+            $('#Paciente').val(response.nombre);
+            $('#NomPaciente').val(response.nom);
+		    $('#IdPaciente').val(response.id);
+		    $('#correo').val(response.correo);
+		    $('#telefono').val(response.telefono);
+          }
+        },
+        error: function() {
+          $('#Paciente').val('Error al procesar la solicitud');
+          $('#NomPaciente').val('');
+          $('#IdPaciente').val('');
+          $('#correo').val('');
+          $('#telefono').val('');
         }
-      },
-      error: function() {
-        $('#Paciente').val('Error al procesar la solicitud');
-      }
+      });
     });
   });
-});
-
-
-
-
-  // Buscador paciente según su nombre
+  // Buscador paciente segun su nombre 
 $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>; // Obtener el valor del IdPsicologo de la sesión
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo }, // Agregar el parámetro idPsicologo
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
         if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
           $('#IdPaciente').val('');
+          $('#CodigoPaciente').val('');
           $('#correo').val('');
           $('#telefono').val('');
         } else {
           $('#Paciente').val(response.nombre);
-          $('#IdPaciente').val(response.id);
-          $('#correo').val(response.correo);
-          $('#telefono').val(response.telefono);
+		  $('#IdPaciente').val(response.id);
+		  $('#CodigoPaciente').val(response.CodigoPaciente);
+		  $('#correo').val(response.correo);
+		  $('#telefono').val(response.telefono);
         }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
         $('#IdPaciente').val('');
+        $('#CodigoPaciente').val('');
         $('#correo').val('');
         $('#telefono').val('');
       }
     });
   });
 });
-
-
-
-
-
-
-
 //Funciones del modal
 function openModal(id) {
     document.getElementById('modal' + id).style.display = 'block';
