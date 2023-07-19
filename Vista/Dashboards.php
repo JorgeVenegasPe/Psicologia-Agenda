@@ -31,9 +31,6 @@ require_once("../Controlador/Cita/citaControlador.php");
         <!----------- end of aside -------->
         <main>
             <h2>Dashboard</h2>
-            <div class="date">
-                <input type="date">                
-            </div>
 
             <div class="insights">  
                 <div class="sales">
@@ -218,7 +215,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                 <table class="tabla-dash">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Cod.</th>
                             <th>Paciente</th>
                             <th>Motivo</th>
                             <th>Estado</th>
@@ -235,7 +232,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                     <?php if ($Citas) :?>
                         <?php foreach ($Citas as $Cita): ?>
                         <tr>
-                            <td><?=$Cita[0]?></td>
+                            <td><?=$Cita[11]?></td>
                             <td><?=$Cita[1]?></td>
                             <td><?=$Cita[2]?></td>
                             <td><?=$Cita[3]?></td>
@@ -243,6 +240,9 @@ require_once("../Controlador/Cita/citaControlador.php");
                             <td style="color:green"><?=$Cita[5]?></td>
                             <td><?=$Cita[6]?></td>
                             <td><?=$Cita[9]?></td>
+                            <td><?=$Cita[10]?></td>
+                            <td style="color: green;">Yes</td>
+                            <td style="color: red;">No</td>
                         </tr>
                         <?php endforeach;?>
                             <?php else : ?>
@@ -252,7 +252,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                         <?php endif; ?>
                     </tbody>
                 </table>
-                <a href="">Agregar nueva cita</a>
+                <a href="citas.php">Agregar nueva cita</a>
             </div>
         </main>
         <!------ End of Main -->
@@ -280,7 +280,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                         <?php if ($datos) : ?>
                             <?php foreach ($datos as $key) : ?>
                                 <div class="message">
-                                    <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?></b> <?= $key['Edad'] ?> años</p>
+                                    <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?> (<?= $key['CodigoPaciente'] ?>)</b> <?= $key['Edad'] ?> años</p>
                                     <small class="text-muted">Registrado el: <?= $key['Fecha'] ?></small>
                                     <br>
                                     <small class="text-muted">Hora: <?= $key['Hora'] ?></small>

@@ -31,13 +31,20 @@ if (isset($_SESSION['NombrePsicologo'])){
         <h4>Datos Familiares</h4>
           <div style="display:flex; flex-direction:row; gap:70px;">
 			      <div class="checkout-information">
-			        <div class="input-group2">
-                <div class="input-group">
+			        <div class="input-group2" >
+                <div class="input-group" style="display:none">
                   <h3 for="IdPaciente">Id Paciente</h3>
                   <div style="display: flex;gap:5px;">
                     <input id="IdPaciente" type="text" name="IdPaciente" class="input" required/>
                     <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                   </div>
+                </div>
+                <div class="input-group">
+                <h3 for="CodigoPaciente">Codigo Paciente <b style="color:red">*</b></h3>
+                    <div style="display: flex; gap:5px;"> 
+                        <input id="CodigoPaciente" type="text" name="CodigoPaciente"  required/>
+                        <a class="search Codigo"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                    </div>
                 </div>
                 <div class="input-group">
                   <h3 for="NomPaciente">Nombre Paciente</h3>
@@ -111,24 +118,30 @@ if (isset($_SESSION['NombrePsicologo'])){
   </body>
 <script>
 	  $(document).ready(function() {
-  $('.id').click(function() {
-    var IdPaciente = $('#IdPaciente').val();
+  $('.Codigo').click(function() {
+    var CodigoPaciente = $('#CodigoPaciente').val();
     var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteFamiliar.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { IdPaciente: IdPaciente, idPsicologo: idPsicologo },
+      data: { CodigoPaciente: CodigoPaciente, idPsicologo: idPsicologo },
       success: function(response) {
         if (response.hasOwnProperty('error')) {
-          $('#Paciente').val(response.error);
-        } else {
-          $('#Paciente').val(response.nombre);
-        }
+            $('#Paciente').val(response.error);
+            $('#Paciente').val(response.error);
+            $('#NomPaciente').val('');
+          } else {
+            $('#Paciente').val(response.nombre);
+		        $('#IdPaciente').val(response.IdPaciente);
+            $('#NomPaciente').val(response.nom);
+          }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
+		    $('#IdPaciente').val('');
+        $('#NomPaciente').val('');
       }
     });
   });
@@ -149,14 +162,17 @@ $(document).ready(function() {
         if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
 		      $('#IdPaciente').val('');
+		      $('#CodigoPaciente').val('');
         } else {
           $('#Paciente').val(response.nombre);
 		      $('#IdPaciente').val(response.id);
+		      $('#CodigoPaciente').val(response.CodigoPaciente);
         }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
 		    $('#IdPaciente').val('');
+		    $('#CodigoPaciente').val('');
       }
     });
   });
