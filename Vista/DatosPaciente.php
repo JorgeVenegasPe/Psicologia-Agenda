@@ -43,7 +43,9 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                 <div class="card" data-id="<?=$row[0]?>">
                     <div class="card__body">
                         <h1><?=$row[1]?> <?=$row[2]?></h1>
-                        <label>Id: </label><label class="id"><?=$row[0]?></label>
+                        <label style="display:none">Id: </label><label style="display:none"  class="id"><?=$row[0]?></label>
+                        <br>
+                        <label>Código Paciente: </label><label class="codigo"><?=$row[18]?></label>
                         <br>
                         <label>Correo: </label><label class="correo"><?=$row[12]?></label>
                         <br>

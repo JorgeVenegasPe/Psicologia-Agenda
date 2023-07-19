@@ -408,14 +408,15 @@ document.addEventListener("DOMContentLoaded", function(){
   $(document).ready(function() {
     $('.idpaciente').click(function() {
       var codigoPaciente = $('#IdPaciente').val();
+      var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
       // Realizar la solicitud AJAX al servidor
       $.ajax({
         url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
         method: 'POST',
-        data: { codigoPaciente: codigoPaciente },
+        data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
         success: function(response) {
-          if (response.error) {
+          if (response.hasOwnProperty('error')) {
             $('#TituloCompleto').val(response.error);
           } else {
             $('#TituloCompleto').val(response.nombre);

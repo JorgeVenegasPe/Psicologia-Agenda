@@ -103,14 +103,10 @@ form {
 }
 
 .containerModal{
-    max-width: 1090px;
     width: 520px;
     margin-inline: auto;
     margin-top: 80px;
-    margin-bottom: 180px;
     background-color: #fff;
-    border-style: double;
-    border-color:#b4d77b;
     padding: 15px 55px;
     border-radius: 2em;
 	box-shadow: 0 1px 1rem 

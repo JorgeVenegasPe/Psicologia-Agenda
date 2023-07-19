@@ -8,7 +8,7 @@ $NomPaciente = $_POST['NomPaciente'];
 $idPsicologo = $_POST['idPsicologo'];
 
 // Consultar la base de datos para obtener la atención del paciente
-$sql = "SELECT p.IdPaciente,p.NomPaciente,p.ApPaterno,p.ApMaterno
+$sql = "SELECT p.IdPaciente,p.NomPaciente,p.ApPaterno,p.ApMaterno, p.CodigoPaciente
         FROM paciente p
         WHERE p.NomPaciente = :NomPaciente
         AND IdPsicologo = :idPsicologo";
@@ -22,12 +22,12 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($row) {
-  $IdPaciente = $row['IdPaciente']; 
-  $NomPaciente = $row['NomPaciente'];
-  $ApMaterno = $row['ApMaterno'];
+  $IdPaciente = $row['IdPaciente'];
+  $nombrePaciente = $row['NomPaciente'];
   $ApPaterno = $row['ApPaterno'];
-
-  $response = array('nombre' => $NomPaciente." ".$ApPaterno." ".$ApMaterno, 'id' => $IdPaciente);
+  $ApMaterno = $row['ApMaterno'];
+  $CodigoPaciente = $row['CodigoPaciente'];
+  $response = array('nombre' => $nombrePaciente." ".$ApMaterno." ".$ApPaterno,'id' => $IdPaciente,'CodigoPaciente'=>$CodigoPaciente);
 } else {
   $response = array('error' => 'No existe ese paciente');
 }

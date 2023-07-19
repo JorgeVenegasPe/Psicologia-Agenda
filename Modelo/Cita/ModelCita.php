@@ -43,7 +43,7 @@ class UserModelCita{
 
     }
     public function showByFecha($id){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,p.CodigoPaciente FROM cita c
                                        INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                        INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
                                        where c.IdPsicologo = :idUsua
