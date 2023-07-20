@@ -3,7 +3,7 @@ class usernameControlerAtencPaciente{
     private $model;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Modelo/Paciente/ModelAtencPaciente.php");
+        require_once("C:/xampp/htdocs/agenda/Psicologia-Agenda/Modelo/Paciente/ModelAtencPaciente.php");
         $this->model=new UserModelAtencPaciente();
     }
     public function guardarAtencPac($IdPaciente, $IdEnfermedad,$MotivoConsulta,$FormaContacto, $Diagnostico, $Tratamiento ,$Observacion,$UltimosObjetivos){

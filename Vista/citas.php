@@ -73,7 +73,7 @@ if (isset($_SESSION['NombrePsicologo'])){
 			        	    <input id="telefono" type="text" name="telefono"  readonly/>
 			            </div>
 			            <div class="input-group">
-			        	    <h3 for="MotivoCita">Motivo de la Consutla <b style="color:red">*</b></h3>
+			        	    <h3 for="MotivoCita">Motivo de la Consulta <b style="color:red">*</b></h3>
 			        	    <textarea style="resize: none; padding: 1.2em 1em 2.8em 1em;font-family: 'Poppins', sans-serif;	font-size: 14px;" type="text" id="MotivoCita" name="MotivoCita"  required></textarea>
 			            </div>
                         <div class="input-group2" style="gap:60px">
@@ -106,6 +106,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                                 <input type="time" id="HoraInicio" name="HoraInicio" />
                             </div>
                         </div>
+
                         <div class="input-group2" style="gap:100px">
                             <div class="input-group">
   		                        <h3 for="TipoCita">Tipo de Cita <b style="color:red">*</b></h3>
@@ -131,6 +132,10 @@ if (isset($_SESSION['NombrePsicologo'])){
                                     <option value="120'">120'</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="input-group">
+                                <h3 for="HoraInicio">Fecha y tiempo de Cita <b style="color:red">*</b></h3>
+                                <input type="datetime-local" id="fechaHoraFinal" name="HoraInicio" disabled/>
                         </div>
                         <div class="input-group2" style="gap:10px">
                             <div class="input-group">
@@ -424,6 +429,43 @@ function mostrarPagina(page) {
         rows[i].style.display = 'table-row';
     }
 }
+function calcularHoraFinal() {
+  // Obtener los elementos de entrada
+  var fechaInicioInput = document.getElementById("FechaInicioCita");
+  var horaInicioInput = document.getElementById("HoraInicio");
+  var duracionInput = document.getElementById("DuracionCita");
+  var fechaHoraFinalInput = document.getElementById("fechaHoraFinal");
+
+  // Obtener los valores de fecha de inicio, hora de inicio y duración en minutos seleccionada
+  var fechaInicioValue = fechaInicioInput.value;
+  var horaInicioValue = horaInicioInput.value;
+  var duracionValue = parseInt(duracionInput.value);
+
+  // Convertir la hora de inicio a un objeto de fecha
+  var fechaInicio = new Date(fechaInicioValue + "T" + horaInicioValue);
+
+  // Calcular la duración en milisegundos
+  var duracionEnMs = duracionValue * 60 * 1000;
+
+  // Calcular la hora final sumando la duración a la hora de inicio
+  var horaFinalEnMs = fechaInicio.getTime() + duracionEnMs;
+  var horaFinal = new Date(horaFinalEnMs);
+
+  // Formatear la fecha y hora final en el formato adecuado para el campo de entrada "datetime-local"
+  var fechaHoraFinalValue = horaFinal.toISOString().slice(0, 16);
+
+  // Mostrar el resultado en el campo de entrada "datetime-local" correspondiente
+  fechaHoraFinalInput.value = fechaHoraFinalValue;
+}
+
+// Agregar eventos onchange a los campos de entrada
+document.getElementById("FechaInicioCita").onchange = calcularHoraFinal;
+document.getElementById("HoraInicio").onchange = calcularHoraFinal;
+document.getElementById("DuracionCita").onchange = calcularHoraFinal;
+
+// Calcular la hora final inicial
+calcularHoraFinal();
+
 
 mostrarPagina(1);
 </script>

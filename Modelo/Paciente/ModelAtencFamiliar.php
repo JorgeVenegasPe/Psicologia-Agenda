@@ -3,7 +3,7 @@ class UserModelAreaFamiliar{
     private $PDO;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-master/Conexion/conexion.php");
+        require_once("C:/xampp/htdocs/agenda/Psicologia-Agenda/Conexion/conexion.php");
         $con=new conexion();
         $this->PDO=$con->conexion();
 

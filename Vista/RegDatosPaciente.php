@@ -139,7 +139,12 @@ if (isset($_SESSION['NombrePsicologo'])){
       edad--;
     }
     
+    if (edad > 5){
     document.getElementById('Edad').value = edad;
+    }else{
+      alert("No se puede ingresar una edad menor a 5")
+    }
+
   }
 </script>
 </html>

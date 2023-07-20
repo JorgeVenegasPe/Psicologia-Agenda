@@ -3,7 +3,7 @@ class usernameControlerPaciente{
     private $model;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Modelo/Paciente/ModelPaciente.php");
+        require_once("C:/xampp/htdocs/agenda/Psicologia-Agenda/Modelo/Paciente/ModelPaciente.php");
         $this->model=new UserModelPaciente();
     }
     public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$IdPsicologo,$MedicamentosPrescritos){

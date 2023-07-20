@@ -3,17 +3,18 @@ class UserModelCita{
     private $PDO;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/conexion/conexion.php");
+        require_once("C:/xampp/htdocs/agenda/Psicologia-Agenda/conexion/conexion.php");
         $con=new conexion();
         $this->PDO=$con->conexion();
     }
-    public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
-        $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita, DuracionCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
-                                        VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :DuracionCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
+    public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $Fechafinalcita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
+        $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita,Fechafinalcita, DuracionCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
+                                        VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :Fechafinalcita,:DuracionCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
         $statement->bindParam(":IdPaciente", $IdPaciente);
         $statement->bindParam(":MotivoCita", $MotivoCita);
         $statement->bindParam(":EstadoCita", $EstadoCita);
         $statement->bindParam(":FechaInicioCita", $FechaInicioCita);
+        $statement->bindParam(":Fechafinalcita", $Fechafinalcita);
         $statement->bindParam(":DuracionCita", $DuracionCita);
         $statement->bindParam(":TipoCita", $TipoCita);
         $statement->bindParam(":ColorFondo", $ColorFondo);
@@ -25,7 +26,7 @@ class UserModelCita{
     }
     
     public function ver($idUsuario){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Fechafinalcita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita FROM cita c
                                         INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
                                         INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                         WHERE c.IdPsicologo = :idUsuario");
@@ -34,20 +35,20 @@ class UserModelCita{
 
     }
     public function show($id){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
-                                       INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
-                                       INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
-                                       where IdCita=:id limit 1");
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.EstadoCita,c.FechaInicioCita,c.Fechafinalcita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
+            INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
+            INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
+            where IdCita=:id limit 1");
         $statement->bindParam(":id",$id);
         return($statement->execute())? $statement->fetch():false;
 
     }
     public function showByFecha($id){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
-                                       INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
-                                       INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
-                                       where IdCita=:id limit 1
-                                       order by c.FechaRegistro");
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.EstadoCita,c.FechaInicioCita,c.Fechafinalcita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
+            INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
+            INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
+            where IdCita=:id limit 1
+            order by c.FechaRegistro");
         $statement->bindParam(":id",$id);
         return($statement->execute())? $statement->fetch():false;
 

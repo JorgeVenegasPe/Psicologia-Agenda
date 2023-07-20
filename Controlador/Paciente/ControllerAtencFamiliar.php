@@ -3,7 +3,7 @@ class usernameControlerAreaFamiliar{
     private $model;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Modelo/Paciente/ModelAtencFamiliar.php");
+        require_once("C:/xampp/htdocs/agenda/Psicologia-Agenda/Modelo/Paciente/ModelAtencFamiliar.php");
         $this->model=new UserModelAreaFamiliar();
     }
     public function guardarAreaFamiliar($IdPaciente, $NomPadre,$EstadoPadre, $NomMadre,$EstadoMadre, $NomApoderado,$EstadoApoderado,$CantHermanos,$CantHijos,$IntegracionFamiliar,$HistorialFamiliar){

@@ -24,7 +24,10 @@ button{
     border-color: none;
     border-style: none;
 }
-
+div {
+    display: grid;
+    position: relative;
+}
 div a{
 	color: blue;
 }

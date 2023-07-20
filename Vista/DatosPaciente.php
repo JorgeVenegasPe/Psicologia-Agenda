@@ -37,10 +37,15 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     ?> 
     <h2>Datos del Paciente</h2>
     <div class="containerDatos">
+    <div class="view-selector">
+        <button onclick="changeView('card')">Ver como Tarjetas</button>
+        <button onclick="changeView('table')">Ver como Tabla</button>
+    </div>
     <div class="insightsDatos">
         <?php if ($rows): ?>
+            <div id="cardview"> 
             <?php foreach ($rows as $row): ?>
-                <div class="card" data-id="<?=$row[0]?>">
+                <div class="card"  data-id="<?=$row[0]?>">
                     <div class="card__body">
                         <h1><?=$row[1]?> <?=$row[2]?></h1>
                         <label>Id: </label><label class="id"><?=$row[0]?></label>
@@ -357,6 +362,33 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
         <?php endif; ?>
     </div>
     </div>
+                    <!-- Agrega una nueva sección para la vista de tabla -->
+                    <div id="tableView" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
+                                <th>DNI</th>
+                                <!-- Agrega más encabezados de columna si es necesario -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($rows as $row): ?>
+                                <tr>
+                                    <td><?=$row[1]?></td>
+                                    <td><?=$row[2]?></td>
+                                    <td><?=$row[3]?></td>
+                                    <td><?=$row[4]?></td>
+                                    <!-- Agrega más celdas de datos si es necesario -->
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+    
   </main>
     <script src="../issets/js/Dashboard.js"></script>
 </div>
@@ -416,11 +448,25 @@ function openModalEditarDiag(id) {
 function closeModalEditarDiag(id) {
     document.getElementById('modalEditarDiag' + id).style.display = 'none';
 }
+
+function changeView(viewType) {
+    var cardsView = document.getElementById('cardview');
+    var tableView = document.getElementById('tableView');
+
+    if (viewType === 'card') {
+        cardsView.style.display = 'flex'; // Muestra las cards
+        tableView.style.display = 'none'; // Oculta la tabla
+    } else if (viewType === 'table') {
+        cardsView.style.display = 'none'; // Oculta las cards
+        tableView.style.display = 'block'; // Muestra la tabla
+    }
+}
+
 </script>
 </html>
 <?php
 }else{
-  header("Location: ../Index.php");
+    header("Location: ../Index.php");
 }
 ?>
 

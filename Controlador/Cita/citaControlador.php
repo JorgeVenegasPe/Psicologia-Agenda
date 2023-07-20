@@ -3,11 +3,11 @@ class usernameControlerCita{
     private $model;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Modelo/Cita/ModelCita.php");
+        require_once("C:/xampp/htdocs/agenda/Psicologia-Agenda/Modelo/Cita/ModelCita.php");
         $this->model=new UserModelCita();
     }
-    public function guardar($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
-        $id = $this->model->insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita);
+    public function guardar($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita,$Fechafinalcita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
+        $id = $this->model->insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita,$Fechafinalcita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita);
         return ($id != false) ? header("Location:../../Vista/citas.php") : header("Location:../../Vista/citas.php");
     }
     public function ver($idUsuario) {

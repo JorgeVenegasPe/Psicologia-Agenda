@@ -1,5 +1,5 @@
 <?php
-require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Controlador/Cita/citaControlador.php");
+require_once("../../Controlador/Cita/citaControlador.php");
 
 $obj = new usernameControlerCita();
 $FechaInicioCita = $_POST['FechaInicioCita'];
@@ -10,7 +10,7 @@ $duracion = $_POST['DuracionCita'];
 
 $fechaInicioObj = new DateTime($FechaInicio);
 
-$obj->guardar($_POST['IdPaciente'],$_POST['MotivoCita'],$_POST['EstadoCita'],$FechaInicio,$_POST['DuracionCita'],$_POST['TipoCita'], $_POST['ColorFondo'], $_POST['IdPsicologo'], $_POST['CanalCita'], $_POST['EtiquetaCita']);
+$obj->guardar($_POST['IdPaciente'],$_POST['MotivoCita'],$_POST['EstadoCita'],$FechaInicio,$_POST['DuracionCita'],$Fechafinalcita,$_POST['TipoCita'], $_POST['ColorFondo'], $_POST['IdPsicologo'], $_POST['CanalCita'], $_POST['EtiquetaCita']);
 
 require_once ('../../vendor/autoload.php'); // if you use Composer
 //require_once('ultramsg.class.php'); // if you download ultramsg.class.php
