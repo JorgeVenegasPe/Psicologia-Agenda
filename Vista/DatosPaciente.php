@@ -183,8 +183,8 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
                     $AtencsUser=$Atenc->showAtenc($row[0]);
                 ?>
                 <!-- Ver Diagnostico --> 
-                <div id="modalDiagnostico<?=$row[0]?>" class="modal">
-                    <div class="containerModal">
+                <div id="modalDiagnostico<?=$row[0]?>" class="modal" >
+                    <div class="containerModal" >
                         <a href="#" class="close" onclick="closeModalVerDiagnostico('<?=$row[0]?>')">&times;</a>
                         <form class="form" autocomplete="off"method="post">
                             <?php 
@@ -363,137 +363,108 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     <script src="../issets/js/Dashboard.js"></script>
 </div>
 </body>
-<script>
-//Animacion de entrada 
-function openModalVerPaciente(id) {
-  var modalElement = document.getElementById('modalPaciente' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
 
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+
+<script>
+// Función genérica para animación de entrada y salida de modales
+function toggleModal(id, show) {
+  var modalElement = document.getElementById(id);
+
+  if (show) {
+    modalElement.style.display = 'block';
+    modalElement.style.opacity = '0';
+    modalElement.style.transform = 'translateY(-50px)';
+    modalElement.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+
+    setTimeout(function() {
+      modalElement.style.opacity = '1';
+      modalElement.style.transform = 'translateY(0)';
+    }, 10);
+  } else {
+    modalElement.style.transform = 'translateY(-50px)';
+    modalElement.style.opacity = '0';
+
+    setTimeout(function() {
+      modalElement.style.display = 'none';
+      modalElement.style.transform = 'translateY(0)';
+    }, 500);
+  }
+}
+
+// Uso de la función para los diferentes modales
+
+// Paciente
+function openModalVerPaciente(id) {
+  toggleModal('modalPaciente' + id, true);
 }
 
 function closeModalVerPaciente(id) {
-    document.getElementById('modalPaciente' + id).style.display = 'none';
+  toggleModal('modalPaciente' + id, false);
 }
 
 // Diagnostico
 function openModalVerDiagnostico(id) {
-  var modalElement = document.getElementById('modalDiagnostico' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalDiagnostico' + id, true);
 }
 
 function closeModalVerDiagnostico(id) {
-    document.getElementById('modalDiagnostico' + id).style.display = 'none';
+  toggleModal('modalDiagnostico' + id, false);
 }
 
 // Diagnostico Dos
 function openModalVerDiagnosticoDos(id) {
-  var modalElement = document.getElementById('modalEditarDiagDos' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalEditarDiagDos' + id, true);
 }
 
 function closeModalVerDiagnosticoDos(id) {
-    document.getElementById('modalEditarDiagDos' + id).style.display = 'none';
+  toggleModal('modalEditarDiagDos' + id, false);
 }
 
 // Historial
 function openModalVerHistorial(id) {
-  var modalElement = document.getElementById('modalHistorial' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalHistorial' + id, true);
 }
 
 function closeModalVerHistorial(id) {
-    document.getElementById('modalHistorial' + id).style.display = 'none';
+  toggleModal('modalHistorial' + id, false);
 }
 
 // Historial Familiar
 function openModalVerHistorialFamiliar(id) {
-  var modalElement = document.getElementById('modalHistorialFamiliar' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalHistorialFamiliar' + id, true);
 }
 
 function closeModalVerHistorialFamiliar(id) {
-    document.getElementById('modalHistorialFamiliar' + id).style.display = 'none';
+  toggleModal('modalHistorialFamiliar' + id, false);
 }
 
+// Modificar Historial Familiar
 function openModalModificarHistorialFamiliar(id) {
-  var modalElement = document.getElementById('modalModificarHistorialFamiliar' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalModificarHistorialFamiliar' + id, true);
 }
 
 function closeModalModificarHistorialFamiliar(id) {
-    document.getElementById('modalModificarHistorialFamiliar' + id).style.display = 'none';
+  toggleModal('modalModificarHistorialFamiliar' + id, false);
 }
 
 // Editar Paciente
 function openModalEditar(id) {
-  var modalElement = document.getElementById('modalEditar' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalEditar' + id, true);
 }
 
 function closeModalEditar(id) {
-    document.getElementById('modalEditar' + id).style.display = 'none';
+  toggleModal('modalEditar' + id, false);
 }
 
 // Editar Diagnostico
 function openModalEditarDiag(id) {
-  var modalElement = document.getElementById('modalEditarDiag' + id);
-  modalElement.style.display = 'block';
-  modalElement.style.transform = 'translateY(-100%)';
-  modalElement.style.transition = 'transform 0.5s ease';
-
-  setTimeout(function() {
-    modalElement.style.transform = 'translateY(0)';
-  }, 10); // Ajusta la duración de la pausa según tus necesidades
+  toggleModal('modalEditarDiag' + id, true);
 }
 
 function closeModalEditarDiag(id) {
-    document.getElementById('modalEditarDiag' + id).style.display = 'none';
+  toggleModal('modalEditarDiag' + id, false);
 }
-
 </script>
-
-
 
 </html>
 <?php
