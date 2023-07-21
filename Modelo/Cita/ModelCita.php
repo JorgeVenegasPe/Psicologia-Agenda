@@ -7,14 +7,15 @@ class UserModelCita{
         $con=new conexion();
         $this->PDO=$con->conexion();
     }
-    public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
-        $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita, DuracionCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
-                                        VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :DuracionCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
+    public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita,$FechaFinCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
+        $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita, DuracionCita, FechaFinCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
+                                        VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :DuracionCita,:FechaFinCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
         $statement->bindParam(":IdPaciente", $IdPaciente);
         $statement->bindParam(":MotivoCita", $MotivoCita);
         $statement->bindParam(":EstadoCita", $EstadoCita);
         $statement->bindParam(":FechaInicioCita", $FechaInicioCita);
         $statement->bindParam(":DuracionCita", $DuracionCita);
+        $statement->bindParam(":FechaFinCita", $FechaFinCita);
         $statement->bindParam(":TipoCita", $TipoCita);
         $statement->bindParam(":ColorFondo", $ColorFondo);
         $statement->bindParam(":IdPsicologo", $IdPsicologo);
