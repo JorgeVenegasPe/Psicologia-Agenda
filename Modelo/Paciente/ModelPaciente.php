@@ -15,12 +15,12 @@ class userModelPaciente{
         return $codigoPaciente;
     }
     // Método para guardar un nuevo paciente con el código generado automáticamente
-    public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad, $GradoInstruccion, $Ocupacion, $EstadoCivil, $Genero, $Telefono, $Email, $Direccion, $AntecedentesMedicos, $IdPsicologo, $MedicamentosPrescritos)
+    public function GuardarPaciente($NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad, $GradoInstruccion, $Ocupacion, $EstadoCivil, $Genero, $Telefono, $Email, $Direccion, $AntecedentesMedicos, $IdPsicologo, $MedicamentosPrescritos,$IdProvincia,$IdDepartamento,$IdDistrito)
     {
         $statement = $this->PDO->prepare("INSERT INTO Paciente(NomPaciente, ApPaterno, ApMaterno, Dni, FechaNacimiento, Edad,
-         GradoInstruccion, Ocupacion, EstadoCivil, Genero, Telefono, Email, Direccion, AntecedentesMedicos, IdPsicologo, MedicamentosPrescritos) 
+         GradoInstruccion, Ocupacion, EstadoCivil, Genero, Telefono, Email, Direccion, AntecedentesMedicos, IdPsicologo, MedicamentosPrescritos,IdProvincia,IdDepartamento,IdDistrito) 
          VALUES(:NomPaciente, :ApPaterno, :ApMaterno, :Dni, :FechaNacimiento, :Edad, :GradoInstruccion, 
-         :Ocupacion, :EstadoCivil, :Genero, :Telefono, :Email, :Direccion, :AntecedentesMedicos, :IdPsicologo, :MedicamentosPrescritos)");
+         :Ocupacion, :EstadoCivil, :Genero, :Telefono, :Email, :Direccion, :AntecedentesMedicos, :IdPsicologo, :MedicamentosPrescritos,:IdProvincia,:IdDepartamento,:IdDistrito)");
 
         $statement->bindParam(":NomPaciente", $NomPaciente);
         $statement->bindParam(":ApPaterno", $ApPaterno);
@@ -38,6 +38,9 @@ class userModelPaciente{
         $statement->bindParam(":AntecedentesMedicos", $AntecedentesMedicos);
         $statement->bindParam(":IdPsicologo", $IdPsicologo);
         $statement->bindParam(":MedicamentosPrescritos", $MedicamentosPrescritos);
+        $statement->bindParam(":IdProvincia", $IdProvincia);
+        $statement->bindParam(":IdDepartamento", $IdDepartamento);
+        $statement->bindParam(":IdDistrito", $IdDistrito);
 
         $id = ($statement->execute()) ? $this->PDO->lastInsertId() : false;
 
@@ -64,7 +67,13 @@ class userModelPaciente{
         return ($statement->execute()) ? $statement->fetchAll() : false;
     }
     public function show($IdPaciente){
-        $statement=$this->PDO->prepare("SELECT * FROM Paciente where IdPaciente = :IdPaciente limit 1");
+        $statement=$this->PDO->prepare("SELECT p.IdPaciente,p.CodigoPaciente, p.NomPaciente, p.ApPaterno, p.ApMaterno, p.Dni, p.FechaNacimiento, p.Edad, p.GradoInstruccion, p.Ocupacion, p.EstadoCivil,p.Genero, p.Telefono,
+         p.Email, p.Direccion, p.AntecedentesMedicos, p.IdPsicologo, p.MedicamentosPrescritos, de.name, di.name, pr.name 
+         FROM paciente p 
+         inner join departamento de on de.id = p.IdDepartamento
+         inner join distrito di on di.id = p.IdDistrito
+         inner join provincia pr on pr.id = p.IdProvincia
+        where p.IdPaciente = :IdPaciente limit 1");
         $statement->bindParam(":IdPaciente",$IdPaciente);
         return($statement->execute())? $statement->fetch():false;
 
@@ -75,10 +84,11 @@ class userModelPaciente{
         return($statement->execute())? true:false;
 
     }
-    public function modificarPaciente($IdPaciente,$NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$MedicamentosPrescritos) {
+    public function modificarPaciente($IdPaciente,$NomPaciente, $ApPaterno, $ApMaterno, $Dni, $FechaNacimiento, $Edad,$GradoInstruccion, $Ocupacion, $EstadoCivil,$Genero,$Telefono, $Email, $Direccion,$AntecedentesMedicos,$MedicamentosPrescritos,$IdProvincia,$IdDepartamento,$IdDistrito) {
         $statement = $this->PDO->prepare("UPDATE Paciente SET NomPaciente=:NomPaciente, ApPaterno=:ApPaterno, ApMaterno=:ApMaterno,
         Dni=:Dni,FechaNacimiento=:FechaNacimiento,Edad=:Edad, GradoInstruccion=:GradoInstruccion, Ocupacion=:Ocupacion, EstadoCivil=:EstadoCivil, Genero=:Genero,
-        Telefono=:Telefono, Email=:Email, Direccion=:Direccion, AntecedentesMedicos=:AntecedentesMedicos, MedicamentosPrescritos=:MedicamentosPrescritos WHERE IdPaciente=:IdPaciente");
+        Telefono=:Telefono, Email=:Email, Direccion=:Direccion, AntecedentesMedicos=:AntecedentesMedicos, MedicamentosPrescritos=:MedicamentosPrescritos,
+        IdProvincia=:IdProvincia, IdDepartamento=:IdDepartamento, IdDistrito=:IdDistrito WHERE IdPaciente=:IdPaciente");
         $statement->bindParam(":IdPaciente",$IdPaciente);
         $statement->bindParam(":NomPaciente",$NomPaciente);
         $statement->bindParam(":ApPaterno",$ApPaterno);
@@ -95,6 +105,10 @@ class userModelPaciente{
         $statement->bindParam(":Direccion",$Direccion);
         $statement->bindParam(":AntecedentesMedicos",$AntecedentesMedicos);
         $statement->bindParam(":MedicamentosPrescritos",$MedicamentosPrescritos);
+        $statement->bindParam(":IdProvincia",$IdProvincia);
+        $statement->bindParam(":IdDepartamento",$IdDepartamento);
+        $statement->bindParam(":IdDistrito",$IdDistrito);
+
         return ($statement->execute())? $this->PDO->lastInsertId():false;
     }
     public function MostrarPacientesRecientes($idPsicologo) {

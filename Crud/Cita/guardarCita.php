@@ -6,11 +6,9 @@ $FechaInicioCita = $_POST['FechaInicioCita'];
 $HoraInicio = $_POST['HoraInicio'];
 $FechaInicio = $FechaInicioCita . ' ' . $HoraInicio;
 
-$duracion = $_POST['DuracionCita'];
-
 $fechaInicioObj = new DateTime($FechaInicio);
 
-$obj->guardar($_POST['IdPaciente'],$_POST['MotivoCita'],$_POST['EstadoCita'],$FechaInicio,$_POST['DuracionCita'],$_POST['TipoCita'], $_POST['ColorFondo'], $_POST['IdPsicologo'], $_POST['CanalCita'], $_POST['EtiquetaCita']);
+$obj->guardar($_POST['IdPaciente'],$_POST['MotivoCita'],$_POST['EstadoCita'],$FechaInicio,$_POST['DuracionCita'],$_POST['FechaFin'],$_POST['TipoCita'], $_POST['ColorFondo'], $_POST['IdPsicologo'], $_POST['CanalCita'], $_POST['EtiquetaCita']);
 
 require_once ('../../vendor/autoload.php'); // if you use Composer
 //require_once('ultramsg.class.php'); // if you download ultramsg.class.php

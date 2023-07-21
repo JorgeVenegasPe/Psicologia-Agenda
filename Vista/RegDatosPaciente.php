@@ -46,13 +46,15 @@ if (isset($_SESSION['NombrePsicologo'])){
 				       </div>
             </div>
             <div style="margin-left:2em" id="respuesta"> </div>
-            <div class="input-group">
-  		        <h3 for="ApPaterno">Apellido Paterno</h3>
-  	        	<input id="ApPaterno" type="text" name="ApPaterno" class="input" required/>
-            </div>
-            <div class="input-group">
-              <h3 for="ApMaterno">Apellido Materno</h3>
-  	        	<input id="ApMaterno" type="text" name="ApMaterno" class="input" required/>
+            <div class="input-group2">
+              <div class="input-group">
+  		          <h3 for="ApPaterno">Apellido Paterno</h3>
+  	         	  <input id="ApPaterno" type="text" name="ApPaterno" class="input" required/>
+              </div>
+              <div class="input-group">
+                <h3 for="ApMaterno">Apellido Materno</h3>
+  	          	<input id="ApMaterno" type="text" name="ApMaterno" class="input" required/>
+              </div>
             </div>
             <div class="input-group2">
             <?php
