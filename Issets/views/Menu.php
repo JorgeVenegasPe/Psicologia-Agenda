@@ -51,6 +51,11 @@
             <span class="material-symbols-sharp" translate="no">security</span>
             <h3>Politcas y Privacidad</h3>
         </a>
+        <!--agregamos el la seccion de ajustes perfil-->
+        <a href="Usuario.php">
+            <span class="material-symbols-sharp" translate="no">security</span>
+            <h3>Politcas y Privacidad</h3>
+        </a>
         <a href="../issets/views/Salir.php">
             <span class="material-symbols-sharp" translate="no">logout</span>
             <h3>Salir</h3>
