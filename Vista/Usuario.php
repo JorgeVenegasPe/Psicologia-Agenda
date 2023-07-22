@@ -32,16 +32,16 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?> 
       <div class="recent-updates">
       <form action="../Crud/Paciente/guardarPaciente.php" method="post">
-    <h4 style="margin-bottom: 100px;"></h4>
+    <h4 style="margin-bottom: 0px;"></h4>
     <div style="display: flex; align-items: center; justify-content: center;"></div>
-    <div style="width: 80%; margin-left: 10%; margin-bottom:100px;">
+    <div style="width: 70%; margin-left: 15%; margin-bottom:5px;">
         <div class="checkout-information">
             <div style="display: flex; align-items: center; justify-content: center;">
-                <img src="https://static.vecteezy.com/system/resources/previews/018/765/757/non_2x/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg" alt="" style="width: 200px; height: 200px; border-radius: 100px; border: 10px solid #886CA7; position: absolute; top: +80px;"></div><br><br><br><br>
+                <img src="https://static.vecteezy.com/system/resources/previews/018/765/757/non_2x/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg" alt="" style="width: 150px; height: 150px; border-radius: 80px; border: 10px solid #886CA7; position: absolute; top: +50px;"></div><br><br><br><br>
                 <div class="input-group" style="margin-bottom:20px;">
                 <div class="data_usuario" style="background-color: white;">
-                <h3 for="ApPaterno" style="font-size: 14px;">Usuario</h3>
-                <input style="height: 40px; font-size:15px; text-align: center;" id="ApPaterno" type="text" name="ApPaterno" class="input" required value="<?php echo $_SESSION['Usuario']; ?>" disabled/>
+                <h3 for="ApPaterno" style="font-size: 14px; margin-bottom:5px;"></h3>
+                <input style="height: 40px; font-size:20px; text-align: center; background-color:white;" id="ApPaterno" type="text" name="ApPaterno" class="input" required value="<?php echo $_SESSION['Usuario']; ?>" disabled/>
               </div>
           </div>
       <script>
@@ -57,7 +57,7 @@ if (isset($_SESSION['NombrePsicologo'])){
  <div class="input-group" style="display: grid; grid-template-columns: repeat(2, 1fr);  margin-bottom:20px;">
                 <div class="data_usuario" style="background-color: white;">
                   <h3 for="ApPaterno" style="font-size: 14px;">ID</h3>
-                  <input style="height: 40px;" id="ApPaterno" type="text" name="ApPaterno" class="input" required/>
+                  <input style="height: 40px; font-size:15px; " id="ApPaterno" type="text" name="ApPaterno" class="input" required value="<?php echo $_SESSION['IdPsicologo']; ?>" disabled/>
                 </div>
                 <div class="btn_editar" style="display: flex; justify-content: flex-end; align-items:center; background-color: white; height:100%; ">
                   <button style="width: 100px; height:40px; border: 2px solid #886CA7; background-color: #eee3fffb;  border-radius:10px; ">Editar</button>
@@ -65,7 +65,7 @@ if (isset($_SESSION['NombrePsicologo'])){
               </div>
               <div class="input-group" style="display: grid; grid-template-columns: repeat(2, 1fr);  margin-bottom:20px;">
                 <div class="data_usuario" style="background-color: white;">
-                  <h3 for="ApPaterno" style="font-size: 14px;">NombrePsicologo</h3>
+                  <h3 for="ApPaterno" style="font-size: 14px;">Nombre</h3>
                   <input style="height: 40px; font-size:14px; " id="ApPaterno" type="text" name="ApPaterno" class="input" required value="<?php echo $_SESSION['NombrePsicologo']; ?>" disabled/>
                 </div>
                 <div class="btn_editar" style="display: flex; justify-content: flex-end; align-items:center; background-color: white; height:100%; ">
@@ -136,7 +136,7 @@ if ($result->num_rows > 0) {
               </div>
             <div class="input-group2"></div>
             <div class="button-container">
-                <button id="submitButton"  style="height: 20px;"class="button">Editar Usuario</button>
+                <button id="submitButton"  style="height: 20px; "class="button">Editar</button>
             </div>
         </div>          
     </div>
