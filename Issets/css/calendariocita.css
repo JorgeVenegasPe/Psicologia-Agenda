@@ -36,7 +36,7 @@ a {
     grid-template-columns: 17rem auto;
 }
 .fc-col-header-cell-cushion{
-    color: #9274b3;
+    color: #6a91f4;
     
 }
 .fc-col-header-cell-cushion:hover{
@@ -46,50 +46,50 @@ a {
 .fc-toolbar-title {
     text-transform: capitalize;
     font-weight: bold;
-    color: #9274b3;
+    color: #6a91f4;
   }
 .fc-prev-button,
 .fc-prev-button.fc-button,
 .fc-prev-button.fc-button-primary {
-border-color: #f38238;
-background-color: #f38238;
+border-color: #49c691;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 
 .fc-next-button,
 .fc-next-button.fc-button,
 .fc-next-button.fc-button-primary {
-border-color: #f38238;
-background-color: #f38238;
+border-color: #49c691;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 .fc-today-button.fc-button.fc-button-primary {
-border-color: #f38238;
-background-color: #f38238;
+border-color: #49c691;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 /* Cambiar color del botón dayGridMonth */
 .fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
-background-color: #8fab60;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 .fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
-background-color: #8fab60;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 .fc-dayGridMonth-button.fc-button.fc-button-primary{
-background-color: #b4d77b;
+background-color: #49c691;
 
 }
 /* Cambiar color del botón timeGridWeek */
 .fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active{
-background-color: #8fab60;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 
 /* Cambiar color del botón timeGridDay */
 .fc-timeGridDay-button.fc-button.fc-button-primary.fc-button-active {
-background-color: #8fab60;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 
@@ -97,7 +97,7 @@ background-color: #8fab60;
 .fc-timeGridWeek-button,
 .fc-timeGridWeek-button.fc-button,
 .fc-timeGridWeek-button.fc-button-primary {
-background-color: #b4d77b;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 
@@ -105,7 +105,7 @@ background-color: #b4d77b;
 .fc-timeGridDay-button,
 .fc-timeGridDay-button.fc-button,
 .fc-timeGridDay-button.fc-button-primary {
-background-color: #b4d77b;
+background-color: #49c691;
 /* Otros estilos que desees aplicar */
 }
 .modal-content{
@@ -116,7 +116,7 @@ margin-inline: auto;
 margin-top: 80px;
 background-color: #fff;
 border-style: double;
-border-color:#b4d77b;
+border-color:#49c691;
 padding: 15px 35px;
 border-radius: 2em;
 box-shadow: 0 1px 1rem 
@@ -147,8 +147,8 @@ font-weight: bold;
 flex-direction: row;
 }
 #BotonAgregar{
-background-color: #f38238;
-border-color: #f38238;
+background-color: #49c691;
+border-color: #49c691;
 font-size: 15px;
 
 }#BotonModificar{

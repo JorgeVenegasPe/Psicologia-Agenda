@@ -121,7 +121,12 @@ class userModelPaciente{
     public function MostrarDepartamento(){
         $statement = $this->PDO->prepare("SELECT * FROM departamento");  
         return ($statement->execute()) ? $statement->fetchAll() : false;
-
+    }
+    public function DatosPsicologo($idPsicologo){
+        $statement = $this->PDO->prepare("SELECT * FROM psicologo 
+        where IdPsicologo = :idPsicologo");  
+        $statement->bindParam(":idPsicologo", $idPsicologo);        
+        return ($statement->execute()) ? $statement->fetchAll() : false;
     }
 }
 ?>

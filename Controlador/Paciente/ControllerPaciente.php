@@ -42,7 +42,8 @@ class usernameControlerPaciente{
     public function MostrarDepartamento() {
         return ($this->model->MostrarDepartamento()) ?: false;
     }
-        
-        
+    public function DatosPsicologo($idPsicologo) {
+        return ($this->model->DatosPsicologo($idPsicologo)) ?: false;
+    }
 }
 ?>

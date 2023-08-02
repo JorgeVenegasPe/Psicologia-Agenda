@@ -47,7 +47,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                   </div>
               </div>
               <div class="input-group" >
-                <h3 for="NomPaciente">Nombre Paciente</h3>
+                <h3 for="NomPaciente">Nombre Paciente </h3>
                 <div style="display: flex; gap:5px;">
                   <input id="NomPaciente" type="text" name="NomPaciente" class="input" />
                     <a class="search nom"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>

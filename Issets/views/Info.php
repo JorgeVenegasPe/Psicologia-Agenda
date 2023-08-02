@@ -19,6 +19,10 @@
             <small class="text-muted">Admin</small>
         </div>
     </div>
+    <a href="../issets/views/Salir.php">
+        <span class="material-symbols-sharp" translate="no">logout</span>
+        <h3>Salir</h3>
+    </a>
 </div>
 </body>
 </html>

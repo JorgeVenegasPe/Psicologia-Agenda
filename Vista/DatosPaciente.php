@@ -13,6 +13,10 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
     <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>
@@ -27,6 +31,7 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     $departamentos = $Pac->MostrarDepartamento();
     $rows=$Pac->ver($_SESSION['IdPsicologo']);
 ?>
+
 <div class="containerTotal">
 <?php
     require_once '../issets/views/Menu.php';
@@ -47,13 +52,13 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
           <div class="insightsDatos" >
             <div class="card" data-id="<?=$row[0]?>">
                 <div class="card__body">
-                    <h1><?=$row[1]?> <?=$row[2]?></h1>
+                  <h1><a style="color: #9274b3; cursor: pointer;" class="nav-link" onclick="openModalVerPaciente('<?=$row[0]?>')"><?=$row[1]?> <?=$row[2]?></a></h1>
                     <br>
                     <p class="id" style="display:none"><b >Id: </b><?=$row[0]?></p>
                     <p class="codigo"><b>Código Paciente: </b> <?=$row[18]?></p>
                     <p class="correo"><b>Correo: </b><?=$row[12]?></p>
                     <br>
-                    <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerPaciente('<?=$row[0]?>')">Ver Datos Personales</a>
+                    <a type="button" style="cursor:pointer;" class="nav-link" href="citas.php">Agregar Cita</a>
                     <br>
                     <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerHistorialFamiliar('<?=$row[0]?>')">Ver Datos Familiares</a>
                     <br>
@@ -402,9 +407,17 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
               </div>
           </div>
         <?php endforeach; ?>
-        
+          <div class="insightsDatos" >
+            <div class="card">
+                <div class="card__body">
+                    <h1>Agregar nuevo Paciente</h1>
+                    <br>
+                    <a type="button" href="RegPaciente.php" style="cursor:pointer;" class="nav-link">Agregar</a>
+                </div>
+            </div>
+          </div>
         <?php else : ?>  
-                <p class="centered-text">No hay Pacientes<a href="RegDatosPaciente.php"> Agregar nuevo paciente </a></p>
+                <p class="centered-text">No hay Pacientes<a href="RegPaciente.php"> Agregar nuevo paciente </a></p>
 
       <?php endif ; ?>
     </div>
@@ -414,8 +427,8 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
         <table>
             <thead>
                 <tr>
-                    <th>Codigo</th>
                     <th>Nombres</th>
+                    <th>Codigo</th>
                     <th>DNI</th>
                 </tr>
             </thead>
@@ -423,11 +436,13 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
               <?php if($rows) :?>
                 <?php foreach ($rows as $row): ?>
                   <tr>
-                      <td><?=$row[18]?></td>
-                      <td><?=$row[1]?> <?=$row[2]?></td>
-                      <td><?=$row[12]?></td>
                       <td>
-                          <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerPaciente('<?=$row[0]?>')">Ver Datos Personales</a>
+                        <a style="color: black; cursor: pointer;" class="nav-link" onclick="openModalVerPaciente('<?=$row[0]?>')"><?=$row[1]?> <?=$row[2]?></a>
+                      </td>
+                      <td><?=$row[18]?></td>
+                      <td><?=$row[4]?></td>
+                      <td>
+                      <a type="button" style="cursor:pointer;" class="nav-link" href="citas.php">Agregar Cita</a>
                       </td>
                       <td>
                           <a type="button" style="cursor:pointer;" class="nav-link" onclick="openModalVerHistorialFamiliar('<?=$row[0]?>')">Ver Datos Familiares</a>
