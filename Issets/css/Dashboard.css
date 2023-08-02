@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 :root {
-    --color-primary: #9274b3;
-    --color-danger:#f38238;
+    --color-primary: #49c691;
+    --color-danger:#6a91f4;
     --color-success: #b4d77b;
-    --color-warning: #f38238;
+    --color-warning: #6a91f4;
     --color-white: #fff;
     --color-info-dark: #7d8da1;
     --color-info-light: #dce1eb;
     --color-dark: #363949;
     --color-light: rgba(132, 139, 200, 0.18);
-    --color-primary-variant: #9274b3;
+    --color-primary-variant: #49c691;
     --color-dark-variant:#677483;
     --color-background:#f6f6f9;
     
@@ -357,6 +357,7 @@ main .recent-orders a {
 }
 
 
+/* ========= DANIEL ===========*/
 
 
 

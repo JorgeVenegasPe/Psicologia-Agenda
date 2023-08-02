@@ -30,7 +30,7 @@ select{
 	border: none;
     top: 20px;   
     font-weight: bold;
-    color: #9274b3;
+    color: #6a91f4;
 }
 button{
     font: inherit;
@@ -62,12 +62,12 @@ form {
     align-items: center;
     font-weight: bold;
     font-size: 5px;
-    background-color: #f38238;
+    background-color: #49c691;
     color: #fff;
     cursor: pointer;
     border-radius: 1px;
     padding: 2px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     transition: color 1s;
 }
 
@@ -190,13 +190,13 @@ main .recent-citas a {
 }
 
 input::placeholder {
-    color: #9274b3;
+    color: #49c691;
     font-weight: lighter;
     font-style: italic;
 }
 
 textarea::placeholder{
-    color: #9274b3;
+    color: #49c691;
     font-weight: lighter;
     font-style: italic;
 }
@@ -222,7 +222,7 @@ textarea::placeholder{
     display: block;
     font-size: 2.5em;
     margin-bottom: 10px;
-    color: #f38238;
+    color: #49c691;
 }
 
 .title2 {
@@ -241,10 +241,10 @@ textarea::placeholder{
     letter-spacing: 2px;
     align-items: center;
     font-weight: bold;
-    background-color: #f38238 ;
+    background-color: #49c691 ;
     color: #fff;
     border-radius: 1px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     padding: 5px 10px;
     margin-top: 7px;
     overflow: hidden;
@@ -261,10 +261,10 @@ textarea::placeholder{
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold;
-    background-color: #f38238 ;
+    background-color: #49c691 ;
     color: #fff;
     border-radius: 1px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     padding: 5px 10px;
     margin-top: 7px;  
     margin-left: 53em;
@@ -300,7 +300,7 @@ textarea::placeholder{
     border: 1px solid #888;
     width: 80%;
   }
-  
+
   .close {
     color: #aaa;
     float: right;
@@ -325,7 +325,7 @@ textarea::placeholder{
     text-decoration: none;
     padding: 8px 12px;
     margin: 0 4px;
-    border: 1px solid #f38238;
+    border: 1px solid #49c691;
     border-radius: 4px;
 }
 
@@ -335,7 +335,7 @@ textarea::placeholder{
 
 .pagination .current-page {
     background-color: #4CAF50;
-    color: #f38238;
+    color: #49c691;
 }
 
 
@@ -394,3 +394,48 @@ textarea::placeholder{
         gap: 0;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -30,7 +30,54 @@ require_once("../Controlador/Cita/citaControlador.php");
         ?>    
         <!----------- end of aside -------->
         <main>
-            <h2>Dashboard</h2>
+            <br>
+            <h4 style="text-align: center;">Dashboard</h4>
+            <!----------------- END OF INSIGHTS --------------->
+            <div class="recent-orders">
+                <h2>Citas de la Semana</h2>
+                <table class="tabla-dash">
+                    <thead>
+                        <tr>
+                            <th>Cod.</th>
+                            <th>Paciente</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Duracion</th>
+                            <th>Tipo</th>
+                            <th>Canal</th>
+                            <th>Etiquetas</th>
+                            <th >1º Mensaje</th>
+                            <th >2º Mensaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php if ($Citas) :?>
+                        <?php foreach ($Citas as $Cita): ?>
+                        <tr>
+                            <td><?=$Cita[11]?></td>
+                            <td><?=$Cita[1]?></td>
+                            <td><?=$Cita[2]?></td>
+                            <td><?=$Cita[3]?></td>
+                            <td><?=$Cita[4]?></td>
+                            <td style="color:green"><?=$Cita[5]?></td>
+                            <td><?=$Cita[6]?></td>
+                            <td><?=$Cita[9]?></td>
+                            <td><?=$Cita[10]?></td>
+                            <td style="color: green;">Yes</td>
+                            <td style="color: red;">No</td>
+                        </tr>
+                        <?php endforeach;?>
+                            <?php else : ?>
+                                <tr>
+                                <td colspan="13" style="text-align: center;"><a href="citas.php"> No hay Citas Agregar nueva Cita </a> </td>
+                                </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                <a href="citas.php">Agregar nueva cita</a>
+            </div>
+            <h2>Estadisticas</h2>
 
             <div class="insights">  
                 <div class="sales">
@@ -92,6 +139,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                     </div>
                 </div>
                 <!------------------- Final del Sales -------------------->
+                
                 <div class="expenses">
                     <span class="material-symbols-sharp a" translate="no">bar_chart</span>
                     <div class="middle">
@@ -113,7 +161,7 @@ require_once("../Controlador/Cita/citaControlador.php");
                         <div class="progress">
                             <canvas id="miGrafica2"></canvas>
                             <script>
-                                const datos2 = [<?php echo $PORCENTAJES['porcentaje_cita_online']; ?>, <?php echo $PORCENTAJES['porcentaje_marketing_directo']; ?>, <?php echo $PORCENTAJES['porcentaje_referidos']; ?>];
+                                const datos2 = [<?php echo $PORCENTAJES['porcentaje_cita_online']; ?>, <?php echo $IdPsicologoPORCENTAJES['porcentaje_marketing_directo']; ?>, <?php echo $PORCENTAJES['porcentaje_referidos']; ?>];
 
                                 const data2 = {
                                   labels: ["Cita Online", "Marketing Directo", "Referidos"],
@@ -209,51 +257,6 @@ require_once("../Controlador/Cita/citaControlador.php");
                 </div>
                 <!------------------- Final del income -------------------->
             </div>
-            <!----------------- END OF INSIGHTS --------------->
-            <div class="recent-orders">
-                <h2>Citas de la Semana</h2>
-                <table class="tabla-dash">
-                    <thead>
-                        <tr>
-                            <th>Cod.</th>
-                            <th>Paciente</th>
-                            <th>Motivo</th>
-                            <th>Estado</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Duracion</th>
-                            <th>Tipo</th>
-                            <th>Canal</th>
-                            <th>Etiquetas</th>
-                            <th >1º Mensaje</th>
-                            <th >2º Mensaje</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php if ($Citas) :?>
-                        <?php foreach ($Citas as $Cita): ?>
-                        <tr>
-                            <td><?=$Cita[11]?></td>
-                            <td><?=$Cita[1]?></td>
-                            <td><?=$Cita[2]?></td>
-                            <td><?=$Cita[3]?></td>
-                            <td><?=$Cita[4]?></td>
-                            <td style="color:green"><?=$Cita[5]?></td>
-                            <td><?=$Cita[6]?></td>
-                            <td><?=$Cita[9]?></td>
-                            <td><?=$Cita[10]?></td>
-                            <td style="color: green;">Yes</td>
-                            <td style="color: red;">No</td>
-                        </tr>
-                        <?php endforeach;?>
-                            <?php else : ?>
-                                <tr>
-                                <td colspan="13" style="text-align: center;"><a href="citas.php"> No hay Citas Agregar nueva Cita </a> </td>
-                                </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-                <a href="citas.php">Agregar nueva cita</a>
-            </div>
         </main>
         <!------ End of Main -->
         <div class="right">
@@ -271,6 +274,11 @@ require_once("../Controlador/Cita/citaControlador.php");
                         <small class="text-muted">Admin</small>
                     </div>
                 </div>
+                
+                <a href="../issets/views/Salir.php">
+                    <span class="material-symbols-sharp" translate="no">logout</span>
+                    <h3>Salir</h3>
+                </a>
             </div>
             <!----------end of Top------->
             <div class="recent-updates">
@@ -287,11 +295,11 @@ require_once("../Controlador/Cita/citaControlador.php");
                                 </div>                                
                             <?php endforeach; ?>
                             <?php else : ?>
-                                    <p style="text-align: center;">No hay Pacientes<a href="RegDatosPaciente.php"> Agregar nuevo paciente </a> </p>
+                                    <p style="text-align: center;">No hay Pacientes<a href="RegPaciente.php"> Agregar nuevo paciente </a> </p>
                         <?php endif; ?>
                     </div>
                 </div>
-                <a href="RegDatosPaciente.php">Agregar Paciente</a>
+                <a href="RegPaciente.php">Agregar Paciente</a>
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Menu.php';
     ?>
     <!----------- fin de aside -------->
-    <main>
+    <main >
     <?php
     require_once '../Issets/views/Info.php';
     ?>

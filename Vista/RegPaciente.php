@@ -157,7 +157,7 @@ if (isset($_SESSION['NombrePsicologo'])){
           </div>
         </div>
         <br>
-          <div class="button-container">
+          <div class="button-container" style=" margin-top:10px;gap:15px">
             <button id="submitButton" class="button">Registrar</button>
           </div>
         </form>

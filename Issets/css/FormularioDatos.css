@@ -201,7 +201,7 @@ main .insightsDatos small {
 .title {
     font-size: 2.2em;
     margin-bottom: 10px;
-    color: #f38238;
+    color: #49c691;
 }
 .error{
     font-size: 1em;
@@ -270,12 +270,12 @@ main .insightsDatos small {
     letter-spacing: 1px;
     align-items: center;
     font-weight: bold;
-    background-color: #f38238 ;
+    background-color: #49c691 ;
     color: #fff;
     margin: 0.5em;
     border-radius: 1px;
     font-size: 10px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     padding: 5px 10px;
     overflow: hidden;
     transition: color 1s;
@@ -289,11 +289,11 @@ main .insightsDatos small {
 
 .buttonEditar {
     font-weight: bold;
-    background-color: #f38238 ;
+    background-color: #49c691 ;
     color: #fff;
     cursor: pointer;
     border-radius: 1px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     padding: 4px 4px;
     transition: color 1s;
 }
