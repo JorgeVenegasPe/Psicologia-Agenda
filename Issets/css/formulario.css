@@ -150,10 +150,11 @@ main .recent-citas table {
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
 }
-
+    
 main .recent-citas table:hover{
     box-shadow: none;
 }
+
 main .recent-citas a {
     text-align: center;
     display: block;
@@ -233,6 +234,7 @@ textarea::placeholder{
 }
 .button-container {
     display: flex;
+    gap: 20px;
     justify-content: flex-end; /* Cambiamos de "right" a "flex-start" */
 }
 

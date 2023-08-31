@@ -16,6 +16,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="../issets/css/formulario.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="../issets/js/Citas.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Citas</title>
@@ -36,7 +37,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Menu.php';
     ?>
     <!----------- fin de aside -------->
-    <main >
+    <main class="animate__animated animate__fadeIn">
     <?php
     require_once '../Issets/views/Info.php';
     ?>
