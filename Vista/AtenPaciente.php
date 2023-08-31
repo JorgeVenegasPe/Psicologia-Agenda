@@ -12,6 +12,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="../issets/css/formulario.css">
     <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos del Paciento</title>
 </head>
@@ -21,14 +22,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Menu.php';
   ?> 
   <!----------- end of aside -------->
-  <main>
+  <main class="animate__animated animate__fadeIn">
     <?php
     require_once '../Issets/views/Info.php';
     ?> 
     <div class="container-form">
       <div class="recent-updates">
         <form action="../Crud/Paciente/guardarAtencPaciente.php" method="post">
-        <h4>Atencion al Paciente</h4>
+        <h4><a href="RegPaciente.php" style="float: left;"><</a>Atencion al Paciente</h4>
+        <br>
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">
             <div class="input-group2">

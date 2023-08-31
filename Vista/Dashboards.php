@@ -12,6 +12,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../Issets/css/Dashboard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -29,7 +30,7 @@ require_once("../Controlador/Cita/citaControlador.php");
             require_once '../Issets/views/Menu.php';
         ?>    
         <!----------- end of aside -------->
-        <main>
+        <main class="animate__animated animate__fadeIn">
             <br>
             <h4 style="text-align: center;">Dashboard</h4>
             <!----------------- END OF INSIGHTS --------------->

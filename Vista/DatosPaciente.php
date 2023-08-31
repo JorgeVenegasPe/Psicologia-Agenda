@@ -13,10 +13,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
     <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>
@@ -37,7 +34,7 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     require_once '../issets/views/Menu.php';
   ?> 
   <!----------- end of aside -------->
-  <main>
+  <main class="animate__animated animate__fadeIn">
     <?php
     require_once '../issets/views/Info.php';
     ?> 
