@@ -16,38 +16,46 @@
     </div>
     <div class="sidebar">
         <a class="dashboard" href="Dashboards.php" >
-            <span class="material-symbols-sharp" translate="no">grid_view</span>
+            <span class="material-symbols-sharp" translate="no">dashboard</span>
             <h3>Dashboard</h3>
         </a>
-        
         <a class="pacientes" href="TablaPacientes.php">
             <span class="material-symbols-sharp" translate="no">groups</span>
             <h3>Pacientes</h3>
         </a>
         <a class="citas" href="TablaCitas.php">
             <span class="material-symbols-sharp" translate="no">contacts</span>
-            <h3>Citas</h3>
+
+        <a class="pacientes" href="RegPaciente.php">
+            <span class="material-symbols-sharp" translate="no">groups</span>
+            <h3>Pacientes</h3>
         </a>
-        <a class="calendario" href="CalendarioCitas.php">
-            <span class="material-symbols-sharp" translate="no">calendar_month</span>
-            <h3>Calendario</h3>
+        <a class="citas" href="citas.php">
+            <span class="material-symbols-sharp" translate="no">volunteer_activism</span>
+
+            <h3>Citas</h3>
         </a>
         <a class="historial" href="DatosPaciente.php">
             <span class="material-symbols-sharp" translate="no">history</span>
             <h3>Historial</h3>
         </a>
+        <a class="calendario" href="CalendarioCitas.php">
+            <span class="material-symbols-sharp" translate="no">calendar_month</span>
+            <h3>Calendario</h3>
+        </a>
+
         <a class="planes" href="Salir.php">
-            <span class="material-symbols-sharp" translate="no">paid</span>
+            <span class="material-symbols-sharp" translate="no">account_balance_wallet</span>
             <h3>Planes</h3>
         </a>
         <a class="privacidad" href="../issets/views/seguridad.php">
             <span class="material-symbols-sharp" translate="no">security</span>
             <h3>Politcas y Privacidad</h3>
         </a>
-        <a class="ajuste" href="ajuste.php">
+        <!-- <a class="ajuste" href="ajuste.php">
             <span class="material-symbols-sharp" translate="no">settings</span>
             <h3>Ajustes</h3>
-        </a>
+        </a> -->
     </div>
     <div class="nav-menu-btn"></div>  
 </aside>
