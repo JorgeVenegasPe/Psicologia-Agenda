@@ -20,11 +20,11 @@
             <h3>Dashboard</h3>
         </a>
         
-        <a class="pacientes" href="RegPaciente.php">
-            <span class="material-symbols-sharp" translate="no">receipt_long</span>
+        <a class="pacientes" href="TablaPacientes.php">
+            <span class="material-symbols-sharp" translate="no">groups</span>
             <h3>Pacientes</h3>
         </a>
-        <a class="citas" href="citas.php">
+        <a class="citas" href="TablaCitas.php">
             <span class="material-symbols-sharp" translate="no">contacts</span>
             <h3>Citas</h3>
         </a>

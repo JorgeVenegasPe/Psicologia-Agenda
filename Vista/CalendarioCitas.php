@@ -32,7 +32,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Menu.php';
   ?> 
   <!----------- end of aside -------->
-  <main class="animate__animated animate__fadeIn">
+  <main >
     <?php
     require_once '../Issets/views/Info.php';
     ?> 
