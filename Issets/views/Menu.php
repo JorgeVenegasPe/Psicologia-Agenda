@@ -19,13 +19,20 @@
             <span class="material-symbols-sharp" translate="no">dashboard</span>
             <h3>Dashboard</h3>
         </a>
-        
+        <a class="pacientes" href="TablaPacientes.php">
+            <span class="material-symbols-sharp" translate="no">groups</span>
+            <h3>Pacientes</h3>
+        </a>
+        <a class="citas" href="TablaCitas.php">
+            <span class="material-symbols-sharp" translate="no">contacts</span>
+
         <a class="pacientes" href="RegPaciente.php">
             <span class="material-symbols-sharp" translate="no">groups</span>
             <h3>Pacientes</h3>
         </a>
         <a class="citas" href="citas.php">
             <span class="material-symbols-sharp" translate="no">volunteer_activism</span>
+
             <h3>Citas</h3>
         </a>
         <a class="historial" href="DatosPaciente.php">
