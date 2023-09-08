@@ -351,7 +351,7 @@ class UserModelCita{
     
 
 
-    
+
 
     public function obtenerCitasConNombrePacienteHoraMinutos() {
         // Obtener el IdPsicologo de la sesión
@@ -390,6 +390,46 @@ class UserModelCita{
         }
     }
     
+
+
+
+
+
+
+    
+public function contarPacientesUltimoMes() {
+    // Obtener el IdPsicologo de la sesión
+    $idPsicologo = $_SESSION['IdPsicologo'];
+
+    // Obtener la fecha actual
+    $fechaActual = date("Y-m-d");
+
+    // Calcular la fecha hace un mes atrás
+    $fechaHaceUnMes = date("Y-m-d", strtotime("-1 month"));
+
+    // Consulta SQL para contar los registros donde IdPsicologo sea igual al valor de la sesión
+    // y la FechaRegistro (solo la parte de la fecha) esté dentro del último mes
+    $sql = "SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) BETWEEN :fechaHaceUnMes AND :fechaActual";
+
+    // Preparar la consulta
+    $statement = $this->PDO->prepare($sql);
+
+    // Asignar los valores a los parámetros de la consulta
+    $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+    $statement->bindParam(":fechaHaceUnMes", $fechaHaceUnMes, PDO::PARAM_STR);
+    $statement->bindParam(":fechaActual", $fechaActual, PDO::PARAM_STR);
+
+    // Ejecutar la consulta
+    $result = $statement->execute();
+
+    if ($result) {
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $total_registros = $row["total"];
+        return $total_registros;
+    } else {
+        return 0;
+    }
+}
 
 
     

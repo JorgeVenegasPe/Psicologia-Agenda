@@ -501,9 +501,18 @@ background-color: #6A90F1; border-radius: 20px 20px 0px 0px; color: #fff; paddin
 }
 
 
-
-
-
+.h3-dsh{
+    text-align: start; margin:5px 30px;
+}
+.pie-chart{
+    border-radius: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); margin:20px 0px; color:#6A90F1;
+}
+.section-cia{
+    border-radius: 5px; border: 2px solid #a0a0a0; padding: 2px; display: flex; justify-content: space-between; align-items: center;
+}
+.contenedor-secciones{
+    width:900px; display:grid; grid-template-columns: 55% 45%;
+}
 
 
 

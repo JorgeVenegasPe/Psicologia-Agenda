@@ -32,6 +32,10 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
 
     $totalRegistrosEnCitasHora = (new UserModelCita())->obtenerFechasCitasConFechaActual();
 
+    $contarPacientesUltimoMes = (new UserModelCita())->contarPacientesUltimoMes();
+
+
+
 
     $PORC=new usernameControlerCita();
     $Pac=new usernameControlerPaciente();
@@ -53,7 +57,11 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
                 <h3 style="color:#6A90F1; font-size: 18px;">
                 Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
 </h3>
+<h3 style="color:#6A90F1; font-size: 18px;">
+    Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= $contarPacientesUltimoMes ?> pacientes</span> registrados en el último mes
+</h3>
 
+<div class="contenedor-secciones">
 
 <div class="agenda">
     <div class="div_event3">
@@ -78,7 +86,7 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
                 <tr>
                     <td><?= $cita["HoraMinutos"] ?></td>
                     <td>
-                        <div style="border-radius: 5px; border: 2px solid #a0a0a0; padding: 2px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="section-cia">
                             <span><?= $cita["NomPaciente"] ?></span>
                             <button class="button3">Botón</button>
                         </div>
@@ -90,8 +98,45 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
         <p>No hay citas programadas para hoy.</p>
     <?php endif; ?>
 </div>
+<div class="pie-chart" >
+<h3 style="text-align: start; margin:20px 30px;">Pacientes del ultimo mes</h3>
+        <h2>Canal de Atracción</h2>
+        <canvas id="myPieChart"></canvas>
+        <h3  class="h3-dsh">Cita Online</h3>
+        <h3  class="h3-dsh">Referidos</h3>
+        <h3  class="h3-dsh">Marketing Digital</h3>
+    </div>
 
+    <script>
+    // Importa los datos que deseas mostrar en el gráfico de pastel.
+    var pacientesUltimoMes = <?= $contarPacientesUltimoMes ?>;
 
+    // Configura el gráfico de pastel
+    var ctx = document.getElementById("myPieChart").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["Pacientes del último mes", "Otros Pacientes"],
+            datasets: [{
+                backgroundColor: ["#8CB7C2", "#f2f2f2"],
+                data: [pacientesUltimoMes, <?= $totalPacientes - $contarPacientesUltimoMes ?>]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    // Agrega el mensaje "Gráfico del último mes" debajo del gráfico
+    var pieChartMessage = document.createElement("p");
+    pieChartMessage.innerHTML = "Gráfico del último mes";
+    document.querySelector(".pie-chart").appendChild(pieChartMessage);
+
+</script>
+</div>
             <!--
             <h2>Estadisticas</h2>
             -->
