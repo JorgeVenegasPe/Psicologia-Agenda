@@ -16,6 +16,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
     <script src="../issets/js/jquery-3.6.0.min.js"></script>
     <script src="../issets/js/popper.min.js"></script>
     <script src="../issets/js/bootstrap.min.js"></script>
@@ -28,23 +29,21 @@ if (isset($_SESSION['NombrePsicologo'])){
 <body>
 <div class="container-calendario">
 <?php
-    require_once 'Menu.php';
+    require_once '../Issets/views/Menu.php';
   ?> 
   <!----------- end of aside -------->
-  <main>
+  <main >
     <?php
-    require_once 'Info.php';
+    require_once '../Issets/views/Info.php';
     ?> 
     <!----------- Calendario ------------------>
     <div class="container-fluid2">
-    <h2 class="title">Calendario de Citas</h2>
+      <h4 style="text-align:center">Calendario de Citas</h4>
       <div id="Calendario1"></div>
-      
     </div>
 
     <!-- Formulario de Eventos -->
     <div class="modal fade" id="FormularioEventos" tabindex="-1" role="dialog">
-    
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <a  class="close" data-bs-dismiss="modal" aria-label="Close">&times;</a>
@@ -70,9 +69,13 @@ if (isset($_SESSION['NombrePsicologo'])){
               <div class="form-row">
                 <div class="form-group">
                   <label for="TituloCompleto">Paciente</label>
-                  <input type="text" id="TituloCompleto" class="form-control" >
+                  <input type="text" id="TituloCompleto" name="TituloCompleto" class="form-control" >
                 </div>
               </div>
+              <div style="display:none" class="form-row">
+			        	<label for="correo" >correo<b style="color:red">*</b></label>
+			        	<input id="correo" type="text" name="correo"  readonly/>
+			        </div>
               <br>
               <div class="form-row">
                 <div class="form-group">
@@ -106,13 +109,13 @@ if (isset($_SESSION['NombrePsicologo'])){
                 <div class="col-sm">
                   <label class="form-label" >Fecha de Cita</label>
                   <div class="input-group" data-autoclose="true">
-                    <input type="date" id="FechaInicio" value="" class="form-control">
+                    <input type="date" id="FechaInicio" name="FechaInicio" value="" class="form-control">
                   </div>
                 </div>
                 <div class="col-sm">
                   <label class="form-label" >Hora Cita</label>
                   <div class="input-group clockpicker" data-autoclose="true">
-                    <input type="text" id="HoraInicio" value="" class="form-control" autocomplete="off">
+                    <input type="text" id="HoraInicio" name="HoraInicio" value="" class="form-control" autocomplete="off">
                   </div>
                 </div>
               </div>
@@ -199,7 +202,17 @@ document.addEventListener("DOMContentLoaded", function(){
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
       editable: true,
-      events: '../Modelo/Cita/datoseventos.php?accion=listar',
+      events: {
+    url: '../Modelo/Cita/datoseventos.php',
+    method: 'GET',
+    extraParams: {
+      accion: 'listar',
+      idPsicologo: <?=$_SESSION['IdPsicologo']?>,
+    },
+    failure: function() {
+      alert('Error al cargar los eventos');
+    }
+  },
       dateClick: function(info){
         limpiarFormulario();
         $('#BotonAgregar').show();
@@ -273,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function(){
     });   
     calendario1.render();
     //Eventos de botones de la aplicacion
-    $('#BotonAgregar').click(function(){
+    $('#BotonAgregar').click(function() {
       let registro = recuperarDatosFormulario();
       agregarRegistro(registro);
       $('#FormularioEventos').modal('hide');
@@ -299,6 +312,7 @@ document.addEventListener("DOMContentLoaded", function(){
         url: '../Modelo/Cita/datoseventos.php?accion=agregar',
         data: registro,
         success: function(msg){
+          enviarCorreo(registro);
           calendario1.refetchEvents();
         },
         error: function(error) {
@@ -335,6 +349,21 @@ document.addEventListener("DOMContentLoaded", function(){
       });
     }
 
+    function enviarCorreo(registro) {
+      $.ajax({
+        type: 'POST',
+        url: 'Fetch/enviar_correo.php',
+        data: registro,
+        success: function(response) {
+          // Manejar la respuesta del servidor después de enviar el correo
+          console.log(response);
+        },
+        error: function(error) {
+          // Manejar el error en caso de que falle el envío del correo
+          console.log("Hubo un error al enviar el correo: " + error);
+        }
+      });
+    }
     //funciones que interactuan con el FormularioEventos
 
     function limpiarFormulario(){
@@ -357,7 +386,9 @@ document.addEventListener("DOMContentLoaded", function(){
         id: $('#Id').val(),
         idpaciente: $('#IdPaciente').val(),
         titulo: $('#Titulo').val(),
-        tituloCompleto: $('#TituloCompleto').val(),
+        TituloCompleto: $('#TituloCompleto').val(),
+        FechaInicio: $('#FechaInicio').val(),
+        HoraInicio: $('#HoraInicio').val(),
         inicio: $('#FechaInicio').val() + ' ' + $('#HoraInicio').val(),
         duracion: $('#DuracionCita').val(),
         motivo: $('#MotivoCita').val(),
@@ -367,6 +398,7 @@ document.addEventListener("DOMContentLoaded", function(){
         backgroundColor: $('#backgroundColor').val(),
         canal: $('#CanalCita').val(),
         etiqueta: $('#EtiquetaCita').val(),
+        correo: $('#correo').val()
       }
       return registro;
     }
@@ -377,14 +409,15 @@ document.addEventListener("DOMContentLoaded", function(){
   $(document).ready(function() {
     $('.idpaciente').click(function() {
       var codigoPaciente = $('#IdPaciente').val();
+      var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
       // Realizar la solicitud AJAX al servidor
       $.ajax({
         url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
         method: 'POST',
-        data: { codigoPaciente: codigoPaciente },
+        data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
         success: function(response) {
-          if (response.error) {
+          if (response.hasOwnProperty('error')) {
             $('#TituloCompleto').val(response.error);
           } else {
             $('#TituloCompleto').val(response.nombre);
@@ -397,35 +430,36 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
   // Buscador paciente segun su nombre 
-$(document).ready(function() {
+  $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
+    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
       url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
-      data: { NomPaciente: NomPaciente },
+      data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
-        if (response.error) {
+        if (response.hasOwnProperty('error')) {
           $('#TituloCompleto').val(response.error);
           $('#IdPaciente').val('');
+          $('#correo').val('');
         } else {
           $('#TituloCompleto').val(response.nombre);
-		  $('#IdPaciente').val(response.id);
+		      $('#IdPaciente').val(response.id);
+		      $('#correo').val(response.correo);
         }
       },
       error: function() {
         $('#TituloCompleto').val('Error al procesar la solicitud');
         $('#IdPaciente').val('');
+        $('#correo').val('');
       }
     });
   });
 });
-
-
     </script>
-    
   </body>
 </html>
 <?php

@@ -1,12 +1,4 @@
 <?php
-require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Controlador/Cita/citaControlador.php");
-$obj = new usernameControlerCita();
-$FechaCitaInicio = $_POST['FechaInicioCita'];
-$HoraInicio = $_POST['HoraInicio'];
-$FechaInicio = $FechaCitaInicio . ' ' . $HoraInicio;
-
-$obj->modificarCita($_POST['IdCita'],$FechaInicio, $_POST['EstadoCita'], $_POST['MotivoCita'], $_POST['DuracionCita'], $_POST['tipoCita'], $_POST['CanalCita'], $_POST['EtiquetaCita'], $_POST['ColorFondo']);
-
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -41,11 +33,11 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = '!!Felicidades!!';
     $mail->Body = '<body style="text-align: center; font-size: 20px;max-width: 300px; margin: 0 auto;">
-                    Querido ' . $_POST['Paciente'] . ',
-                    <br>Se Modifico su cita con nosotros. 
+                    Querido ' . $_POST['TituloCompleto'] . ',
+                    <br>Gracias por reservar una cita con nosotros. 
                     <br>Los detalles de su reserva son los siguientes:
                     <br>
-                    <br>Fecha: ' . $_POST['FechaInicioCita'] . '
+                    <br>Fecha: ' . $_POST['FechaInicio'] . '
                     <br>Hora: ' . $_POST['HoraInicio'] . '
                     <br>
                     <br>"Saludos Cordiales, Contigo Voy"
@@ -55,14 +47,10 @@ try {
                     <br>
                     <br><a href="https://gestion.contigo-voy.com" style="background-color: #9274b3; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; cursor: pointer;">Acceso a la Pagina</a>
                     ';
+    // Envío del correo electrónico
     $mail->send();
-    header('Location: ../../Vista/citas.php?enviado=true');
-    exit;
+    echo json_encode(true);
 } catch (Exception $e) {
-    header('Location: ../../Vista/citas.php?error=' . urlencode($mail->ErrorInfo));
-    exit;
+    echo json_encode('Hubo un error al enviar el correo: ' . $mail->ErrorInfo);
 }
-
-
-
 ?>

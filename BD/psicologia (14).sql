@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-07-2023 a las 19:08:31
+-- Tiempo de generación: 31-08-2023 a las 17:16:18
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -43,13 +43,6 @@ CREATE TABLE `areafamiliar` (
   `FechaRegistro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `areafamiliar`
---
-
-INSERT INTO `areafamiliar` (`IdFamiliar`, `IdPaciente`, `NomPadre`, `EstadoPadre`, `NomMadre`, `EstadoMadre`, `NomApoderado`, `EstadoApoderado`, `CantHermanos`, `CantHijos`, `IntegracionFamiliar`, `HistorialFamiliar`, `FechaRegistro`) VALUES
-(3, 14, 'jorge', 'Buena', 'liliana', 'Buena', 'Liliana', 'Buena', 2, 2, 'mama', 'amam', '2023-07-19 16:07:51');
-
 -- --------------------------------------------------------
 
 --
@@ -68,13 +61,6 @@ CREATE TABLE `atencionpaciente` (
   `UltimosObjetivos` varchar(500) NOT NULL,
   `FechaRegistro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `atencionpaciente`
---
-
-INSERT INTO `atencionpaciente` (`IdAtencion`, `IdPaciente`, `IdEnfermedad`, `MotivoConsulta`, `FormaContacto`, `Diagnostico`, `Tratamiento`, `Observacion`, `UltimosObjetivos`, `FechaRegistro`) VALUES
-(12, 14, 2, 'saludar', 'nolose', 'esta mal', 'comer', 'arroz', 'ok', '2023-07-19 16:08:26');
 
 -- --------------------------------------------------------
 
@@ -2338,7 +2324,7 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`IdPaciente`, `NomPaciente`, `ApPaterno`, `ApMaterno`, `Dni`, `FechaNacimiento`, `Edad`, `GradoInstruccion`, `Ocupacion`, `EstadoCivil`, `Genero`, `Telefono`, `Email`, `Direccion`, `AntecedentesMedicos`, `IdPsicologo`, `MedicamentosPrescritos`, `FechaRegistro`, `CodigoPaciente`, `IdProvincia`, `IdDepartamento`, `IdDistrito`) VALUES
-(14, 'Jorge', 'Venegas', 'Francia', '76466718', '2015-01-02', '8', 'Barbero', 'Barbero', 'casado', 'Masculino', '955828875', 'mariano.venegas.francia@gmail.com', 'Ancon', 'Vicio', 1, 'Jarabe', '2023-07-19 15:57:03', 'PA0014', '0201', '02', '20101');
+(19, 'Jorge', 'Venegas', 'Francia', '76466718', '2015-01-08', '8', 'Barbero', 'Barbero', 'soltero', 'Masculino', '955828875', 'mariano.venegas.francia@gmail.com', 'Ancon', 'Vicio', 1, 'ads', '2023-08-01 12:22:44', 'PA0019', '0201', '02', '20102');
 
 -- --------------------------------------------------------
 
@@ -2565,16 +2551,18 @@ CREATE TABLE `psicologo` (
   `NombrePsicologo` varchar(30) NOT NULL,
   `Passwords` varchar(50) NOT NULL,
   `FechaRegistro` datetime DEFAULT current_timestamp(),
-  `Usuario` varchar(59) NOT NULL
+  `Usuario` varchar(59) NOT NULL,
+  `celular` int(9) NOT NULL,
+  `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `psicologo`
 --
 
-INSERT INTO `psicologo` (`IdPsicologo`, `NombrePsicologo`, `Passwords`, `FechaRegistro`, `Usuario`) VALUES
-(1, 'jorge', '123456', '2023-06-21 09:22:39', 'Jorge Venegas'),
-(2, 'Mariano', '210403Abril', '2023-07-15 12:15:55', 'Mariano Venegas');
+INSERT INTO `psicologo` (`IdPsicologo`, `NombrePsicologo`, `Passwords`, `FechaRegistro`, `Usuario`, `celular`, `email`) VALUES
+(1, 'jorge', '123456', '2023-06-21 09:22:39', 'Jorge Venegas', 955828875, 'mariano.venegas.francia@gmail.com'),
+(2, 'Mariano', '210403Abril', '2023-07-15 12:15:55', 'Mariano Venegas', 0, '');
 
 --
 -- Índices para tablas volcadas
@@ -2677,7 +2665,7 @@ ALTER TABLE `enfermedad`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `IdPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `IdPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `psicologo`

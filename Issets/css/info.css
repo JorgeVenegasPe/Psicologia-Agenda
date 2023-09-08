@@ -1,3 +1,5 @@
+
+
 main .top {
     display: flex;
     justify-content: end;
@@ -7,6 +9,24 @@ main .top {
 }
 main .top button {
     display: none;
+}
+.button-seguridad{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-items: center;
+    font-weight: bold;
+    background-color:#b4d77b ;
+    color: #fff;
+    border-radius: 1px;
+    outline: 2px solid #b4d77b;
+    padding: 5px 10px;
+    overflow: hidden;
+    transition: color 1s;
+}
+
+.button-seguridad:hover{
+    color: black;
+    cursor: pointer;
 }
 
 main .theme-toggler {

@@ -30,7 +30,7 @@ select{
 	border: none;
     top: 20px;   
     font-weight: bold;
-    color: #9274b3;
+    color: #6a91f4;
 }
 button{
     font: inherit;
@@ -48,7 +48,8 @@ select{
 }
 form {
     margin-inline: auto;
-	max-width: 790px;
+	max-width: 990px;
+    text-align: center;
     display: flex;
 	border-radius: 8px;
 	flex-direction: column;
@@ -61,12 +62,12 @@ form {
     align-items: center;
     font-weight: bold;
     font-size: 5px;
-    background-color: #f38238;
+    background-color: #49c691;
     color: #fff;
     cursor: pointer;
     border-radius: 1px;
     padding: 2px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     transition: color 1s;
 }
 
@@ -77,7 +78,7 @@ form {
 
 .input-group .fechas{
     color: #9274b3;
-    font-size: 1.1rem;
+    font-size: 1.8rem;
     align-self: flex-end; 
 }
 
@@ -86,12 +87,13 @@ form {
     color: red;
 }
 
-.container-form{
-    display: flex; 
-    flex-direction:row;
-    gap: 6em;
+.container-form-cita{
+    display:grid;
+    margin: 0 auto;
+    text-align: center;
+    gap:1.8rem;
+    
 }
-
 .containerTotal{
     display: grid;
     width: 96%;
@@ -101,19 +103,16 @@ form {
 }
 
 .containerModal{
-    max-width: 1090px;
     width: 520px;
     margin-inline: auto;
     margin-top: 80px;
-    margin-bottom: 180px;
     background-color: #fff;
-    border-style: double;
-    border-color:#b4d77b;
     padding: 15px 55px;
     border-radius: 2em;
 	box-shadow: 0 1px 1rem 
 		rgba(0, 0, 0, 0.1);
 }
+
 .containerModalEliminar{
     text-align: center;
     max-width: 490px;
@@ -130,11 +129,19 @@ form {
 }
 
 /*----------- main ----*/
+ input[type="date"]{
+    background: transparent;
+    text-align: center;
+}
 
-main .recent-orders{
+main .recent-citas{
     margin-top: 2rem;
 }
-main .recent-orders .table-cita{
+main .recent-citas h2{
+    margin-bottom: 0.8rem;
+}
+
+main .recent-citas table {
     background: var(--color-white);
     width: 100%;
     border-radius: var(--card-border-radius);
@@ -143,37 +150,37 @@ main .recent-orders .table-cita{
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
 }
-
-main .recent-orders .table-cita:hover{
+    
+main .recent-citas table:hover{
     box-shadow: none;
 }
 
-main .table-cita tbody td{
-    height: 2.8rem;
-    border-bottom: 1px solid var(--color-light);
-    color: var(--color-dark-variant);
-}
-
-main .table-cita tbody tr:last-child td{
-    border: none;
-}
-
-main .recent-orders a {
+main .recent-citas a {
     text-align: center;
     display: block;
     margin: 1rem auto;
     color: var(--color-primary);
 }
-
-
 .checkout-information,
 .input-group {
-    margin-left: 20px;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 }
 
+.checkout-information {
+	background: var(--color-white);
+    width: 100%;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+.checkout-information:hover{
+    box-shadow: none;
+
+}
 .input-group2{
 	display: flex;
 	flex-direction: row;
@@ -182,50 +189,46 @@ main .recent-orders a {
 .input-group {
 	gap: 8px;
 }
-.input-group label {
-    font-size: 0.87rem;
-	color: #f5f5f5;
-	font-weight: bold;
-}
-.input-group2 label {
-	font-size: 15px;
-	color: #f5f5f5;
-	font-weight: bold;
-}
-.input-group .labelModal {
-    font-size: 0.87rem;
-	color: #b4d77b;
-	font-weight: bold;
-}
-.input-group .labelModal {
-    font-size: 0.87rem;
-	color: #b4d77b;
-	font-weight: bold;
-}
+
 input::placeholder {
-    color: #9274b3;
-    font-weight: bold;
+    color: #49c691;
+    font-weight: lighter;
+    font-style: italic;
 }
 
 textarea::placeholder{
-    color: #9274b3;
-    font-weight: bold;
+    color: #49c691;
+    font-weight: lighter;
+    font-style: italic;
 }
 
-.input-group input,textarea,select {
+.input-group input,textarea{
 	width: 100%;
 	padding: 10px 15px;
 	border-radius: 8px;
-	background-color: #ffffff;
+	background-color:var(--color-background);
     height: 100%;
 }
 
-.input-group2 input,textarea,select {
+.input-group2 input,textarea{
 	width: 100%;
 	padding: 10px 15px;
 	border-radius: 8px;
-	background-color: #ffffff;
+	background-color: var(--color-background);
     height: 100%;
+}
+select{
+    width: 100%;
+	padding: 10px 15px;
+	border-radius: 8px;
+	background-color: var(--color-background);
+    border: 2px black;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='14' color='black' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.7812 1.25L13.1875 0.625C13.0312 0.46875 12.7812 0.46875 12.6562 0.625L7 6.28125L1.3125 0.625C1.1875 0.46875 0.9375 0.46875 0.78125 0.625L0.1875 1.25C0.03125 1.375 0.03125 1.625 0.1875 1.78125L6.71875 8.3125C6.875 8.46875 7.09375 8.46875 7.25 8.3125L13.7812 1.78125C13.9375 1.625 13.9375 1.375 13.7812 1.25Z' fill='%23898EA6'/%3E%3C/svg%3E%0A");
+    background-size: 14px;
+    background-position: calc(100% - 20px) center;
+    background-repeat: no-repeat;
+    outline: none;
 }
 
 .title {
@@ -233,7 +236,7 @@ textarea::placeholder{
     display: block;
     font-size: 2.5em;
     margin-bottom: 10px;
-    color: #f38238;
+    color: #49c691;
 }
 
 .title2 {
@@ -244,6 +247,7 @@ textarea::placeholder{
 }
 .button-container {
     display: flex;
+    gap: 20px;
     justify-content: flex-end; /* Cambiamos de "right" a "flex-start" */
 }
 
@@ -252,10 +256,10 @@ textarea::placeholder{
     letter-spacing: 2px;
     align-items: center;
     font-weight: bold;
-    background-color: #f38238 ;
+    background-color: #49c691 ;
     color: #fff;
     border-radius: 1px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     padding: 5px 10px;
     margin-top: 7px;
     overflow: hidden;
@@ -272,10 +276,10 @@ textarea::placeholder{
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: bold;
-    background-color: #f38238 ;
+    background-color: #49c691 ;
     color: #fff;
     border-radius: 1px;
-    outline: 2px solid #f38238;
+    outline: 2px solid #49c691;
     padding: 5px 10px;
     margin-top: 7px;  
     margin-left: 53em;
@@ -311,7 +315,7 @@ textarea::placeholder{
     border: 1px solid #888;
     width: 80%;
   }
-  
+
   .close {
     color: #aaa;
     float: right;
@@ -325,30 +329,6 @@ textarea::placeholder{
     text-decoration: none;
     cursor: pointer;
   }
-  .input-group2{
-	display: flex;
-	flex-direction: row;
-	gap: 1px;
-}
-.input-group2 .input2 {
-	width: 70%;
-	padding: 10px 15px;
-	border-radius: 8px;
-	background-color: #f2f2f2;
-    height: 60%;
-}
-.input-group2 .input3 {
-	width: 70%;
-	padding: 10px 15px;
-	border-radius: 8px;
-	background-color: #f2f2f2;
-    height: 60%;
-}
-.input-group2 label {
-	font-size: 15px;
-	color: #f5f5f5;
-	font-weight: bold;
-}
 
 .pagination {
     display: flex;
@@ -360,7 +340,7 @@ textarea::placeholder{
     text-decoration: none;
     padding: 8px 12px;
     margin: 0 4px;
-    border: 1px solid #f38238;
+    border: 1px solid #49c691;
     border-radius: 4px;
 }
 
@@ -370,7 +350,7 @@ textarea::placeholder{
 
 .pagination .current-page {
     background-color: #4CAF50;
-    color: #f38238;
+    color: #49c691;
 }
 
 
@@ -417,12 +397,60 @@ textarea::placeholder{
 		transform: scaleX(1);
 	}
 }
+@media screen and (max-width: 1280px) {
 
+    .containerTotal{
+        width: 94%;
+        grid-template-columns: 7rem auto;
+    }
 
-
-
-td:nth-of-type(1){
-    color: #9274b3;
-    font-size: 1.5em;
-    font-weight: bold;
+    .container-form-cita{
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
