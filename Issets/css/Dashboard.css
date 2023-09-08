@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 :root {
-    --color-primary: #9274b3;
-    --color-danger:#f38238;
+    --color-primary: #49c691;
+    --color-danger:#6a91f4;
     --color-success: #b4d77b;
-    --color-warning: #f38238;
+    --color-warning: #6a91f4;
     --color-white: #fff;
     --color-info-dark: #7d8da1;
     --color-info-light: #dce1eb;
     --color-dark: #363949;
     --color-light: rgba(132, 139, 200, 0.18);
-    --color-primary-variant: #9274b3;
+    --color-primary-variant: #49c691;
     --color-dark-variant:#677483;
     --color-background:#f6f6f9;
     
@@ -149,14 +149,19 @@ main .date input[type="date"]{
 }
 
 main .insights{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(28rem, 4fr));
+    /*background-color: #49c691;*/
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 4fr));
+    width:950px;
     gap: 1.6rem;
+    margin-bottom: 15px;
 }
 
 main .insights > div {
     background: var(--color-white);
-    padding: var(--card-padding);
+    /*daniel*/
+    /*padding: var(--card-padding);*/
+    padding:  10px 80px;
     border-radius: var(--card-border-radius);
     margin-top: 1rem;
     box-shadow: var(--box-shadow);
@@ -167,7 +172,8 @@ main .insights > div:hover{
     box-shadow: none;
 }
 
-
+/*EFECTOS CIRCULAES DE LOS SPAM*/
+/* 
 main .insights > div span{
     background:var(--color-primary);
     padding: 0.5rem;
@@ -196,7 +202,7 @@ main .insights > div.income span {
 }main .insights > div.income span.no-style {
     background: initial;
 }
-
+*/
 main .insights > div .middle {
     display: flex;
     align-items: center;
@@ -298,7 +304,9 @@ main .recent-orders a {
 .right .recent-updates .updates {
     background: var(--color-white);
     padding: var(--card-padding);
+    /*
     border-radius: var(--card-border-radius);
+    */
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
 }
@@ -338,9 +346,7 @@ main .recent-orders a {
         transform: translateX(-50%);
         margin: 2rem 0 0 8.8rem;
     }
-    main .insights > div .a{
-        display: none;
-    }
+
     main .recent-orders table {
         width: 83vw;
     }
@@ -349,16 +355,150 @@ main .recent-orders a {
     main table thead tr th:first-child{
         display: none;
     }
-    
+    /*Error de ocultar automaticamente la tabla-AGENDA del Dashboard*/
+    /*
     main table tbody tr td:last-child, 
     main table tbody tr td:first-child{
         display: none;
-    }
+    }*/
+
+    /*Daaniel*/
+main .insights{
+    /*background-color: #49c691;*/
+    display: flex;
+    width: 600px;
+    gap: 1.6rem;
+    margin-bottom: 10px;
 }
 
 
 
+main .insights > div {
+    background: var(--color-white);
+    /*daniel*/
+    /*padding: var(--card-padding);*/
+    padding:  5px 24px;
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
 
+
+}
+
+
+/* ========= DANIEL ===========*/
+
+.agenda {
+    max-width: 400px;
+    margin: 0px;
+    /*background-color: #fff;*/
+    border-radius: 10px;
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
+    padding: 20px;
+}
+/*
+h1 {
+    text-align: center;
+}
+*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+th, td {
+    background-color: #fff;
+    padding: 15px;
+    text-align: left;
+}
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+/*.evento {
+    background-color: #e7f0ff;
+}*/
+.button1 {
+    /*display: block;*/
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button2 {
+/* Quita el margin-left anterior */
+margin: 10px auto;
+padding: 10px 20px;
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+/* Alinea el botón al final del lado derecho */
+margin-left: auto;
+margin-right: 20px; /* Puedes ajustar este valor según sea necesario */
+}
+
+.button3 {
+/* Quita el margin-left anterior */
+margin: 10px auto;
+padding: 10px 20px;
+background-color: #49c691;
+color: #fff;
+border: none;
+border-radius: 30px;
+cursor: pointer;
+/* Alinea el botón al final del lado derecho */
+margin-left: auto;
+margin-right: 20px; /* Puedes ajustar este valor según sea necesario */
+}
+
+.span1{
+    display: inline; margin-right: 10px;
+}
+.span2{
+    padding: 5px; vertical-align: middle; margin: 10px 50px 10px 20px;
+}  
+.div_event1{
+     display: flex; align-items: center;
+}
+.div_event2{
+    /*background-color: #e7f0ff;*/
+    border: 2px solid #CFCFCF; display: flex; align-items: center;
+}
+/* Estilos para el botón circular */
+.add-button {
+position: absolute;
+top: 20px; /* Ajusta la posición vertical */
+right: 15px; /* Ajusta la posición horizontal */
+width: 40px;
+height: 40px;
+background-color: #fff; /* Color de fondo verde */
+border: none;
+border-radius: 50%; /* Hace que el botón sea circular */
+color: #007bff; /* Cambia el color del símbolo de suma a azul */
+font-size:25px; /* Tamaño de fuente */
+font-weight: bold; /* Estilo de fuente en negrita */
+cursor: pointer;
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+/* Estilos para el símbolo de suma */
+.add-button .add-button-content {
+position: absolute;
+top: 50%; /* Centrar verticalmente */
+left: 50%; /* Centrar horizontalmente */
+transform: translate(-50%, -50%); /* Centrar en el medio */
+}
+
+.div_event3{
+background-color: #6A90F1; border-radius: 20px 20px 0px 0px; color: #fff; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); position: relative;
+}
 
 
 

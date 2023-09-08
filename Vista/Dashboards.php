@@ -12,12 +12,27 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../Issets/css/Dashboard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
+
 <body>
 <?php
 require_once("../Controlador/Paciente/ControllerPaciente.php");
 require_once("../Controlador/Cita/citaControlador.php");
+require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA FUNCION DE CONTEO
+    //OBTENEMOS EL CONTEO TOTAL
+    $totalRegistrosEnCitas = (new UserModelCita())->contarRegistrosEnCitas(); 
+    $totalPacientes = (new UserModelCita())->contarRegistrosEnPacientes(); 
+    $totalPacientesRecientes = (new UserModelCita())->contarPacientesConFechaActual();
+    $totalRegistrosEnCitasConfirmado = (new UserModelCita())->contarCitasConfirmadas();
+
+
+    $totalRegistrosEnCitasHora = (new UserModelCita())->obtenerFechasCitasConFechaActual();
+
+
     $PORC=new usernameControlerCita();
     $Pac=new usernameControlerPaciente();
     $Citas=$PORC->showByFecha($_SESSION['IdPsicologo']);
@@ -29,230 +44,84 @@ require_once("../Controlador/Cita/citaControlador.php");
             require_once '../Issets/views/Menu.php';
         ?>    
         <!----------- end of aside -------->
-        <main>
-            <h2>Dashboard</h2>
+        <main class="animate__animated animate__fadeIn">
+            <br>
+            <!----------- CAmbios NUEVOS DEL DASHBOARDS -------->
+            <div style="text-align: center; max-width: 400px;">
+                 <h4 style=" color:#49c691;">¡Buenos dias, <?=$_SESSION['NombrePsicologo']?>!</h4>
 
-            <div class="insights">  
+                <h3 style="color:#6A90F1; font-size: 18px;">
+                Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
+</h3>
+
+
+<div class="agenda">
+    <div class="div_event3">
+        <h1>Citas del día</h1>
+        <p style="color: #fff;" id="fechaActual"></p>
+        
+        <a href="citas.php" class="add-button">
+    <i class="fas fa-plus"></i> <!-- Icono de suma -->
+</a>
+
+        </button>
+    </div>
+
+    <?php
+    // Llama a la función para obtener las citas con nombre del paciente, hora y minutos
+    $citasConNombrePacienteHoraMinutos = (new UserModelCita())->obtenerCitasConNombrePacienteHoraMinutos();
+    ?>
+
+    <?php if (!empty($citasConNombrePacienteHoraMinutos)): ?>
+        <table>
+            <?php foreach ($citasConNombrePacienteHoraMinutos as $cita): ?>
+                <tr>
+                    <td><?= $cita["HoraMinutos"] ?></td>
+                    <td>
+                        <div style="border-radius: 5px; border: 2px solid #a0a0a0; padding: 2px; display: flex; justify-content: space-between; align-items: center;">
+                            <span><?= $cita["NomPaciente"] ?></span>
+                            <button class="button3">Botón</button>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <p>No hay citas programadas para hoy.</p>
+    <?php endif; ?>
+</div>
+
+
+            <!--
+            <h2>Estadisticas</h2>
+            -->
+            <div class="insights"style="color: #49c691; ">  
+                
                 <div class="sales">
-                    <span class="material-symbols-sharp a" translate="no">analytics</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Tipo de Citass</h3>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
-                                Primera Visita : <b> <?php echo $PORCENTAJES['porcentaje_primera_visita']; ?>%</b>
-                            </p>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#9274b3" class="material-symbols-sharp no-style">arrow_right</span>
-                                Visita de Control : <b> <?php echo $PORCENTAJES['porcentaje_visita_control'];?> %</b>
-                            </p>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#b4d77b" class="material-symbols-sharp no-style">arrow_right</span>
-                            </p>
-                        </div>
-                        <div class="progress">
-                            <canvas id="miGrafica"></canvas>
-                            <script>
-                                const datos = [<?php echo $PORCENTAJES['porcentaje_primera_visita']; ?>, <?php echo $PORCENTAJES['porcentaje_visita_control']; ?>];
-
-                                const data = {
-                                  labels: ["Primera visita", "Visita de control"],
-                                  datasets: [
-                                    {
-                                      label: "Ventas",
-                                      backgroundColor: ["#f38238", "#9274b3" ],
-                                      borderColor: "#fff",
-                                      borderWidth: 1,
-                                      hoverBackgroundColor: ["#f38238", "#9274b3"],
-                                      hoverBorderColor: "#fff",
-                                      data: datos
-                                    }
-                                  ]
-                                };
-
-                                const options = {
-                                  cutout: '70%',
-                                  plugins: {
-                                    legend: {
-                                      display: false, // Oculta la leyenda
-                                    },
-                                  },
-                                };
-
-                                const config = {
-                                  type: 'doughnut',
-                                  data: data,
-                                  options: options,
-                                };
-
-                                var miGrafica = new Chart(  document.getElementById('miGrafica'), config);
-
-                            </script>
-                        </div>
+                    <div class="middle" >
+                    <h3 style=" font-size: 14px; ">
+                    <span style=" font-weight: bold; font-size:40px"><?= $totalPacientes ?></span> <br>Total de pacientes
+                </h3>
                     </div>
                 </div>
                 <!------------------- Final del Sales -------------------->
+                
                 <div class="expenses">
-                    <span class="material-symbols-sharp a" translate="no">bar_chart</span>
                     <div class="middle">
-                        <div class="left">
-                            <h3>Canal de Atraccion</h3>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
-                                Cita Online : <b> <?php echo $PORCENTAJES['porcentaje_cita_online'];?> %  </b>
-                            </p>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#9274b3" class="material-symbols-sharp no-style">arrow_right</span>
-                                Marketing Directo : <b><?php echo $PORCENTAJES['porcentaje_marketing_directo'];?> %</b>
-                            </p>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#b4d77b" class="material-symbols-sharp no-style">arrow_right</span>
-                                Referidos : <b><?php echo $PORCENTAJES['porcentaje_referidos'];?>  %</b>
-                            </p>
-                        </div>
-                        <div class="progress">
-                            <canvas id="miGrafica2"></canvas>
-                            <script>
-                                const datos2 = [<?php echo $PORCENTAJES['porcentaje_cita_online']; ?>, <?php echo $PORCENTAJES['porcentaje_marketing_directo']; ?>, <?php echo $PORCENTAJES['porcentaje_referidos']; ?>];
-
-                                const data2 = {
-                                  labels: ["Cita Online", "Marketing Directo", "Referidos"],
-                                  datasets: [
-                                    {
-                                      backgroundColor: ["#f38238", "#9274b3", "#b4d77b"],
-                                      borderColor: "#fff",
-                                      borderWidth: 1,
-                                      hoverBackgroundColor: ["#f38238", "9274b3", "#b4d77b"],
-                                      hoverBorderColor: "#fff",
-                                      data: datos2,
-                                    }
-                                  ]
-                                };
-
-                                const options2 = {
-                                  cutout: '70%',
-                                  plugins: {
-                                    legend: {
-                                      display: false, // Oculta la leyenda
-                                    },
-                                  },
-                                };
-
-                                const config2 = {
-                                  type: 'doughnut',
-                                  data: data2,
-                                  options: options2,
-                                };
-
-                                var miGrafica2 = new Chart(document.getElementById('miGrafica2'), config2);
-
-                            </script>
-                        </div>
+                    <h3 style="font-size: 14px;">
+                    <span style=" font-weight: bold; font-size:40px"><?= $totalPacientesRecientes ?></span> <br> Nuevos pacientes
+                </h3>
                     </div> 
                 </div>
                 <!------------------- Final del expenses -------------------->
                 <div class="income">
-                    <span class="material-symbols-sharp a" translate="no">stacked_line_chart</span>
                     <div class="middle">
-                        <div class="left">
-                            <h3>Estado de Cita</h3>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#f38238" class="material-symbols-sharp no-style">arrow_right</span>
-                                Se requiere configuración : <b><?php echo $PORCENTAJES['porcentaje_se_requiere_confirmacion'];?> %</b>  
-                            </p>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#9274b3" class="material-symbols-sharp no-style">arrow_right</span>
-                                Confirmado : <b><?php echo $PORCENTAJES['porcentaje_confirmado'];?> %</b>
-                            </p>
-                            <p style="display: flex;align-items: center;">
-                                <span style="color:#b4d77b" class="material-symbols-sharp no-style">arrow_right</span>
-                                Ausencia del paciente : <b><?php echo $PORCENTAJES['porcentaje_ausencia_paciente'];?> %</b>
-                            </p>
-                        </div>
-                        <div class="progress">
-                            <canvas id="miGrafica3"></canvas>
-                            <script>
-                            const datos3 = [<?php echo $PORCENTAJES['porcentaje_se_requiere_confirmacion']; ?>, <?php echo $PORCENTAJES['porcentaje_confirmado']; ?>, <?php echo  $PORCENTAJES['porcentaje_ausencia_paciente']; ?> ];
-
-                              const data3 = {
-                                labels: ["Se requiere confirmación", "Confirmado", " Ausencia del paciente "],
-                                datasets: [{
-                                  label: "Estados de cita",
-                                  backgroundColor: ["#f38238", "#9274b3", "#b4d77b"],
-                                  borderColor: "#fff",
-                                  borderWidth: 1,
-                                  hoverBackgroundColor: ["#f38238", "#9274b3", "#b4d77b"],
-                                  hoverBorderColor: "#fff",
-                                  data: datos3
-                                }]
-                              };
-                          
-                              const options3 = {
-                                  cutout: '70%',
-                                  plugins: {
-                                    legend: {
-                                      display: false, // Oculta la leyenda
-                                    },
-                                  },
-                                };
-                            
-                              const config3 = {
-                                type: 'doughnut',
-                                data: data3,
-                                options: options3,
-                              };
-                          
-                              var miGrafica3 = new Chart(document.getElementById('miGrafica3'), config3 );
-                            </script>
-                        </div>
+                    <h3 style="  font-size: 14px; ">
+                    <span style=" font-weight: bold; font-size:40px"><?= $totalRegistrosEnCitasConfirmado ?></span> <br> Citas Confirmadas
+                </h3>
                     </div>           
                 </div>
                 <!------------------- Final del income -------------------->
-            </div>
-            <!----------------- END OF INSIGHTS --------------->
-            <div class="recent-orders">
-                <h2>Citas de la Semana</h2>
-                <table class="tabla-dash">
-                    <thead>
-                        <tr>
-                            <th>Cod.</th>
-                            <th>Paciente</th>
-                            <th>Motivo</th>
-                            <th>Estado</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Duracion</th>
-                            <th>Tipo</th>
-                            <th>Canal</th>
-                            <th>Etiquetas</th>
-                            <th >1º Mensaje</th>
-                            <th >2º Mensaje</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php if ($Citas) :?>
-                        <?php foreach ($Citas as $Cita): ?>
-                        <tr>
-                            <td><?=$Cita[11]?></td>
-                            <td><?=$Cita[1]?></td>
-                            <td><?=$Cita[2]?></td>
-                            <td><?=$Cita[3]?></td>
-                            <td><?=$Cita[4]?></td>
-                            <td style="color:green"><?=$Cita[5]?></td>
-                            <td><?=$Cita[6]?></td>
-                            <td><?=$Cita[9]?></td>
-                            <td><?=$Cita[10]?></td>
-                            <td style="color: green;">Yes</td>
-                            <td style="color: red;">No</td>
-                        </tr>
-                        <?php endforeach;?>
-                            <?php else : ?>
-                                <tr>
-                                <td colspan="13" style="text-align: center;"><a href="citas.php"> No hay Citas Agregar nueva Cita </a> </td>
-                                </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-                <a href="citas.php">Agregar nueva cita</a>
             </div>
         </main>
         <!------ End of Main -->
@@ -271,10 +140,15 @@ require_once("../Controlador/Cita/citaControlador.php");
                         <small class="text-muted">Admin</small>
                     </div>
                 </div>
+                
+                <a href="../issets/views/Salir.php">
+                    <span class="material-symbols-sharp" translate="no">logout</span>
+                    <h3>Salir</h3>
+                </a>
             </div>
             <!----------end of Top------->
             <div class="recent-updates">
-                <h2>Pacientes Recientes</h2>
+                <h2 style="background-color: #6A90F1; margin:0px; border-radius: 20px 20px 0px 0px; padding:1.8rem; font-size:25px; color:#fff;">Pacientes Recientes</h2>
                 <div class="updates">
                     <div class="update">
                         <?php if ($datos) : ?>
@@ -287,11 +161,11 @@ require_once("../Controlador/Cita/citaControlador.php");
                                 </div>                                
                             <?php endforeach; ?>
                             <?php else : ?>
-                                    <p style="text-align: center;">No hay Pacientes<a href="RegDatosPaciente.php"> Agregar nuevo paciente </a> </p>
+                                    <p style="text-align: center;">No hay Pacientes<a href="RegPaciente.php"> Agregar nuevo paciente </a> </p>
                         <?php endif; ?>
                     </div>
                 </div>
-                <a href="RegDatosPaciente.php">Agregar Paciente</a>
+                <a href="RegPaciente.php">Agregar Paciente</a>
             </div>
         </div>
     </div>

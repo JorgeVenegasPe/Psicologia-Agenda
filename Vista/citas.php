@@ -16,6 +16,8 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="../issets/css/formulario.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="../issets/js/Citas.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Citas</title>
 </head>
@@ -35,7 +37,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Menu.php';
     ?>
     <!----------- fin de aside -------->
-    <main>
+    <main class="animate__animated animate__fadeIn">
     <?php
     require_once '../Issets/views/Info.php';
     ?>
@@ -144,6 +146,10 @@ if (isset($_SESSION['NombrePsicologo'])){
                                 </select>
                             </div>
                         </div>
+			            <div class="input-group" style="display: none;">
+			        	    <h3 for="FechaFin" >FechaFin <b style="color:red">*</b></h3>
+			        	    <input id="FechaFin" type="text" name="FechaFin"  readonly/>
+			            </div>
                         <div class="input-group2">
                             <div class="input-group" style="width:58%">
   		                        <h3 for="CanalCita">Canal de Atraccion <b style="color:red">*</b></h3>
@@ -388,6 +394,49 @@ if (isset($_SESSION['NombrePsicologo'])){
 </div>
 <script src="../issets/js/Dashboard.js"></script>
 <script>
+        // Obtener elementos del formulario
+    var fechaInicioInput = document.getElementById('FechaInicioCita');
+    var horaInicioInput = document.getElementById('HoraInicio');
+    var duracionInput = document.getElementById('DuracionCita');
+    var fechaFinInput = document.getElementById('FechaFin');
+
+    // Escuchar eventos de cambio en los campos relevantes
+    fechaInicioInput.addEventListener('change', calcularFechaFin);
+    horaInicioInput.addEventListener('change', calcularFechaFin);
+    duracionInput.addEventListener('change', calcularFechaFin);
+
+    // Función para calcular la fecha y hora de finalización
+    function calcularFechaFin() {
+        var fechaInicio = new Date(fechaInicioInput.value + 'T' + horaInicioInput.value);
+        var duracion = parseInt(duracionInput.value);
+
+        // Convertir la duración a milisegundos
+        var duracionMs = duracion * 60000;
+
+        // Calcular la fecha y hora de finalización
+        var fechaFin = new Date(fechaInicio.getTime() + duracionMs);
+
+        // Formatear la fecha y hora de finalización
+        var fechaFinFormatted = formatDate(fechaFin) + ' ' + formatTime(fechaFin);
+
+        fechaFinInput.value = fechaFinFormatted;
+    }
+
+    // Función para formatear la fecha en formato "YYYY-MM-DD"
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
+    }
+
+    // Función para formatear la hora en formato "HH:MM"
+    function formatTime(date) {
+        var hours = String(date.getHours()).padStart(2, '0');
+        var minutes = String(date.getMinutes()).padStart(2, '0');
+        return hours + ':' + minutes;
+    }
+
     window.addEventListener('DOMContentLoaded', (event) => {
     const notification = document.getElementById('notification');
     const notificationText = document.getElementById('notification-text');

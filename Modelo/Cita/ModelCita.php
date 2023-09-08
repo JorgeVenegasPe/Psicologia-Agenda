@@ -7,14 +7,15 @@ class UserModelCita{
         $con=new conexion();
         $this->PDO=$con->conexion();
     }
-    public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
-        $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita, DuracionCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
-                                        VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :DuracionCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
+    public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita,$FechaFinCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
+        $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita, DuracionCita, FechaFinCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
+                                        VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :DuracionCita,:FechaFinCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
         $statement->bindParam(":IdPaciente", $IdPaciente);
         $statement->bindParam(":MotivoCita", $MotivoCita);
         $statement->bindParam(":EstadoCita", $EstadoCita);
         $statement->bindParam(":FechaInicioCita", $FechaInicioCita);
         $statement->bindParam(":DuracionCita", $DuracionCita);
+        $statement->bindParam(":FechaFinCita", $FechaFinCita);
         $statement->bindParam(":TipoCita", $TipoCita);
         $statement->bindParam(":ColorFondo", $ColorFondo);
         $statement->bindParam(":IdPsicologo", $IdPsicologo);
@@ -161,7 +162,242 @@ class UserModelCita{
             'porcentaje_ausencia_paciente' => $porcentaje_ausencia_paciente
         ];
 }
+       //FUNCION PARA CONTAR LAS CITAS REGISTRADAS
+       public function contarRegistrosEnCitas() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Consulta SQL para contar los registros donde IdPsicologo sea igual al valor de la sesión
+        $sql = "SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo";
+        
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+        
+        // Asignar el valor de IdPsicologo a la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
 
+    public function contarCitasConfirmadas() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Consulta SQL para contar los registros donde IdPsicologo sea igual al valor de la sesión
+        // y EstadoCita sea igual a "Confirmado"
+        $sql = "SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo AND EstadoCita = 'Confirmado'";
+        
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+        
+        // Asignar el valor de IdPsicologo a la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
+    
+
+    
+
+    
+       //FUNCION PARA CONTAR LAS CITAS REGISTRADAS
+       public function contarRegistrosEnPacientes() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Consulta SQL para contar los registros donde IdPsicologo sea igual al valor de la sesión
+        $sql = "SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo";
+        
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+        
+        // Asignar el valor de IdPsicologo a la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
+
+    public function contarPacientesConFechaActual() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Obtener la fecha actual en el formato YYYY-MM-DD
+        $fechaActual = date("Y-m-d");
+    
+        // Consulta SQL para contar los registros donde IdPsicologo sea igual al valor de la sesión
+        // y la FechaRegistro (solo la parte de la fecha) sea igual a la fecha actual
+        $sql = "SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) = :fechaActual";
+    
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+    
+        // Asignar los valores a los parámetros de la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        $statement->bindParam(":fechaActual", $fechaActual, PDO::PARAM_STR);
+    
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
+
+
+
+    //fechas con citas de fecha actual 
+    public function obtenerFechasCitasConFechaActual() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Obtener la fecha actual en el formato YYYY-MM-DD
+        $fechaActual = date("Y-m-d");
+    
+        // Consulta SQL para obtener las fechas de las citas donde IdPsicologo sea igual al valor de la sesión
+        // y la FechaCita (solo la parte de la fecha) sea igual a la fecha actual
+        $sql = "SELECT FechaRegistro FROM cita WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) = :fechaActual";
+    
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+    
+        // Asignar los valores a los parámetros de la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        $statement->bindParam(":fechaActual", $fechaActual, PDO::PARAM_STR);
+    
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $fechas = array();
+    
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $fechas[] = $row["FechaRegistro"];
+            }
+    
+            return $fechas;
+        } else {
+            return array(); // Devolver un arreglo vacío si no se encontraron citas
+        }
+    }
+
+
+
+
+    //horas con citas de fecha actual 
+    public function obtenerHorasCitasConFechaActual() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Obtener la fecha actual en el formato YYYY-MM-DD
+        $fechaActual = date("Y-m-d");
+    
+        // Consulta SQL para obtener las horas y minutos de las citas donde IdPsicologo sea igual al valor de la sesión
+        // y la FechaCita (solo la parte de la fecha) sea igual a la fecha actual
+        $sql = "SELECT DATE_FORMAT(FechaRegistro, '%H:%i') as HoraMinutos FROM cita WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) = :fechaActual";
+    
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+    
+        // Asignar los valores a los parámetros de la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        $statement->bindParam(":fechaActual", $fechaActual, PDO::PARAM_STR);
+    
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $horasMinutos = array();
+    
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $horasMinutos[] = $row["HoraMinutos"];
+            }
+    
+            return $horasMinutos;
+        } else {
+            return array(); // Devolver un arreglo vacío si no se encontraron citas
+        }
+    }
+    
+
+
+    
+
+    public function obtenerCitasConNombrePacienteHoraMinutos() {
+        // Obtener el IdPsicologo de la sesión
+        $idPsicologo = $_SESSION['IdPsicologo'];
+    
+        // Obtener la fecha actual en el formato YYYY-MM-DD
+        $fechaActual = date("Y-m-d");
+    
+        // Consulta SQL para obtener el IdPaciente, NomPaciente, hora y minutos de las citas
+        // donde IdPsicologo sea igual al valor de la sesión y la FechaRegistro (solo la parte de la fecha) sea igual a la fecha actual
+        $sql = "SELECT paciente.IdPaciente, paciente.NomPaciente, DATE_FORMAT(cita.FechaRegistro, '%H:%i') as HoraMinutos
+                FROM cita
+                INNER JOIN paciente ON cita.IdPaciente = paciente.IdPaciente
+                WHERE cita.IdPsicologo = :idPsicologo AND DATE(cita.FechaRegistro) = :fechaActual";
+    
+        // Preparar la consulta
+        $statement = $this->PDO->prepare($sql);
+    
+        // Asignar los valores a los parámetros de la consulta
+        $statement->bindParam(":idPsicologo", $idPsicologo, PDO::PARAM_INT);
+        $statement->bindParam(":fechaActual", $fechaActual, PDO::PARAM_STR);
+    
+        // Ejecutar la consulta
+        $result = $statement->execute();
+    
+        if ($result) {
+            $citas = array();
+    
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $citas[] = $row;
+            }
+    
+            return $citas;
+        } else {
+            return array(); // Devolver un arreglo vacío si no se encontraron citas
+        }
+    }
+    
+
+
+    
+    
+    
+    
+    
+    
     
 }
 
