@@ -54,3 +54,19 @@ main .theme-toggler span.active {
     color: white;
     border-radius: var(--border-radius-1);
 }
+
+.ajustes{
+    font-size: 40px;
+
+}
+
+.info{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cerrar-info{
+    font-size: 15px;
+    font-weight: bold;
+}
+
