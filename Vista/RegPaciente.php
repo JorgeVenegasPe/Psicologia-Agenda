@@ -33,7 +33,6 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?> 
       <div class="recent-updates">
         <form action="../Crud/Paciente/guardarPaciente.php" method="post" >
-        
         <h4><a href="TablaPacientes.php" style="float: left;"><</a>Datos del Paciente</h4>
         <br>
         <div style="display:flex; flex-direction:row; gap:70px;">
@@ -87,7 +86,7 @@ if (isset($_SESSION['NombrePsicologo'])){
   	          <div style="width:190px"class="input-group">
   		          <h3 for="EstadoCivil">Estado civil</h3>
   		          <select style="text-align:center" class="input" id="EstadoCivil" name="EstadoCivil" required>
-                  <option value="">Elegir</option>
+                  <option value="">Seleccionar</option>
                   <option value="soltero">Soltero/a</option>
                   <option value="casado">Casado/a</option>
                   <option value="divorciado">Divorciado/a</option>
@@ -97,7 +96,7 @@ if (isset($_SESSION['NombrePsicologo'])){
               <div style=" width:190px;"class="input-group">
   		          <h3 for="Genero">Género</h3>
   		          <select style="text-align:center" class="input" id="Genero" name="Genero" required>
-                  <option value="">Elegir</option>
+                  <option value="">Seleccionar</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
@@ -120,7 +119,7 @@ if (isset($_SESSION['NombrePsicologo'])){
               <div style="width: 190px" class="input-group">
                 <h3 for="Departamento">Departamento</h3>
                 <select style="text-align: center" class="input" id="Departamento" name="Departamento" required>
-                  <option value="">Elegir</option>
+                  <option value="">Seleccionar</option>
                   <?php foreach ($departamentos as $departamento) : ?>
                       <option value="<?php echo $departamento['id']; ?>" data-id="<?php echo $departamento['id']; ?>"><?php echo $departamento['name']; ?></option>
                   <?php endforeach; ?>
@@ -129,7 +128,7 @@ if (isset($_SESSION['NombrePsicologo'])){
               <div style="width: 190px" class="input-group">
                   <h3 for="Provincia">Provincia</h3>
                   <select style="text-align: center" class="input" id="Provincia" name="Provincia" required>
-                      <option value="">Elegir</option>
+                      <option value="">Seleccionar</option>
                   </select>
               </div>
             </div>
@@ -137,7 +136,7 @@ if (isset($_SESSION['NombrePsicologo'])){
   	          <div style="width:190px" class="input-group">
   		          <h3 for="Distrito">Distrito</h3>
   		          <select style="text-align:center" class="input" id="Distrito" name="Distrito" required>
-                  <option value="">Elegir</option>
+                  <option value="">Seleccionar</option>
                 </select>
   	          </div>
               <div class="input-group">

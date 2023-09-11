@@ -50,11 +50,39 @@ class usernameControlerCita{
         }
     }
     public function showByFecha($id) {
-        return ($this->model->showByFecha($id)) ?: false;
+        return ($this->model->showByFecha($id));
     }
-    public function mostrarVista($idPsicologo)
-    {
-    return $this->model->calcularPorcentajes($idPsicologo);
+
+    public function contarRegistrosEnCitas($id) {
+        return ($this->model->contarRegistrosEnCitas($id));
+    }
+
+    public function contarCitasConfirmadas($id) {
+        return ($this->model->contarCitasConfirmadas($id));
+    }
+    
+    public function contarRegistrosEnPacientes($id) {
+        return ($this->model->contarRegistrosEnPacientes($id));
+    }
+
+    public function contarPacientesConFechaActual($id) {
+        return ($this->model->contarPacientesConFechaActual($id));
+    }
+
+    public function obtenerFechasCitasConFechaActual($id) {
+        return ($this->model->obtenerFechasCitasConFechaActual($id));
+    }
+
+    public function obtenerHorasCitasConFechaActual($id) {
+        return ($this->model->obtenerHorasCitasConFechaActual($id));
+    }
+    
+    public function obtenerCitasConNombrePacienteHoraMinutos($id) {
+        return ($this->model->obtenerCitasConNombrePacienteHoraMinutos($id));
+    }
+    
+    public function contarPacientesUltimoMes($id) {
+        return ($this->model->contarPacientesUltimoMes($id));
     }
 
 } 
