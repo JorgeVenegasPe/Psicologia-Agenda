@@ -87,13 +87,7 @@ form {
     color: red;
 }
 
-.container-form-cita{
-    display: grid;
-    margin: 0 auto;
-    text-align: center;
-    gap:1.8rem;
-    grid-template-columns: minmax(27rem, 1fr) minmax(40rem, 2fr);
-}
+
 .containerTotal{
     display: grid;
     width: 96%;

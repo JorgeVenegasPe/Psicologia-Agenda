@@ -25,6 +25,7 @@ if (isset($_SESSION['NombrePsicologo'])){
 <?php
     require("../Controlador/Cita/citaControlador.php");
     $obj=new usernameControlerCita();
+    $rowscita=$obj->contarRegistrosEnCitas($_SESSION['IdPsicologo']);
     $rows=$obj->ver($_SESSION['IdPsicologo']);
 ?>
 <div class="containerTotal">
@@ -38,10 +39,12 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?>
     
     <h2>Citas del dia</h2>
-    <div class="recent-orders" style="flex-direction:row;">
-     <span>10 pacientes</span>
-     <button type="submit" style="padding:10px;  background-color:beige">Agregar cita</button>
-     <button type="submit" style="padding:10px;  background-color:azure">Buscar cita</button>
+    <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
+        <span style="font-size: 15px;"><b style="font-size: 20px;"><?= $rowscita ?></b> pacientes </span>
+        <div class="input-group" >
+  	        <input  type="text" style="background-color: White;" placeholder="Buscar"  class="input" required/>
+        </div>
+        <a class="search" style="padding:10px; font-size:10px;" href="citas.php">Agregar Cita</a>
     </div>
                 <div class="recent-citas">
                     <table>
