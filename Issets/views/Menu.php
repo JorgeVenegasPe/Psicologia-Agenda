@@ -19,15 +19,33 @@
             <span class="material-symbols-sharp" translate="no">dashboard</span>
             <h3>Dashboard</h3>
         </a>
-        
         <a class="pacientes" href="TablaPacientes.php">
             <span class="material-symbols-sharp" translate="no">groups</span>
             <h3>Pacientes</h3>
         </a>
         <a class="citas" href="TablaCitas.php">
+<<<<<<< HEAD
             <span class="material-symbols-sharp" translate="no">volunteer_activism</span>
             <h3>Citas</h3>
         </a>        
+        <a class="historial" href="DatosPaciente.php">
+            <span class="material-symbols-sharp" translate="no">history</span>
+            <h3>Historial</h3>
+=======
+            <span class="material-symbols-sharp" translate="no">contacts</span>
+
+        <a class="pacientes" href="RegPaciente.php">
+            <span class="material-symbols-sharp" translate="no">groups</span>
+            <h3>Pacientes</h3>
+>>>>>>> c8c84999a1dd7b4d468706455eaafe0d3b82052d
+        </a>
+        <a class="citas" href="citas.php">
+            <span class="material-symbols-sharp" translate="no">volunteer_activism</span>
+
+            <h3>Citas</h3>
+        </a>
+<<<<<<< HEAD
+=======
         <a class="historial" href="DatosPaciente.php">
             <span class="material-symbols-sharp" translate="no">history</span>
             <h3>Historial</h3>
@@ -36,6 +54,8 @@
             <span class="material-symbols-sharp" translate="no">calendar_month</span>
             <h3>Calendario</h3>
         </a>
+
+>>>>>>> c8c84999a1dd7b4d468706455eaafe0d3b82052d
         <a class="planes" href="Salir.php">
             <span class="material-symbols-sharp" translate="no">account_balance_wallet</span>
             <h3>Planes</h3>
@@ -44,6 +64,13 @@
             <span class="material-symbols-sharp" translate="no">security</span>
             <h3>Politcas y Privacidad</h3>
         </a>
+<<<<<<< HEAD
+=======
+        <!-- <a class="ajuste" href="ajuste.php">
+            <span class="material-symbols-sharp" translate="no">settings</span>
+            <h3>Ajustes</h3>
+        </a> -->
+>>>>>>> c8c84999a1dd7b4d468706455eaafe0d3b82052d
     </div>
     <div class="nav-menu-btn"></div>  
 </aside>
