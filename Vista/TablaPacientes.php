@@ -17,6 +17,14 @@ if (isset($_SESSION['NombrePsicologo'])){
     <title>Paciente</title>
 </head>
 <body>
+<?php
+    require("../Controlador/Paciente/ControllerPaciente.php");
+    require("../Controlador/Cita/citaControlador.php");
+    $obj=new usernameControlerPaciente();
+    $objcita=new usernameControlerCita();
+    $rowscita=$objcita->contarRegistrosEnPacientes($_SESSION['IdPsicologo']);
+    $rows=$obj->ver($_SESSION['IdPsicologo']);
+?>
 <div class="containerTotal">
 <?php
     require_once '../Issets/views/Menu.php';
@@ -27,36 +35,47 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Info.php';
     ?>
     <h2>Pacientes del dia</h2>
-    <div class="recent-orders" style="flex-direction:row;">
-     <span>10 pacientes</span>
-     <button type="submit" style="padding:10px;  background-color:beige">Agregar Paciente</button>
-     <button type="submit" style="padding:10px;  background-color:azure">Buscar Paciente</button>
+    <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
+        <span style="font-size: 15px;"><b style="font-size: 20px;"><?= $rowscita ?></b> pacientes </span>
+        <div class="input-group" >
+  	        <input  type="text" style="background-color: White;" placeholder="Buscar"  class="input" required/>
+        </div>
+        <a class="search" style="padding:10px; font-size:10px;" href="RegPaciente.php">Agregar Paciente</a>
     </div>
     <div class="recent-citas">
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Paciente</th>
                     <th>Codigo</th>
                     <th>DNI</th>
                     <th>Email</th>
-                    <th>Edad</th>
-                    <th>Duracion</th>
-                    <th ></th>
+                    <th>Celular</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
+            <?php if ($rows) :?>
+                                <?php foreach ($rows as $row): ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Crear cita</td>
-                    <td></td>
-                    <td></td>
+                <td><span class="material-symbols-sharp">
+check_box_outline_blank
+</span>
+</td>
+                    <td><?=$row[1]?> <?=$row[2]?></td>
+                    <td><?=$row[18]?></td>
+                    <td><?=$row[4]?></td>
+                    <td><?=$row[12]?></td>
+                    <td><?=$row[11]?></td>
+                    <td><span class="material-symbols-sharp">
+more_vert
+</span>
+</td>
                 </tr>
+                
+                <?php endforeach;?>            
+            <?php endif;?>
             </tbody>
         </table>
     </div>

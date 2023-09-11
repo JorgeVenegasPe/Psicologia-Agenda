@@ -33,7 +33,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?> 
       <div class="recent-updates">
         <form action="../Crud/Paciente/guardarPaciente.php" method="post" >
-        <h4>Datos del Paciente</h4>
+        <h4><a href="TablaPacientes.php" style="float: left;"><</a>Datos del Paciente</h4>
         <br>
         <div style="display:flex; flex-direction:row; gap:70px;">
           <div class="checkout-information">
