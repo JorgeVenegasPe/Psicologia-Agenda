@@ -25,7 +25,7 @@ class UserModelCita{
         return ($statement->execute()) ? $this->PDO->lastInsertId() : false;
     }
     public function ver($idUsuario){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,p.CodigoPaciente FROM cita c
                                         INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
                                         INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                         WHERE c.IdPsicologo = :idUsuario");

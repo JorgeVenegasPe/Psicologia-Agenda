@@ -192,63 +192,7 @@ if (isset($_SESSION['NombrePsicologo'])){
 </div>
 <script src="../issets/js/Dashboard.js"></script>
 <script>
-        // Obtener elementos del formulario
-    var fechaInicioInput = document.getElementById('FechaInicioCita');
-    var horaInicioInput = document.getElementById('HoraInicio');
-    var duracionInput = document.getElementById('DuracionCita');
-    var fechaFinInput = document.getElementById('FechaFin');
-
-    // Escuchar eventos de cambio en los campos relevantes
-    fechaInicioInput.addEventListener('change', calcularFechaFin);
-    horaInicioInput.addEventListener('change', calcularFechaFin);
-    duracionInput.addEventListener('change', calcularFechaFin);
-
-    // Función para calcular la fecha y hora de finalización
-    function calcularFechaFin() {
-        var fechaInicio = new Date(fechaInicioInput.value + 'T' + horaInicioInput.value);
-        var duracion = parseInt(duracionInput.value);
-
-        // Convertir la duración a milisegundos
-        var duracionMs = duracion * 60000;
-
-        // Calcular la fecha y hora de finalización
-        var fechaFin = new Date(fechaInicio.getTime() + duracionMs);
-
-        // Formatear la fecha y hora de finalización
-        var fechaFinFormatted = formatDate(fechaFin) + ' ' + formatTime(fechaFin);
-
-        fechaFinInput.value = fechaFinFormatted;
-    }
-
-    // Función para formatear la fecha en formato "YYYY-MM-DD"
-    function formatDate(date) {
-        var year = date.getFullYear();
-        var month = String(date.getMonth() + 1).padStart(2, '0');
-        var day = String(date.getDate()).padStart(2, '0');
-        return year + '-' + month + '-' + day;
-    }
-
-    // Función para formatear la hora en formato "HH:MM"
-    function formatTime(date) {
-        var hours = String(date.getHours()).padStart(2, '0');
-        var minutes = String(date.getMinutes()).padStart(2, '0');
-        return hours + ':' + minutes;
-    }
-
-    window.addEventListener('DOMContentLoaded', (event) => {
-    const notification = document.getElementById('notification');
-    const notificationText = document.getElementById('notification-text');
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const enviado = urlParams.get('enviado');
-
-    if (enviado === 'true') {
-        notification.style.display = 'block';
-        notificationText.textContent = 'Enviado Correctamente ✔️';
-        history.replaceState(null, null, window.location.pathname);
-    }
-});
-  // Buscador del paciente según su id
+      // Buscador del paciente según su id
   $(document).ready(function() {
     $('.Codigo').click(function() {
       var codigoPaciente = $('#CodigoPaciente').val();
@@ -320,50 +264,63 @@ $(document).ready(function() {
     });
   });
 });
-//Funciones del modal
-function openModal(id) {
-    document.getElementById('modal' + id).style.display = 'block';
-}
 
-function closeModal(id) {
-    document.getElementById('modal' + id).style.display = 'none';
-}
+        // Obtener elementos del formulario
+    var fechaInicioInput = document.getElementById('FechaInicioCita');
+    var horaInicioInput = document.getElementById('HoraInicio');
+    var duracionInput = document.getElementById('DuracionCita');
+    var fechaFinInput = document.getElementById('FechaFin');
 
-function openModalEliminar(id) {
-    document.getElementById('modalEliminar' + id).style.display = 'block';
-}
+    // Escuchar eventos de cambio en los campos relevantes
+    fechaInicioInput.addEventListener('change', calcularFechaFin);
+    horaInicioInput.addEventListener('change', calcularFechaFin);
+    duracionInput.addEventListener('change', calcularFechaFin);
 
-function closeModalEliminar(id) {
-    document.getElementById('modalEliminar' + id).style.display = 'none';
-}
+    // Función para calcular la fecha y hora de finalización
+    function calcularFechaFin() {
+        var fechaInicio = new Date(fechaInicioInput.value + 'T' + horaInicioInput.value);
+        var duracion = parseInt(duracionInput.value);
 
-//funciones de la pagina
-var paginationLinks = document.getElementsByClassName('pagination')[0].getElementsByTagName('a');
+        // Convertir la duración a milisegundos
+        var duracionMs = duracion * 60000;
 
-for (var i = 0; i < paginationLinks.length; i++) {
-    paginationLinks[i].addEventListener('click', function(event) {
-        event.preventDefault();
-        var page = parseInt(this.getAttribute('href').split('=')[1]);
-        mostrarPagina(page);
-    });
-}
+        // Calcular la fecha y hora de finalización
+        var fechaFin = new Date(fechaInicio.getTime() + duracionMs);
 
-function mostrarPagina(page) {
-    var rows = document.getElementById('myTable').getElementsByTagName('tr');
+        // Formatear la fecha y hora de finalización
+        var fechaFinFormatted = formatDate(fechaFin) + ' ' + formatTime(fechaFin);
 
-    for (var i = 0; i < rows.length; i++) {
-        rows[i].style.display = 'none';
+        fechaFinInput.value = fechaFinFormatted;
     }
 
-    var startIndex = (page - 1) * <?=$rowsPerPage?>;
-    var endIndex = startIndex + <?=$rowsPerPage?>;
-
-    for (var i = startIndex; i < endIndex && i < rows.length; i++) {
-        rows[i].style.display = 'table-row';
+    // Función para formatear la fecha en formato "YYYY-MM-DD"
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
     }
-}
 
-mostrarPagina(1);
+    // Función para formatear la hora en formato "HH:MM"
+    function formatTime(date) {
+        var hours = String(date.getHours()).padStart(2, '0');
+        var minutes = String(date.getMinutes()).padStart(2, '0');
+        return hours + ':' + minutes;
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notification-text');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const enviado = urlParams.get('enviado');
+
+    if (enviado === 'true') {
+        notification.style.display = 'block';
+        notificationText.textContent = 'Enviado Correctamente ✔️';
+        history.replaceState(null, null, window.location.pathname);
+    }
+});
 </script>
 </body>
 </html>
