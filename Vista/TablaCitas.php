@@ -61,8 +61,9 @@ if (isset($_SESSION['NombrePsicologo'])){
                         ?>
                         <thead>
                             <tr>
+                                <th ></th>
                                 <th>Paciente</th>
-                                <th>ID</th>
+                                <th>Codigo</th>
                                 <th>Motivo</th>
                                 <th>Estado</th>
                                 <th>Fecha de Inicio</th>
@@ -74,23 +75,28 @@ if (isset($_SESSION['NombrePsicologo'])){
                             <?php if ($rows) :?>
                                 <?php foreach ($rows as $row): ?>
                                     <tr>
+                                        <td><span class="material-symbols-sharp">
+check_box_outline_blank
+</span></td>
                                         <td><?=$row[1]?></td>
-                                        <td><?=$row[0]?></td>
+                                        <td><?=$row[11]?></td>
                                         <td><?=$row[2]?></td>
                                         <td><?=$row[3]?></td>
                                         <td><?=$row[4]?></td>
                                         <td style="color:green"><?=$row[5]?></td>
-                                        <td>Crear cita</td>
-                                        <td class="acct">
-                                            <a type="button" class="btne" onclick="openModalEliminar('<?=$row[0]?>')">
+                                        <td><span class="material-symbols-sharp">
+more_vert
+</span></td>
+                                        <!-- <td class="acct">
+                                            <a type="button" class="btne" onclick="openModalEliminar('')">
                                                 <span style="color:red" class="material-symbols-sharp">delete</span>
                                             </a>
                                         </td>
                                         <td class="acct">
-                                            <a type="button" class="btnm" onclick="openModal('<?=$row[0]?>')">
+                                            <a type="button" class="btnm" onclick="openModal('')">
                                             <span style="color:green"class="material-symbols-sharp">edit</span>
                                             </a>
-                                        </td>
+                                        </td>   -->
                                     </tr>
                                     <?php
                                     $user=$obj->show($row[0]);
