@@ -160,7 +160,7 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
         </div>
     </div>
     </div>
-  </main>
+</main>
     <script src="../issets/js/Dashboard.js"></script>
 </div>
 </body>

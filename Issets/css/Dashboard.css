@@ -110,6 +110,23 @@ p{
     color: var(--color-dark-variant);
 }
 
+.arriba{ /*Nueva clase creada para el formulario - Hans */
+    color: #89BEF5; /*Añadi un cambio de color - Hans */
+    font-size: 15px;
+    font-weight: bold;
+}
+.abajo{ /*Nueva clase creada para el formulario - Hans */
+    font-size: 0.90rem;
+    color: #89BEF5; /*Añadi un cambio de color - Hans */
+    font-weight: normal;
+    text-align: center;
+}
+.visual{
+    color: #49c691;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 b{
     color: var(--color-dark);
 }
