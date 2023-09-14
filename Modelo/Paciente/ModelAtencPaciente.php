@@ -81,5 +81,27 @@ class UserModelAtencPaciente{
     
         return ($statement->execute())? $this->PDO->lastInsertId():false;
     }
+    //public function showAtenc($IdPaciente){
+    //    $statement=$this->PDO->prepare("SELECT ap.IdAtencion,ap.IdPaciente,ap.IdEnfermedad,e.Clasificacion,p.NomPaciente,ap.MotivoConsulta,ap.FormaContacto,ap.Diagnostico,ap.Tratamiento,ap.Observacion,ap.UltimosObjetivos,c.FechaInicioCita
+    //    FROM AtencionPaciente ap
+    //    JOIN Enfermedad e ON ap.IdEnfermedad = e.IdEnfermedad
+    //    JOIN Paciente p ON ap.IdPaciente = p.IdPaciente
+    //    Join cita c on p.IdPaciente = c.IdPaciente
+    //    WHERE p.IdPaciente = :IdPaciente
+    //    ORDER BY ap.FechaRegistro DESC
+    //    LIMIT 1 ");
+    //    $statement->bindParam(":IdPaciente",$IdPaciente);
+    //    return($statement->execute())? $statement->fetch():false;
+    //}
+
+    public function mostrarxd(){
+        $statement=$this->PDO->prepare("SELECT ap.IdAtencion,ap.IdPaciente,ap.IdEnfermedad,e.Clasificacion,p.NomPaciente,ap.MotivoConsulta,
+        ap.FormaContacto,ap.Diagnostico,ap.Tratamiento,ap.Observacion,ap.UltimosObjetivos,c.FechaInicioCita,p.ApPaterno, p.Edad, p.MedicamentosPrescritos
+        FROM AtencionPaciente ap
+        JOIN Enfermedad e ON ap.IdEnfermedad = e.IdEnfermedad
+        JOIN Paciente p ON ap.IdPaciente = p.IdPaciente
+        Join cita c on p.IdPaciente = c.IdPaciente");
+        return($statement->execute())? $statement->fetchaLL():false;
+    }
 }
 ?>
