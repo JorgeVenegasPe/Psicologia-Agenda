@@ -22,6 +22,7 @@
     
     --box-shadow: 0 2rem 3rem var(--color-light);
 }
+
 aside{
     background: var(--color-white);
     padding: var(--card-padding);
@@ -33,13 +34,6 @@ aside{
 
 .logo h2{
     color: #49c691;
-}
-
-aside .top{
-    background: var(--color-white);
-    display: flex;
-    align-items: center;
-    justify-content:center;
 }
 
 aside .logo{
@@ -86,7 +80,6 @@ aside .sidebar a span{
     font-size: 1.7rem;
     transition: all 300ms ease;
 }
-
 
 aside .sidebar a.active{
     background: #49c691;
