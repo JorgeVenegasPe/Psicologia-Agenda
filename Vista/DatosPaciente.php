@@ -95,72 +95,13 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     require_once '../issets/views/Menu.php';
   ?> 
   <!----------- end of aside -------->
-  <main class="animate__animated animate__fadeIn">
+  <main class="animate_animated animate_fadeIn">
     <?php
     require_once '../issets/views/Info.php';
     ?> 
     
     <div style="display:flex; flex-direction:row; gap:20px; margin-left: 60px;">
       <h2>Historial de Pacientes</h2>
-    </div>
-      <?php if($rows) :?>
-    <div class="containerDatos" id="containerDatos" style="margin: 10px 0 0 75px ;">
-        <?php foreach ($rows as $row): ?>
-          
-          <?php
-            $user=$Pac->show($row[0]);
-          ?>
-          
-         <?php
-              $AtencsUser=$Atenc->showAtenc($row[0]);
-          ?>
-
-          <!-- Ver Diagnostico --> 
-          <div id="modalDiagnostico<?=$row[0]?>" class="modal">
-              <div class="containerModal">
-                  <a href="#" class="close" onclick="closeModalVerDiagnostico('<?=$row[0]?>')">&times;</a>
-                  <form>
-                      <?php 
-                      if ($AtencsUser !== null) { ?>
-                          <h2 class="title">Paciente <?=$AtencsUser[4]?></h2>
-                          <p><b>Clasificacion: </b><?=$AtencsUser[5]?></p>
-                          <p><b>Motivo Consulta: </b><?=$AtencsUser[6]?></p>
-                          <p><b>Forma Contacto: </b><?=$AtencsUser[3]?></p>
-                          <p><b>Diagnóstico: </b><?=$AtencsUser[7]?></p>
-                          <p><b>Tratamiento: </b><?=$AtencsUser[8]?></p>
-                          <p><b>Observacion: </b><?=$AtencsUser[9]?></p>
-                          <p><b>Ultimos Objetivos: </b><?=$AtencsUser[10]?></p>
-                          <div class="button-container">
-                              <a type="button" href="../Crud/Paciente/eliminarAtencPaciente.php?id=<?=$AtencsUser[0]?>" id="deleteBtn" class="butonEliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                              <a type="button" onclick="openModalEditarDiag('<?=$row[0]?>')"id="editBtn" class="butonEditar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                          </div>
-                      <?php 
-                      } else { 
-                          ?>
-                          <h2 class="error">No hay registros de atención para este paciente</h2>
-                      <?php 
-                      } 
-                      ?>                   
-                  </form>
-              </div>
-          </div>
-          <?php
-              $AtencAreaFamiliar=$Fam->showAreaFamiliar($row[0]);
-          ?>
-       <?php endforeach; ?>
-          <div class="insightsDatos" >
-            <div class="card">
-                <div class="card__body">
-                    <h1>Agregar nuevo Paciente</h1>
-                    <br>
-                    <a type="button" href="RegPaciente.php" style="cursor:pointer;" class="nav-link">Agregar</a>
-                </div>
-            </div>
-          </div>
-        <?php else : ?>  
-                <p class="centered-text">No hay Pacientes<a href="RegPaciente.php"> Agregar nuevo paciente </a></p>
-
-      <?php endif ; ?>
     </div>
 
 
@@ -176,25 +117,29 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
             </thead>
             <tbody>
                 <?php if ($rows) : ?>
-                  <?php foreach ($rows as $row) : ?>
-                      <?php
-                      // Obtén los datos de atención para el usuario actual
-                      $AtencsUser = $Atenc->showAtenc($row[0]);
-                      ?>
-                      <tr>
-                          <td>
-                              <p style="color: black; cursor: pointer;" onclick="abrirDetallesDerecha('<?=$AtencsUser[4]?>', '<?=$AtencsUser[7]?>', '<?=$AtencsUser[8]?>', '<?=$AtencsUser[10]?>')" ondblclick="cerrarDetallesDerecha()"><?=$AtencsUser[4]?></p>
-                              <p><?=$AtencsUser[7]?> / <?=$AtencsUser[8]?></p>
-                          </td>
-                          <td><?=$AtencsUser[7]?></td>
-                      </tr>
-                  <?php endforeach; ?>
+                  <?php foreach ($rows as $row): ?>
+    <?php
+    $user = $Pac->show($row[0]);
+    $AtencsUser = $Atenc->showAtenc($row[0]);
+
+    // Verifica si los índices existen antes de acceder a ellos
+    if (isset($AtencsUser[4]) && isset($AtencsUser[7]) && isset($AtencsUser[8]) && isset($AtencsUser[10])) {
+    ?>
+    <tr>
+        <td>
+            <p style="color: black; cursor: pointer;" onclick="abrirDetallesDerecha('<?=$AtencsUser[4]?>', '<?=$AtencsUser[7]?>', '<?=$AtencsUser[8]?>', '<?=$AtencsUser[10]?>')" ondblclick="cerrarDetallesDerecha()"><?=$AtencsUser[4]?></p>
+            <p><?=$AtencsUser[7]?> / <?=$AtencsUser[8]?></p>
+        </td>
+    </tr>
+    <?php } else {?>
+    <tr>
+       <td colspan="4">No hay pacientes</td>
+        </tr>
+    <?php } ?>
+<?php endforeach; ?>
 
 
-                <?php else : ?>
-                    <tr>
-                        <td colspan="4">No hay pacientes</td>
-                    </tr>
+                
                 <?php endif; ?>
             </tbody>
         </table>
@@ -215,19 +160,10 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
         </div>
     </div>
     </div>
-
-    
-  
-
-  </main>
+</main>
     <script src="../issets/js/Dashboard.js"></script>
 </div>
 </body>
-
-
-
-
-
 <script>
 var contenedorDetalles = document.getElementById("contenedorDetalles");
     var detallesAbiertos = null;
@@ -247,7 +183,6 @@ var contenedorDetalles = document.getElementById("contenedorDetalles");
         // Actualizar el contenedor de detalles abierto actualmente
         detallesAbiertos = contenedorDetalles;
     }
-
     // Función para cerrar los detalles en el caso de doble clic
     function cerrarDetallesDerecha() {
         if (detallesAbiertos !== null) {
@@ -256,14 +191,9 @@ var contenedorDetalles = document.getElementById("contenedorDetalles");
         }
     }
     </script>
-
-
-
-
-
 </html>
 <?php
 }else{
-  header("Location: ../Index.php");
+  header("Location: ../index.php");
 }
 ?>

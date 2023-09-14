@@ -221,6 +221,26 @@ main .insightsDatos small {
     
 }
 
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 5px;
+    background-color: #49c691;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 1px;
+    padding: 2px;
+    outline: 2px solid #49c691;
+    transition: color 1s;
+}
+
+.search:hover {
+    color: black;
+    cursor: pointer;
+}
+
 .card {
 	position: relative;
     border-style: double;

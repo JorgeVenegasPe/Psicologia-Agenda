@@ -13,6 +13,9 @@ class usernameControlerPaciente{
     public function ver($IdPsicologo) {
         return ($this->model->ver($IdPsicologo)) ?: false;
     }
+    public function verPatientAndFamilyInfo($IdPsicologo) {
+        return ($this->model->getPatientAndFamilyInfo($IdPsicologo)) ?: false;
+    }
     public function eliminar($id){
         return ($this->model->eliminar($id)) ?  header("Location:../../Vista/DatosPaciente.php") : header("Location:../../Vista/DatosPaciente.php");
     }

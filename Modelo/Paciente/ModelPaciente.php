@@ -3,7 +3,7 @@ class userModelPaciente{
     private $PDO;
     public function __construct()
     {
-        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-master/Conexion/conexion.php");
+        require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Conexion/conexion.php");
         $con=new conexion();
         $this->PDO=$con->conexion();
 
@@ -126,6 +126,15 @@ class userModelPaciente{
         $statement = $this->PDO->prepare("SELECT * FROM psicologo 
         where IdPsicologo = :idPsicologo");  
         $statement->bindParam(":idPsicologo", $idPsicologo);        
+        return ($statement->execute()) ? $statement->fetchAll() : false;
+    }
+    
+    public function getPatientAndFamilyInfo($IdPsicologo) {
+        $statement = $this->PDO->prepare("SELECT p.*, af.IdFamiliar, af.NomPadre, af.EstadoPadre, af.NomMadre, af.EstadoMadre, af.NomApoderado, af.EstadoApoderado, af.CantHermanos, af.CantHijos, af.IntegracionFamiliar, af.HistorialFamiliar
+            FROM Paciente p
+            INNER JOIN AreaFamiliar af ON p.IdPaciente = af.IdPaciente
+            WHERE p.IdPsicologo = :IdPsicologo");
+        $statement->bindParam(':IdPsicologo', $IdPsicologo);
         return ($statement->execute()) ? $statement->fetchAll() : false;
     }
 }
