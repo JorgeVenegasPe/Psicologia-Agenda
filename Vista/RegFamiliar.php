@@ -9,9 +9,8 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/formulario.css">
-    <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
+  <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos del Paciento</title>
@@ -41,13 +40,13 @@ if (isset($_SESSION['NombrePsicologo'])){
                     <a class="search id"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
                   </div>
                 </div>
-                <div class="input-group">
-                <h3 for="CodigoPaciente">Codigo Paciente <b style="color:red">*</b></h3>
-                    <div style="display: flex; gap:5px;"> 
-                        <input id="CodigoPaciente" type="text" name="CodigoPaciente"  required/>
-                        <a class="search Codigo"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
-                    </div>
-                </div>
+              <div class="input-group">
+                <h3 for="codigopac">Codigo Paciente <b style="color:red">*</b></h3>
+                  <div style="display: flex; gap:5px;"> 
+                      <input id="codigopac" type="text" name="codigopac" class="input" />
+                      <a class="search codigoaa"><span style="font-size:4em" class="material-symbols-sharp">search</span></a>
+                  </div>
+              </div>
                 <div class="input-group">
                   <h3 for="NomPaciente">Nombre Paciente</h3>
                   <div style="display: flex; gap:5px;">
@@ -119,37 +118,39 @@ if (isset($_SESSION['NombrePsicologo'])){
   <script src="../issets/js/Dashboard.js"></script>
   </body>
 <script>
-	  $(document).ready(function() {
-  $('.Codigo').click(function() {
-    var CodigoPaciente = $('#CodigoPaciente').val();
-    var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
+$(document).ready(function() {
+    $('.codigoaa').click(function() {
+      var codigopac = $('#codigopac').val();
+      var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
-    // Realizar la solicitud AJAX al servidor
-    $.ajax({
-      url: 'Fetch/fetch_pacienteFamiliar.php', // Archivo PHP que procesa la solicitud
-      method: 'POST',
-      data: { CodigoPaciente: CodigoPaciente, idPsicologo: idPsicologo },
-      success: function(response) {
-        if (response.hasOwnProperty('error')) {
+      // Realizar la solicitud AJAX al servidor
+      $.ajax({
+        url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
+        method: 'POST',
+        data: { codigopac: codigopac, idPsicologo: idPsicologo },
+        success: function(response) {
+          if (response.hasOwnProperty('error')) {
             $('#Paciente').val(response.error);
-            $('#Paciente').val(response.error);
+            $('#IdPaciente').val('');
             $('#NomPaciente').val('');
+            $('#correo').val('');
           } else {
             $('#Paciente').val(response.nombre);
-		        $('#IdPaciente').val(response.IdPaciente);
             $('#NomPaciente').val(response.nom);
+		        $('#IdPaciente').val(response.id);
+		        $('#correo').val(response.correo);
           }
-      },
-      error: function() {
-        $('#Paciente').val('Error al procesar la solicitud');
-		    $('#IdPaciente').val('');
-        $('#NomPaciente').val('');
-      }
+        },
+        error: function() {
+          $('#Paciente').val('Error al procesar la solicitud');
+          $('#NomPaciente').val('');
+          $('#IdPaciente').val('');
+        }
+      });
     });
   });
-});
 
-
+// Buscador paciente segun su nombre 
 $(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
@@ -157,24 +158,24 @@ $(document).ready(function() {
 
     // Realizar la solicitud AJAX al servidor
     $.ajax({
-      url: 'Fetch/fetch_pacienteFamiliarNom.php', // Archivo PHP que procesa la solicitud
+      url: 'Fetch/fetch_pacienteNom.php', // Archivo PHP que procesa la solicitud
       method: 'POST',
       data: { NomPaciente: NomPaciente, idPsicologo: idPsicologo },
       success: function(response) {
         if (response.hasOwnProperty('error')) {
           $('#Paciente').val(response.error);
-		      $('#IdPaciente').val('');
-		      $('#CodigoPaciente').val('');
+          $('#IdPaciente').val('');
+          $('#codigopac').val('');
         } else {
           $('#Paciente').val(response.nombre);
 		      $('#IdPaciente').val(response.id);
-		      $('#CodigoPaciente').val(response.CodigoPaciente);
+		      $('#codigopac').val(response.codigopac);
         }
       },
       error: function() {
         $('#Paciente').val('Error al procesar la solicitud');
-		    $('#IdPaciente').val('');
-		    $('#CodigoPaciente').val('');
+        $('#IdPaciente').val('');
+        $('#codigopac').val('');
       }
     });
   });

@@ -12,8 +12,6 @@ body{
     font-family: 'Raleway', sans-serif;
 }
 
-
-
 .hero{
     padding: 20px;
 }
@@ -82,8 +80,6 @@ h5{
 
 }
 
-
-
 .cta{
     display: inline-block;
     text-decoration: none;
@@ -92,9 +88,6 @@ h5{
     border-radius: 8px;
     color: #fff;
 }
-
-
-
 
 /* info2 */
 
@@ -119,7 +112,6 @@ h5{
 footer{
 margin: 20px;
 }
-
 
 @media screen and (max-width:800px){
     .textos-hero h1{

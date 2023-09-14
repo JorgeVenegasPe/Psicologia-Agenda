@@ -10,9 +10,8 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="icon" href="../Issets/images/contigovoyico.ico">
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
     <link rel="stylesheet" href="../Issets/css/formulario.css">
-    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
@@ -33,13 +32,9 @@ if (isset($_SESSION['NombrePsicologo'])){
 <body>
 <?php
 require_once("../Controlador/Paciente/ControllerPaciente.php");
-require_once("../Controlador/Paciente/ControllerAtencPaciente.php");
-require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
-    $Fam=new usernameControlerAreaFamiliar();
-    $Atenc=new usernameControlerAtencPaciente();
     $Pac=new usernameControlerPaciente();
     $departamentos = $Pac->MostrarDepartamento();
-    $rows=$Atenc->mostrarpacientecompleto();
+    $rows=$Pac->ver($_SESSION['IdPsicologo']);
     
 ?>
 
@@ -58,51 +53,64 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
         <div class="input-group">
   	        <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
         </div>
-        <a class="search" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php">
+        <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php">
             <span class="material-symbols-sharp">add</span>Agregar Paciente
         </a>
     </div>
     <!-- Agrega una nueva sección para la vista de tabla -->
-    <div style="display: flex; flex-direction:column;">
-        <?php if ($rows) : ?>
-            <?php foreach ($rows as $row):   ?>
-                <div style="display: flex; flex-direction:row;">    
-                <div class="insights" style="display:initial;margin-bottom:inherit">
-                    <div style="display: flex; flex-direction:row; justify-content:space-between">
-                        <div>
-                            <h1><?=$row[4]?> <?=$row[12]?></h1>
-                            <label><?=$row[7]?> / <?=$row[5]?></label>
-                        </div>
-                        <div style="display:flex; align-items: center;">
-                            <button class="butonActive" style="padding:10px;">ver mas</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="ContainerDatos active" >
-                    <h1><?=$row[4]?> <?=$row[12]?></h1>
-                    <label><?=$row[13]?> años</label>,
-                    <label>primera consulta: <?=$row[11]?></label>
-                    <div>
-                        <h1>Diagnostico: </h1>
-                        <label><?=$row[7]?></label>
-                    </div>
-                    <div>
-                        <h1>Tratamiento: </h1>
-                        <label><?=$row[8]?></label>
-                    </div>
-                    <div>
-                        <h1>Medicamentos: </h1>
-                        <label><?=$row[14]?></label>
-                    </div>
-                    <div>
-                        <h1>Primera Cita: </h1>
-                        <label><?=$row[5]?></label>
-                    </div>
-                </div>
+        <!-- Agrega una nueva sección para la vista de tabla -->
 
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <div class="tableData" style="display: flex;justify-content: center;align-items: stretch;margin: 50px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombres</th>
+                    <th>FECHA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($rows) : ?>
+                    <?php foreach ($rows as $row): ?>
+    <?php
+    $user = $Pac->show($row[0]);
+    $AtencsUser = $Pac->showAtenc($row[0]);
+
+    // Verifica si los índices existen antes de acceder a ellos
+    if (isset($AtencsUser[4]) && isset($AtencsUser[7]) && isset($AtencsUser[8]) && isset($AtencsUser[10])) {
+    ?>
+    <tr>
+        <td>
+            <p style="color: black; cursor: pointer;" onclick="abrirDetallesDerecha('<?=$AtencsUser[4]?>', '<?=$AtencsUser[7]?>', '<?=$AtencsUser[8]?>', '<?=$AtencsUser[10]?>')" ondblclick="cerrarDetallesDerecha()"><?=$AtencsUser[4]?></p>
+            <p><?=$AtencsUser[7]?> / <?=$AtencsUser[8]?></p>
+        </td>
+    </tr>
+    <?php } ?>
+<?php endforeach; ?>
+
+
+                <?php else : ?>
+                    <tr>
+                        <td colspan="4">No hay pacientes</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+
+        <!-- Contenedor de detalles para mostrar al lado derecho -->
+    <div class="detalles" id="contenedorDetalles">
+        <div class="contener">
+            <div class="izquierda">
+                <!-- Contenido izquierdo -->
+                <p></p> <!-- Aquí mostrarás el nombre -->
+                <p><b>Diagnóstico: </b></p> <!-- Aquí mostrarás el diagnóstico -->
+                <p><b>Tratamiento: </b></p> <!-- Aquí mostrarás el tratamiento -->
+            </div>
+            <div class="derecha">
+                <!-- Contenido derecho -->
+                <p><b>Ultimos Objetivos: </b></p> <!-- Aquí mostrarás los últimos objetivos -->
+            </div>
+        </div>
+    </div>
     </div>
   </main>
     <script src="../issets/js/Dashboard.js"></script>
