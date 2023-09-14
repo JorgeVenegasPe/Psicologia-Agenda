@@ -128,5 +128,18 @@ class userModelPaciente{
         $statement->bindParam(":idPsicologo", $idPsicologo);        
         return ($statement->execute()) ? $statement->fetchAll() : false;
     }
+    //Nueva funcion creada para llamar a los pacientes y areafamiliar en una consulta
+    public function getPatientAndFamilyInfo($IdPsicologo) {
+        $statement = $this->PDO->prepare("
+            SELECT p.*, af.IdFamiliar, af.NomPadre, af.EstadoPadre, af.NomMadre, af.EstadoMadre, af.NomApoderado, af.EstadoApoderado, af.CantHermanos, af.CantHijos, af.IntegracionFamiliar, af.HistorialFamiliar
+            FROM Paciente p
+            INNER JOIN AreaFamiliar af ON p.IdPaciente = af.IdPaciente
+            WHERE p.IdPsicologo = :IdPsicologo
+        ");
+        
+        $statement->bindValue(':IdPsicologo', $IdPsicologo);
+        
+        return ($statement->execute()) ? $statement->fetchAll() : false;
+    }
 }
 ?>

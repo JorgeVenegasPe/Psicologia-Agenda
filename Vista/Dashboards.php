@@ -8,40 +8,34 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard</title>    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
+    <link rel="stylesheet" href="../issets/css/formulario.css">
     <link rel="stylesheet" href="../Issets/css/Dashboard.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 </head>
-
+</head>
 <body>
 <?php
-require_once("../Controlador/Paciente/ControllerPaciente.php");
-require_once("../Controlador/Cita/citaControlador.php");
-require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA FUNCION DE CONTEO
-    //OBTENEMOS EL CONTEO TOTAL
-    $totalRegistrosEnCitas = (new UserModelCita())->contarRegistrosEnCitas(); 
-    $totalPacientes = (new UserModelCita())->contarRegistrosEnPacientes(); 
-    $totalPacientesRecientes = (new UserModelCita())->contarPacientesConFechaActual();
-    $totalRegistrosEnCitasConfirmado = (new UserModelCita())->contarCitasConfirmadas();
-
-
-    $totalRegistrosEnCitasHora = (new UserModelCita())->obtenerFechasCitasConFechaActual();
-
-    $contarPacientesUltimoMes = (new UserModelCita())->contarPacientesUltimoMes();
-
-
-
-
+    require_once("../Controlador/Paciente/ControllerPaciente.php");
+    require_once("../Controlador/Cita/citaControlador.php");
     $PORC=new usernameControlerCita();
     $Pac=new usernameControlerPaciente();
+
+    $totalRegistrosEnCanalAtraccion =$PORC->contarCitasConfirmadasConCanal($_SESSION['IdPsicologo']); 
+    $totalRegistrosEnCanalAtraccion2 =$PORC->contarCitasConfirmadasConCanal2($_SESSION['IdPsicologo']); 
+    $totalRegistrosEnCanalAtraccion3 =$PORC->contarCitasConfirmadasConCanal3($_SESSION['IdPsicologo']); 
+
+    $totalRegistrosEnCitas =$PORC->contarRegistrosEnCitas($_SESSION['IdPsicologo']); 
+    $totalPacientes =$PORC->contarRegistrosEnPacientes($_SESSION['IdPsicologo']); 
+    $totalPacientesRecientes =$PORC->contarPacientesConFechaActual($_SESSION['IdPsicologo']);
+    $totalRegistrosEnCitasConfirmado =$PORC->contarCitasConfirmadas($_SESSION['IdPsicologo']);
+    $totalRegistrosEnCitasHora =$PORC->obtenerFechasCitasConFechaActual($_SESSION['IdPsicologo']);
+    $contarPacientesUltimoMes =$PORC->contarPacientesUltimoMes($_SESSION['IdPsicologo']);
     $Citas=$PORC->showByFecha($_SESSION['IdPsicologo']);
     $datos=$Pac->MostrarPacientesRecientes($_SESSION['IdPsicologo']);
-    $PORCENTAJES=$PORC->mostrarVista($_SESSION['IdPsicologo']);
 ?>
     <div class="container">
         <?php
@@ -56,32 +50,38 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
 
                 <h3 style="color:#6A90F1; font-size: 18px;">
                 Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
-</h3>
-<h3 style="color:#6A90F1; font-size: 18px;">
-    Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= $contarPacientesUltimoMes ?> pacientes</span> registrados en el último mes
-</h3>
-
+                </h3>
 <div class="contenedor-secciones">
 
 <div class="agenda">
-    <div class="div_event3">
-        <h1>Citas del día</h1>
-        <p style="color: #fff;" id="fechaActual"></p>
-        
-        <a href="citas.php" class="add-button">
-    <i class="fas fa-plus"></i> <!-- Icono de suma -->
-</a>
+<?php
+$fecha_actual = new DateTime('now', new DateTimeZone('UTC'));
+$fecha_actual->setTimeZone(new DateTimeZone('America/Lima')); // Cambia a tu zona horaria
 
-        </button>
+$locale = 'es_ES';
+$fmt = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+$fecha_formateada = $fmt->format($fecha_actual);
+
+?>
+    <div class="div_event3">
+        <div>
+            <h3 style="text-align: left;font-size: 16px;">Citas del día</h3>
+            <p style="text-align: left; color: #fff;">Hoy, <?php echo $fecha_formateada; ?></p>
+        </div>
+        <div style="display:flex; align-items: center;">
+            <a href="citas.php">
+                <span style="color: #fff" class="material-symbols-sharp">add_circle</span>
+            </a>
+        </div>
     </div>
 
     <?php
     // Llama a la función para obtener las citas con nombre del paciente, hora y minutos
-    $citasConNombrePacienteHoraMinutos = (new UserModelCita())->obtenerCitasConNombrePacienteHoraMinutos();
+    $citasConNombrePacienteHoraMinutos = (new UserModelCita())->obtenerCitasConNombrePacienteHoraMinutos($_SESSION['IdPsicologo']);
     ?>
 
     <?php if (!empty($citasConNombrePacienteHoraMinutos)): ?>
-        <table>
+        <table >
             <?php foreach ($citasConNombrePacienteHoraMinutos as $cita): ?>
                 <tr>
                     <td><?= $cita["HoraMinutos"] ?></td>
@@ -98,45 +98,8 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
         <p>No hay citas programadas para hoy.</p>
     <?php endif; ?>
 </div>
-<div class="pie-chart" >
-<h3 style="text-align: start; margin:20px 30px;">Pacientes del ultimo mes</h3>
-        <h2>Canal de Atracción</h2>
-        <canvas id="myPieChart"></canvas>
-        <h3  class="h3-dsh">Cita Online</h3>
-        <h3  class="h3-dsh">Referidos</h3>
-        <h3  class="h3-dsh">Marketing Digital</h3>
-    </div>
 
-    <script>
-    // Importa los datos que deseas mostrar en el gráfico de pastel.
-    var pacientesUltimoMes = <?= $contarPacientesUltimoMes ?>;
 
-    // Configura el gráfico de pastel
-    var ctx = document.getElementById("myPieChart").getContext('2d');
-    var myPieChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ["Pacientes del último mes", "Otros Pacientes"],
-            datasets: [{
-                backgroundColor: ["#8CB7C2", "#f2f2f2"],
-                data: [pacientesUltimoMes, <?= $totalPacientes - $contarPacientesUltimoMes ?>]
-            }]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: false
-            }
-        }
-    });
-
-    // Agrega el mensaje "Gráfico del último mes" debajo del gráfico
-    var pieChartMessage = document.createElement("p");
-    pieChartMessage.innerHTML = "Gráfico del último mes";
-    document.querySelector(".pie-chart").appendChild(pieChartMessage);
-
-</script>
-</div>
             <!--
             <h2>Estadisticas</h2>
             -->
@@ -179,16 +142,24 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
                     <span class="material-symbols-sharp active" translate="no">light_mode</span>
                     <span class="material-symbols-sharp" translate="no">dark_mode</span>
                 </div>
+                <div>
+                    <a class="ajuste-info nav-link" style="cursor:pointer;" onclick="openModalAjustes()">
+                        <span class="material-symbols-sharp" translate="no">settings</span>
+                    </a>
+                </div>
+                <?php
+                    require_once 'ajuste.php';
+                ?>
                 <div class="profile">
+
                     <div class="info">
-                        <p>Hola. <b><?=$_SESSION['Usuario']?></b></p>
-                        <small class="text-muted">Admin</small>
+                        <p>| <b><?=$_SESSION['Usuario']?> | </b></p>
                     </div>
                 </div>
-                
                 <a href="../issets/views/Salir.php">
-                    <span class="material-symbols-sharp" translate="no">logout</span>
-                    <h3>Salir</h3>
+                    <!-- <span class="material-symbols-sharp" translate="no">logout</span>-->
+                    <h3 class="cerrar">Cerrar Sesion</h3>
+
                 </a>
             </div>
             <!----------end of Top------->
@@ -212,6 +183,57 @@ require_once("../Modelo/Cita/ModelCita.php");//LLAMAMOS AL MODELO DONDE ESTA LA 
                 </div>
                 <a href="RegPaciente.php">Agregar Paciente</a>
             </div>
+            
+<div class="pie-chart" >
+<h2 style="text-align: start; margin:20px 20px; font-size:20px;">Pacientes del ltimo mes</h2>
+        <div class="grafico">
+            <canvas id="myPieChart"></canvas>
+        </div>
+        <h3  class="h3-dsh">Cita Online: <?= $totalRegistrosEnCanalAtraccion ?> </h3>
+        <h3  class="h3-dsh">Marketing Digital: <?= $totalRegistrosEnCanalAtraccion2 ?></h3>
+        <h3  class="h3-dsh">Referidos: <?= $totalRegistrosEnCanalAtraccion3 ?></h3>
+    </div>
+
+    <script>
+    // Importa los datos que deseas mostrar en el gráfico de pastel.
+    var canalAtraccion1 = <?= $totalRegistrosEnCanalAtraccion ?>;
+    var canalAtraccion2 = <?= $totalRegistrosEnCanalAtraccion2 ?>;
+    var canalAtraccion3 = <?= $totalRegistrosEnCanalAtraccion3 ?>;
+
+    // Define colores personalizados para cada canal de atracción
+    var colores = ["#8CB7C2", "#7999A4", "#27ae60"];
+
+    // Configura el gráfico de pastel
+    var ctx = document.getElementById("myPieChart").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            //labels: ["Cita Online", "Marketing Digital", "Canal Atracción 3"],
+            datasets: [{
+                backgroundColor: colores,
+                data: [canalAtraccion1, canalAtraccion2, canalAtraccion3]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'bottom'
+            }
+        }
+    });
+
+    // Agrega el mensaje "Gráfico de Canales de Atracción" debajo del gráfico
+    /*
+    var pieChartMessage = document.createElement("p");
+    pieChartMessage.innerHTML = "Gráfico de Canales de Atracción";
+    document.querySelector(".pie-chart").appendChild(pieChartMessage);
+    */
+</script>
+
+
+
+</div>
         </div>
     </div>
     <script src="../issets/js/Dashboard.js"></script>

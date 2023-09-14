@@ -50,12 +50,52 @@ class usernameControlerCita{
         }
     }
     public function showByFecha($id) {
-        return ($this->model->showByFecha($id)) ?: false;
-    }
-    public function mostrarVista($idPsicologo)
-    {
-    return $this->model->calcularPorcentajes($idPsicologo);
+        return ($this->model->showByFecha($id));
     }
 
+    public function contarRegistrosEnCitas($id) {
+        return ($this->model->contarRegistrosEnCitas($id));
+    }
+
+    public function contarCitasConfirmadas($id) {
+        return ($this->model->contarCitasConfirmadas($id));
+    }
+    
+    public function contarRegistrosEnPacientes($id) {
+        return ($this->model->contarRegistrosEnPacientes($id));
+    }
+
+    public function contarPacientesConFechaActual($id) {
+        return ($this->model->contarPacientesConFechaActual($id));
+    }
+
+    public function obtenerFechasCitasConFechaActual($id) {
+        return ($this->model->obtenerFechasCitasConFechaActual($id));
+    }
+
+    public function obtenerHorasCitasConFechaActual($id) {
+        return ($this->model->obtenerHorasCitasConFechaActual($id));
+    }
+    
+    public function obtenerCitasConNombrePacienteHoraMinutos($id) {
+        return ($this->model->obtenerCitasConNombrePacienteHoraMinutos($id));
+    }
+    
+    public function contarPacientesUltimoMes($id) {
+        return ($this->model->contarPacientesUltimoMes($id));
+    }
+
+    
+    public function contarCitasConfirmadasConCanal($id) {
+        return ($this->model->contarCitasConfirmadasConCanal($id));
+    }
+
+    public function contarCitasConfirmadasConCanal2($id) {
+        return ($this->model->contarCitasConfirmadasConCanal2($id));
+    }
+
+    public function contarCitasConfirmadasConCanal3($id) {
+        return ($this->model->contarCitasConfirmadasConCanal3($id));
+    }
 } 
 ?>

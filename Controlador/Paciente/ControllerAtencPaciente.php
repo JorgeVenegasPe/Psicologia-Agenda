@@ -41,5 +41,8 @@ class usernameControlerAtencPaciente{
         $atencion = $this->model->getAtencDiagnosticoById($id);
         return ($atencion != false) ? $atencion : false;
     }
+    public function mostrarpacientecompleto(){
+        return ($this->model->mostrarxd()) ? $this->model->mostrarxd():false;
+    }
 }
 ?>
