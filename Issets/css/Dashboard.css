@@ -231,19 +231,6 @@ main .recent-orders h2{
     margin-bottom: 0.8rem;
 }
 
-main .recent-orders table {
-    background: var(--color-white);
-    width: 100%;
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-}
-
-main .recent-orders table:hover{
-    box-shadow: none;
-}
 
 main .recent-orders a {
     text-align: center;
@@ -399,25 +386,27 @@ main .insights > div {
     /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
     padding: 20px;
 }
-/*
-h1 {
-    text-align: center;
-}
-*/
 table {
     width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
 }
-th, td {
-    background-color: #fff;
-    padding: 15px;
-    text-align: left;
+
+tr {
+    background-color: var(--color-white);
+    border-radius: 40px;
+     /* Borde ovalado */
 }
+
+td {
+    text-align: center;
+}
+
 th {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #f6f6f9;
+    color: #6a90f1;
 }
+
 /*.evento {
     background-color: #e7f0ff;
 }*/
@@ -498,7 +487,16 @@ transform: translate(-50%, -50%); /* Centrar en el medio */
 }
 
 .div_event3{
-background-color: #6A90F1; border-radius: 20px 20px 0px 0px; color: #fff; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); position: relative;
+    background-color: #6A90F1; 
+    border-radius: 20px 20px 0px 0px; 
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+    color: #fff; 
+    padding: 15px 25px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+    position: relative;
 }
 
 

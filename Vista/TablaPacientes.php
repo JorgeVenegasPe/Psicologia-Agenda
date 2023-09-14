@@ -34,24 +34,30 @@ if (isset($_SESSION['NombrePsicologo'])){
     <?php
     require_once '../Issets/views/Info.php';
     ?>
-    <h2>Pacientes del dia</h2>
+    <h2 style="color: #49c691;">Lista de Pacientes</h2>
     <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
-        <span style="font-size: 15px;"><b style="font-size: 20px;"><?= $rowscita ?></b> pacientes </span>
-        <div class="input-group" >
-  	        <input  type="text" style="background-color: White;" placeholder="Buscar"  class="input" required/>
+        <span style="font-size: 15px;color: #6a90f1;"><b style="font-size: 25px;color: #6a90f1;" ><?= $rowscita ?></b> pacientes </span>
+        <div class="input-group">
+  	        <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
         </div>
-        <a class="search" style="padding:10px; font-size:10px;" href="RegPaciente.php">Agregar Paciente</a>
+        <a class="search" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php"><span class="material-symbols-sharp">add</span>Agregar Paciente</a>
     </div>
+    
     <div class="recent-citas">
         <table>
             <thead>
                 <tr>
-                    <th></th>
+                    
+                <th><span class="material-symbols-sharp">
+check_box_outline_blank
+</span>
+</th>
                     <th>Paciente</th>
                     <th>Codigo</th>
                     <th>DNI</th>
                     <th>Email</th>
                     <th>Celular</th>
+                    <th>Nueva Cita</th>
                     <th></th>
                 </tr>
             </thead>
@@ -68,6 +74,9 @@ check_box_outline_blank
                     <td><?=$row[4]?></td>
                     <td><?=$row[12]?></td>
                     <td><?=$row[11]?></td>
+                    <td><a class="search" style="width: 110px; padding:6px; display:flex; font-size:10px;" href="citas.php"><span class="material-symbols-sharp">
+add
+</span>Crear Cita</a></td>
                     <td><span class="material-symbols-sharp">
 more_vert
 </span>

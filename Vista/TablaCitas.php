@@ -38,13 +38,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once '../Issets/views/Info.php';
     ?>
     
-    <h2>Citas del dia</h2>
+    <h2 style="color: #49c691;">Lista de Citas</h2>
     <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
-        <span style="font-size: 15px;"><b style="font-size: 20px;"><?= $rowscita ?></b> pacientes </span>
-        <div class="input-group" >
-  	        <input  type="text" style="background-color: White;" placeholder="Buscar"  class="input" required/>
+        <span style="font-size: 15px;color: #6a90f1;"><b style="font-size: 25px;color: #6a90f1;" ><?= $rowscita ?></b> pacientes </span>
+        <div class="input-group">
+  	        <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
         </div>
-        <a class="search" style="padding:10px; font-size:10px;" href="citas.php">Agregar Cita</a>
+        <a class="search" style="padding:10px 30px; font-size:10px;" href="citas.php"><span class="material-symbols-sharp">
+add
+</span>Agregar Cita</a>
     </div>
                 <div class="recent-citas">
                     <table>
@@ -78,7 +80,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                                         <td><span class="material-symbols-sharp">
 check_box_outline_blank
 </span></td>
-                                        <td><?=$row[1]?></td>
+                                        <td style="padding: 20px;"><?=$row[1]?></td>
                                         <td><?=$row[11]?></td>
                                         <td><?=$row[2]?></td>
                                         <td><?=$row[3]?></td>

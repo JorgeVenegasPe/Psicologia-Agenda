@@ -46,22 +46,29 @@ if (isset($_SESSION['NombrePsicologo'])){
                 <h3 style="color:#6A90F1; font-size: 18px;">
                 Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
 </h3>
-<h3 style="color:#6A90F1; font-size: 18px;">
-    Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= $contarPacientesUltimoMes ?> pacientes</span> registrados en el último mes
-</h3>
 
 <div class="contenedor-secciones">
 
 <div class="agenda">
-    <div class="div_event3">
-        <h1>Citas del día</h1>
-        <p style="color: #fff;" id="fechaActual"></p>
-        
-        <a href="citas.php" class="add-button">
-    <i class="fas fa-plus"></i> <!-- Icono de suma -->
-</a>
+<?php
+$fecha_actual = new DateTime('now', new DateTimeZone('UTC'));
+$fecha_actual->setTimeZone(new DateTimeZone('America/Lima')); // Cambia a tu zona horaria
 
-        </button>
+$locale = 'es_ES';
+$fmt = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+$fecha_formateada = $fmt->format($fecha_actual);
+
+?>
+    <div class="div_event3">
+        <div>
+            <h3 style="text-align: left;font-size: 16px;">Citas del día</h3>
+            <p style="text-align: left; color: #fff;">Hoy, <?php echo $fecha_formateada; ?></p>
+        </div>
+        <div style="display:flex; align-items: center;">
+            <a href="citas.php">
+                <span style="color: #fff" class="material-symbols-sharp">add_circle</span>
+            </a>
+        </div>
     </div>
 
     <?php
