@@ -21,11 +21,8 @@
                 if($NombrePsicologo){
                     $_SESSION['NombrePsicologo'] = $NombrePsicologo["NombrePsicologo"];
                     $_SESSION['IdPsicologo'] = $NombrePsicologo["IdPsicologo"];
-                    $_SESSION['Passwords'] = $NombrePsicologo["Passwords"];
-                    $_SESSION['celular'] = $NombrePsicologo["celular"];
-                    $_SESSION['email'] = $NombrePsicologo["email"];
                     $_SESSION['Usuario'] = $NombrePsicologo["Usuario"];
-                    header("location: ../../Vista/Dashboards.php");
+                    header("location: ../../Vista/CalendarioCitas.php");
                 }else{
                     header("location: ../../Index.php?error=1");
                 } 

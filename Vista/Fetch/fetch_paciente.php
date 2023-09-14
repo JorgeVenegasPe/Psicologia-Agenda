@@ -1,22 +1,22 @@
 <?php
-require("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/conexion/conexion.php");
+require("C:/xampp/htdocs/Psicologia-Agenda-Clinica-master/Conexion/conexion.php");
 $con = new conexion();
 $conn = $con->conexion();
 
-$codigopac = $_POST['codigopac'];
+$codigoPaciente = $_POST['codigoPaciente'];
 $idPsicologo = $_POST['idPsicologo']; // Obtener el valor del IdPsicologo
 
-$sql = "SELECT NomPaciente, ApPaterno, ApMaterno, Email, Telefono, IdPaciente 
-        From paciente
-        WHERE codigopac = :codigopac
+$sql = "SELECT NomPaciente, ApPaterno, ApMaterno, Email, Telefono, IdPaciente FROM paciente 
+        WHERE CodigoPaciente = :codigoPaciente
         AND IdPsicologo = :idPsicologo"; // Agregar la condición para el IdPsicologo
 
 $stmt = $conn->prepare($sql);
-$stmt->bindParam(':codigopac', $codigopac);
+$stmt->bindParam(':codigoPaciente', $codigoPaciente);
 $stmt->bindParam(':idPsicologo', $idPsicologo); // Bindear el parámetro IdPsicologo
 $stmt->execute();
 
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 if ($row) {
   $IdPaciente = $row['IdPaciente'];
