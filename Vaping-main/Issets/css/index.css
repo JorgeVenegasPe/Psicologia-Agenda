@@ -1,0 +1,147 @@
+/* Globales */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap');
+*::after,
+*::before,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    height: 100%;
+}
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+	place-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+body::after {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Color de fondo semi-transparente */
+    z-index: -1;
+}
+div{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh;
+    opacity: 0; /* Comenzará con una opacidad de 0 */
+    animation: fadeIn 2s forwards
+}
+img {
+    width:40%;
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0; /* La opacidad inicial es 0 */
+    }
+    to {
+      opacity: 1; /* La opacidad final es 1 (totalmente visible) */
+    }
+  }
+
+
+/* Estilos para los botones Si y No */
+.boton{
+    text-decoration: none;
+    background-color: #252222;
+    color: #fff;
+    display: flex;
+    padding: 8px 0;
+    justify-content: center;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    flex: 1;
+    border: 3px solid rgb(57, 170, 132);
+    font-weight: 700;
+}
+  
+.boton:hover{
+    background-color: #524c4c;
+}
+
+.content-modal {
+    max-width: 400px;
+    padding: 10px 20px;
+    background-color: #252222;
+    border-radius: 12px;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 101;
+    animation: showPopup 0.7s ease;
+}
+  
+/*Contenedor del modal*/
+.contenedor{
+    width: 100%;
+    padding: 20px;
+    background-color: #000000eb;
+    border-radius: 12px;
+    width: 100%;
+    position: absolute;
+
+}
+
+.content-modal .Letras {
+    text-align: center;
+    padding: 40px 0px;
+    color: #fff;
+    font-weight:    bold;
+    font-size: 30px;
+}
+
+.container-boton{
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    padding: 20px 15px;
+}
+
+@keyframes showPopup {
+    from {
+        opacity: 0; /* Comienza con una opacidad de 0 */
+        transform: translateY(-200px); /* Baja 50px desde arriba */
+    }
+    to {
+        opacity: 1; /* Al final, tiene una opacidad completa */
+        transform: translateY(0); /* Regresa a su posición original */
+    }
+}
+
+
+@media screen and ( max-width:500px ){
+    img {
+        width:60%;
+    }
+    .content-modal .Letras {
+        font-size: 20px;
+    }
+    .boton{
+        font-size: 10px;
+    }
+}

@@ -1,0 +1,72 @@
+
+
+main .top {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 3rem;
+    margin-right: 2em;
+    gap: 1rem;
+}
+main .top button {
+    display: none;
+}
+.button-seguridad{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-items: center;
+    font-weight: bold;
+    background-color:#b4d77b ;
+    color: #fff;
+    border-radius: 1px;
+    outline: 2px solid #b4d77b;
+    padding: 5px 10px;
+    overflow: hidden;
+    transition: color 1s;
+}
+
+.button-seguridad:hover{
+    color: black;
+    cursor: pointer;
+}
+
+main .theme-toggler {
+    background: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6rem;
+    width: 4.2rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+main .theme-toggler span {
+    font-size: 1.2rem;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main .theme-toggler span.active {
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius-1);
+}
+
+.ajustes{
+    font-size: 40px;
+
+}
+
+.info{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cerrar-info{
+    font-size: 15px;
+    font-weight: bold;
+}
