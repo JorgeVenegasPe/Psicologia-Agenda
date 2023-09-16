@@ -142,4 +142,3 @@ class userModelPaciente{
         return ($statement->execute()) ? $statement->fetchAll() : false;
     }
 }
-?>

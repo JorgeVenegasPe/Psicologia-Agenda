@@ -53,14 +53,20 @@ class usernameControlerCita{
         return ($this->model->showByFecha($id));
     }
 
+
     public function contarRegistrosEnCitas($id) {
         return ($this->model->contarRegistrosEnCitas($id));
     }
 
+    
+    
+    /*FUNCIONA-DANIEL */
+    /* CODIGO PARA EL DASHBOARD */
+
     public function contarCitasConfirmadas($id) {
         return ($this->model->contarCitasConfirmadas($id));
     }
-    
+  
     public function contarRegistrosEnPacientes($id) {
         return ($this->model->contarRegistrosEnPacientes($id));
     }
@@ -72,34 +78,14 @@ class usernameControlerCita{
     public function obtenerFechasCitasConFechaActual($id) {
         return ($this->model->obtenerFechasCitasConFechaActual($id));
     }
-
-    public function obtenerHorasCitasConFechaActual($id) {
-        return ($this->model->obtenerHorasCitasConFechaActual($id));
-    }
-    
-    public function obtenerCitasConNombrePacienteHoraMinutos($id) {
-        return ($this->model->obtenerCitasConNombrePacienteHoraMinutos($id));
-    }
-    //FUNCION PRA MEJORAR EL ORDEN DE LOS REGISTROS CITA
     public function obtenerCitasConNombrePacienteHoraMinutos2($id) {
         return ($this->model->obtenerCitasConNombrePacienteHoraMinutos2($id));
     }
-    
     public function contarPacientesUltimoMes($id) {
         return ($this->model->contarPacientesUltimoMes($id));
     }
-
-    /*Daniel  */
-    public function contarCitasConfirmadasConCanal($id) {
-        return ($this->model->contarCitasConfirmadasConCanal($id));
+    public function contarCitasConfirmadasConCanal($id, $canal) {
+        return $this->model->contarCitasConfirmadasConCanal($id, $canal);
     }
-
-    public function contarCitasConfirmadasConCanal2($id) {
-        return ($this->model->contarCitasConfirmadasConCanal2($id));
-    }
-
-    public function contarCitasConfirmadasConCanal3($id) {
-        return ($this->model->contarCitasConfirmadasConCanal3($id));
-    }
-} 
-?>
+    
+}
