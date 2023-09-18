@@ -121,8 +121,8 @@ p{
     font-weight: normal;
     text-align: center;
 }
-.visual{
-    color: #49c691;
+.visual{ /*Nueva clase creada para el forulario - Hans */
+    color: #49c691; 
     font-size: 2rem;
     font-weight: bold;
 }

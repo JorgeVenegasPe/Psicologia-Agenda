@@ -9,9 +9,10 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/formulario.css">
+    <link rel="stylesheet" href="../Issets/css/formulario.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/> 
+    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/> 
+    <link href="../Issets/fontawesome/fontawesome-free-6.4.2-web/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Paciente</title>
@@ -110,46 +111,45 @@ if (isset($_SESSION['NombrePsicologo'])){
             </thead>
             <tbody>
             <?php if ($rows) :?>
-                                <?php foreach ($rows as $row): ?>
-                <tr id="filaPaciente<?= $row[0] ?>">
-                <td><span class="material-symbols-sharp">
-check_box_outline_blank
-</span>
-</td>
-                    <td class="pacienteDetalle" style="cursor: pointer;"><?= $row[1] ?><?= $row[2] ?></td>
-                    <td><?=$row[18]?></td>
-                    <td><?=$row[4]?></td>
-                    <td><?=$row[12]?></td>
-                    <td><?=$row[11]?></td>
-                    <td><span class="material-symbols-sharp">
-more_vert
-</span>
-</td>
-                </tr>
-                
-                <?php endforeach;?>            
-            <?php endif;?>
-            </tbody>
-        </table>
+    <?php foreach ($rows as $row): ?>
+      <tr>
+        <td><span class="material-symbols-sharp">check_box_outline_blank</span></td>
+        <td id="filaPaciente-<?= $row[0] ?>" style="cursor: pointer;" onclick="toggleInfoPaciente(<?= $row[0] ?>)">
+          <?= $row[1] ?> <?= $row[2] ?>
+        </td>
+        <td><?= $row[18] ?></td>
+        <td><?= $row[4] ?></td>
+        <td><?= $row[12] ?></td>
+        <td><?= $row[11] ?></td>
+        <td><span class="material-symbols-sharp">more_vert</span></td>
+      </tr>
+    <?php endforeach;?>
+  <?php endif;?>
+  </tbody>
+</table>
     </div>
     
     <!--INICIO DE CONTENEDOR DETALLES--->
-    <div class="detalles" id="contenedorDetalles">
+
     <!----- CAMBIOS TEST HANS ------>
     <br>
         <?php if ($datos) :?>
 
         <?php foreach ($datos as $dato): ?>
+          <div class="detalles" id="detallesPaciente-<?= $dato[0] ?>">
         <!-------2do CAMBIO Posicionamiento Vertical------->
         <div style="display:grid; flex-direction:row; gap:10px;">
         <div class="checkout-information">
-            <div class="input-group2">
-             	<p class="arriba" for="#">Nombre: </p>
-                <p class="visual"><?= $dato[1] ?></p><p class="visual"><?= $dato[2] ?></p><p class="visual"><?= $dato[3] ?></p>
+        <div class="input-group3">
+          <i class="fa-solid fa-arrow-left" style="cursor: pointer;"></i>
+          <p class="arriba" for="#">ID: <?= $dato[0] ?></p>
+        </div>
+            <div class="input-group3">
+                <p class="visual"><?= $dato[1] ?> <?= $dato[2] ?> <?= $dato[3] ?></p>
             </div>
-            <div class="input-group2">
-             	<p class="arriba" for="#">Última cita</p>
-               <h2><?= $dato[17] ?></h2>
+            <div class="input-group">
+             	<p class="arriba" for="#">Última cita: </p>
+              <h2 class="arriba"><?= $dato[17] ?></h2>
             </div>
         </div>
         <!-------2DO CAMBIO FIN------>
@@ -158,38 +158,38 @@ more_vert
         <!-------MI CAMBIO ------>
         <div class="checkout-information">
           <p class="arriba">Datos especificos: </p>
-            <div class="input-group2">
-              <div style="display:flex; flex-direction:row; width:190px;"class="input-group">
+            <div class="input-group4">
+              
   		          <p class="abajo" for="Genero">Género</p>
-  		          <p><?= $dato[10] ?></p>
-  	          </div>
+  		          <p class="arriba"><?= $dato[10] ?></p>
+  	          
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
                 <p class="abajo" for="Genero">Edad</p>
-  		          <p><?= $dato[6] ?></p>
+  		          <p class="arriba"><?= $dato[6] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
               <p class="abajo" for="#">Estado civil</p>
-              <p><?= $dato[9] ?></p>
+              <p class="arriba"><?= $dato[9] ?></p>
             </div>
         </div>
         <!-------FIN DE MI CAMBIO ------>
 
         <div class="checkout-information">
           <p class="arriba">Información de contacto: </p>
-            <div class="input-group2">
-              <div style="display:flex; flex-direction:row; width:190px;"class="input-group">
+            <div class="input-group4">
+              
   		          <p class="abajo" for="Genero">Celular</p>
-  		          <p><?= $dato[11] ?></p>
-  	          </div>
+  		          <p class="arriba"><?= $dato[11] ?></p>
+  	          
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Correo</p>
-               <p><?= $dato[12] ?></p>
+               <p class="arriba"><?= $dato[12] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">DNI</p>
-               <p><?= $dato[4] ?></p>
+               <p class="arriba"><?= $dato[4] ?></p>
             </div>
         </div>
         <!------ Linea de separacion entre mi display flex y grid ---->
@@ -199,52 +199,53 @@ more_vert
           <div style="display:flex; flex-direction:row; gap:10px;">
           <div class="checkout-information">
             <p class="arriba">Información personal: </p>
-            <div class="input-group2">
-              <div style="display:flex; flex-direction:row; width:190px;"class="input-group">
+            <div class="input-group4">
+              
   		          <p class="abajo" for="Genero">Nombres y apellidos</p>
-  		          <p><?= $dato[1] ?></p><p><?= $dato[2] ?></p><p><?= $dato[3] ?></p>
-  	          </div>
+  		          <p class="arriba"><?= $dato[1] ?> <?= $dato[2] ?> <?= $dato[3] ?></p>
+  	          
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Correo</p>
-               <p><?= $dato[12] ?></p>
+               <p class="arriba"><?= $dato[12] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">DNI</p>
-               <p><?= $dato[4] ?></p>
+               <p class="arriba"><?= $dato[4] ?></p>
             </div>
         </div>
           
         <div class="checkout-information">
           <p class="arriba">Información familiar: </p>
-            <div class="input-group2">
-              <div style="display:flex; flex-direction:row; width:190px;"class="input-group">
+            <div class="input-group4">
+              
   		          <p class="abajo" for="Genero">Nombre de la madre</p>
-  		          <p><?= $dato[25] ?></p>
-  	          </div>
+  		          <p class="arriba"><?= $dato[25] ?></p>
+  	          
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Estado de la madre</p>
-               <p><?= $dato[26] ?></p>
+              <p class="arriba"><?= $dato[26] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Nombre del padre</p>
-               <p><?= $dato[23] ?></p>
+              <p class="arriba"><?= $dato[23] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Estado del padre</p>
-               <p><?= $dato[24] ?></p>
+              <p class="arriba"><?= $dato[24] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Cantidad de hijos</p>
-               <p><?= $dato[30] ?></p>
+              <p class="arriba"><?= $dato[30] ?></p>
             </div>
-            <div class="input-group2">
+            <div class="input-group4">
              	<p class="abajo" for="#">Antecedentes familiares</p>
-              <p><?= $dato[32] ?></p>
+              <p class="arriba"><?= $dato[32] ?></p>
             </div>
         </div>
           <!----Linea de separacion entre el formulario y los botones ---->
+        </div>
         </div>
         <?php endforeach;?>
         <?php endif;?>
@@ -254,26 +255,17 @@ more_vert
   <script src="../Issets/js/Dashboard.js"></script>
 </body>
 <script>
-    // Obtén todas las celdas de paciente
-    var celdasPaciente = document.querySelectorAll('.pacienteDetalle');
+function toggleInfoPaciente(idPaciente) {
+  // Obtén el contenedor de detalles del paciente
+  var contenedorDetalles = document.getElementById('detallesPaciente-' + idPaciente);
 
-    // Agrega un evento de clic a cada celda de paciente
-    celdasPaciente.forEach(function(celda) {
-        celda.addEventListener('click', function() {
-            // Obtiene el identificador único de la fila de paciente
-            var filaId = this.parentElement.id;
-
-            // Muestra el contenedor de detalles correspondiente
-            var contenedorDetalles = document.getElementById('contenedorDetalles');
-            contenedorDetalles.style.display = 'block';
-
-            // Aquí puedes agregar el código para cargar los detalles del paciente en el contenedor
-            // Puedes usar el identificador de fila para obtener la información necesaria
-
-            // Por ejemplo, puedes usar AJAX para cargar los detalles desde el servidor
-            // y mostrarlos en el contenedor de detalles.
-        });
-    });
+  // Si está oculto, muéstralo; de lo contrario, ocúltalo
+  if (contenedorDetalles.style.display === 'none' || contenedorDetalles.style.display === '') {
+    contenedorDetalles.style.display = 'block';
+  } else {
+    contenedorDetalles.style.display = 'none';
+  }
+}
 </script>
 </html>
 <?php
