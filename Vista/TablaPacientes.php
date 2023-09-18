@@ -12,7 +12,6 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="../Issets/css/formulario.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="../Issets/css/Dashboard.css"/> 
-    <link href="../Issets/fontawesome/fontawesome-free-6.4.2-web/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Paciente</title>
@@ -140,12 +139,9 @@ if (isset($_SESSION['NombrePsicologo'])){
         <!-------2do CAMBIO Posicionamiento Vertical------->
         <div style="display:grid; flex-direction:row; gap:10px;">
         <div class="checkout-information">
-        <div class="input-group3">
-          <i class="fa-solid fa-arrow-left" style="cursor: pointer;"></i>
-          <p class="arriba" for="#">ID: <?= $dato[0] ?></p>
-        </div>
             <div class="input-group3">
                 <p class="visual"><?= $dato[1] ?> <?= $dato[2] ?> <?= $dato[3] ?></p>
+                <p class="arriba" for="#">ID: <?= $dato[0] ?></p>
             </div>
             <div class="input-group">
              	<p class="arriba" for="#">Última cita: </p>
