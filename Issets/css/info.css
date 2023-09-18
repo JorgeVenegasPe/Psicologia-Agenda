@@ -1,3 +1,5 @@
+
+
 main .top {
     display: flex;
     justify-content: end;
@@ -6,11 +8,9 @@ main .top {
     margin-right: 2em;
     gap: 1rem;
 }
-
 main .top button {
     display: none;
 }
-
 .button-seguridad{
     text-transform: uppercase;
     letter-spacing: 1px;

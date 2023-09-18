@@ -7,8 +7,6 @@ class UserModelCita{
         $con=new conexion();
         $this->PDO=$con->conexion();
     }
-    
-    // Guardar datos de la cita
     public function insertarCita($IdPaciente, $MotivoCita, $EstadoCita, $FechaInicioCita, $DuracionCita,$FechaFinCita, $TipoCita, $ColorFondo, $IdPsicologo, $CanalCita, $EtiquetaCita) {
         $statement = $this->PDO->prepare("INSERT INTO cita (IdPaciente, MotivoCita, EstadoCita, FechaInicioCita, DuracionCita, FechaFinCita, TipoCita, ColorFondo, IdPsicologo, CanalCita, EtiquetaCita) 
                                         VALUES (:IdPaciente, :MotivoCita, :EstadoCita, :FechaInicioCita, :DuracionCita,:FechaFinCita, :TipoCita, :ColorFondo, :IdPsicologo, :CanalCita, :EtiquetaCita)");
@@ -26,10 +24,8 @@ class UserModelCita{
     
         return ($statement->execute()) ? $this->PDO->lastInsertId() : false;
     }
-    
-    // Para ver datos completos de la cita
     public function ver($idUsuario){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,p.codigopac FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,p.CodigoPaciente FROM cita c
                                         INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
                                         INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                         WHERE c.IdPsicologo = :idUsuario");
@@ -37,16 +33,6 @@ class UserModelCita{
         return($statement->execute())? $statement->fetchaLL():false;
 
     }
-
-    // Eliminar cita seleccionada 
-    public function eliminar($id){
-        $statement=$this->PDO->prepare("DELETE FROM cita WHERE IdCita=:id;");
-        $statement->bindParam(":id",$id);
-        return($statement->execute())? true:false;
-        
-    }
-
-    // Mostrar datos de cita seleccionada
     public function show($id){
         $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,p.Email,c.EstadoCita,c.MotivoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,c.FechaRegistro FROM cita c
                                        INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
@@ -56,10 +42,8 @@ class UserModelCita{
         return($statement->execute())? $statement->fetch():false;
 
     }
-
-    // Mostrar citas segun la fecha actual
     public function showByFecha($id){
-        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,p.codigopac FROM cita c
+        $statement=$this->PDO->prepare("SELECT c.IdCita,p.NomPaciente,c.MotivoCita,c.EstadoCita,c.FechaInicioCita,c.Duracioncita,c.TipoCita,c.ColorFondo,ps.NombrePsicologo,c.CanalCita,c.EtiquetaCita,p.CodigoPaciente FROM cita c
                                        INNER JOIN psicologo ps on c.IdPsicologo=ps.IdPsicologo
                                        INNER JOIN paciente p on c.IdPaciente=p.IdPaciente
                                        where c.IdPsicologo = :idUsua
@@ -68,8 +52,12 @@ class UserModelCita{
         return($statement->execute())? $statement->fetchaLL():false;
 
     }
-
-    // Modificar cita completa
+    public function eliminar($id){
+        $statement=$this->PDO->prepare("DELETE FROM cita WHERE IdCita=:id;");
+        $statement->bindParam(":id",$id);
+        return($statement->execute())? true:false;
+        
+    }
     public function modificarCita($IdCita,$FechaInicio, $EstadoCita,$MotivoCita,$Duracioncita,$TipoCita,$CanalCita,$EtiquetaCita ,$ColorFondo) {
       
         $statement = $this->PDO->prepare("UPDATE cita SET FechaInicioCita=:FechaInicioCita,EstadoCita=:EstadoCita,MotivoCita=:MotivoCita,Duracioncita=:Duracioncita,TipoCita=:TipoCita,CanalCita=:CanalCita,EtiquetaCita=:EtiquetaCita,ColorFondo=:ColorFondo WHERE IdCita=:IdCita");
@@ -85,8 +73,7 @@ class UserModelCita{
     
         return ($statement->execute())? $this->PDO->lastInsertId():false;
     }
-
-    // Contar el total de citas
+    
     public function contarRegistrosEnCitas($id) {
         $statement=$this->PDO->prepare("SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo");
         $statement->bindParam(":idPsicologo",$id, PDO::PARAM_INT);
@@ -101,7 +88,6 @@ class UserModelCita{
         }
     }
 
-    // Contar el total de citas confirmadas
     public function contarCitasConfirmadas($id) {
         $statement=$this->PDO->prepare("SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo AND EstadoCita = 'Confirmado'");
         $statement->bindParam(":idPsicologo",$id, PDO::PARAM_INT);
@@ -116,7 +102,6 @@ class UserModelCita{
         }
     }
 
-    // Contar el total de pacientes
     public function contarRegistrosEnPacientes($id) {
         $statement=$this->PDO->prepare("SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo");
         $statement->bindParam(":idPsicologo",$id, PDO::PARAM_INT);
@@ -131,7 +116,6 @@ class UserModelCita{
         }
     }
 
-    // Contar el total de pacientes de la fecha actual
     public function contarPacientesConFechaActual($id) {
         $fechaActual = date("Y-m-d");
         $statement=$this->PDO->prepare("SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) = :fechaActual");
@@ -148,7 +132,6 @@ class UserModelCita{
         }
     }
 
-    // Contar el total de citas de la fecha actual
     public function obtenerFechasCitasConFechaActual($id) {
         $fechaActual = date("Y-m-d");
         $statement=$this->PDO->prepare("SELECT FechaRegistro FROM cita WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) = :fechaActual");
@@ -165,11 +148,10 @@ class UserModelCita{
     
             return $fechas;
         } else {
-            return array();
+            return array(); // Devolver un arreglo vacío si no se encontraron citas
         }
     }
 
-    // Contar el total de citas de la hora actual
     public function obtenerHorasCitasConFechaActual($id) {
         $fechaActual = date("Y-m-d");
         $statement=$this->PDO->prepare("SELECT DATE_FORMAT(FechaRegistro, '%H:%i') as HoraMinutos FROM cita WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) = :fechaActual");
@@ -190,7 +172,6 @@ class UserModelCita{
         }
     }
     
-    // Contar las citas con el nombre de pacientes y las horas
     public function obtenerCitasConNombrePacienteHoraMinutos($id) {
         $fechaActual = date("Y-m-d");
         $statement=$this->PDO->prepare("SELECT paciente.IdPaciente, paciente.NomPaciente, DATE_FORMAT(cita.FechaRegistro, '%H:%i') as HoraMinutos
@@ -213,7 +194,24 @@ class UserModelCita{
             return array(); // Devolver un arreglo vacío si no se encontraron citas
         }
     }
+    
+    public function contarPacientesUltimoMes($id) {
+        $fechaActual = date("Y-m-d");
+        $fechaHaceUnMes = date("Y-m-d", strtotime("-1 month"));
+        $statement=$this->PDO->prepare("SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) BETWEEN :fechaHaceUnMes AND :fechaActual");
+        $statement->bindParam(":idPsicologo",$id,PDO::PARAM_INT);
+        $statement->bindParam(":fechaHaceUnMes", $fechaHaceUnMes,PDO::PARAM_STR);
+        $statement->bindParam(":fechaActual",$fechaActual,PDO::PARAM_STR);
+        $result = $statement->execute();
 
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
 }
 
 ?>

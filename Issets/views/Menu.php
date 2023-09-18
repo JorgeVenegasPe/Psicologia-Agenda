@@ -19,6 +19,7 @@
             <span class="material-symbols-sharp" translate="no">dashboard</span>
             <h3>Dashboard</h3>
         </a>
+        
         <a class="pacientes" href="TablaPacientes.php">
             <span class="material-symbols-sharp" translate="no">groups</span>
             <h3>Pacientes</h3>
@@ -39,7 +40,7 @@
             <span class="material-symbols-sharp" translate="no">account_balance_wallet</span>
             <h3>Planes</h3>
         </a>
-        <a class="privacidad" href="Seguridad.php">
+        <a class="privacidad" href="../issets/views/seguridad.php">
             <span class="material-symbols-sharp" translate="no">security</span>
             <h3>Politcas y Privacidad</h3>
         </a>

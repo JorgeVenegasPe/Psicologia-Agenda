@@ -246,7 +246,7 @@ if (isset($_SESSION['NombrePsicologo'])){
         <?php endforeach;?>
         <?php endif;?>
         </div>
-            <!----FIN DEL CONTENEDOR DETALLES --->
+            <!----FIN DEL CONTENEDOR DETALLES----->
   </main>
   <script src="../Issets/js/Dashboard.js"></script>
 </body>
