@@ -11,8 +11,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <title>Dashboard</title>    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/formulario.css">
-    <link rel="stylesheet" href="../Issets/css/Dashboard.css" />
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -28,7 +27,6 @@ if (isset($_SESSION['NombrePsicologo'])){
     $totalPacientesRecientes =$PORC->contarPacientesConFechaActual($_SESSION['IdPsicologo']);
     $totalRegistrosEnCitasConfirmado =$PORC->contarCitasConfirmadas($_SESSION['IdPsicologo']);
     $totalRegistrosEnCitasHora =$PORC->obtenerFechasCitasConFechaActual($_SESSION['IdPsicologo']);
-    $contarPacientesUltimoMes =$PORC->contarPacientesUltimoMes($_SESSION['IdPsicologo']);
     $Citas=$PORC->showByFecha($_SESSION['IdPsicologo']);
     $datos=$Pac->MostrarPacientesRecientes($_SESSION['IdPsicologo']);
 ?>
@@ -40,28 +38,33 @@ if (isset($_SESSION['NombrePsicologo'])){
         <main class="animate__animated animate__fadeIn">
             <br>
             <!----------- CAmbios NUEVOS DEL DASHBOARDS -------->
-            <div style="text-align: center; max-width: 400px;">
                  <h4 style=" color:#49c691;">¡Buenos dias, <?=$_SESSION['NombrePsicologo']?>!</h4>
 
                 <h3 style="color:#6A90F1; font-size: 18px;">
                 Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
 </h3>
-<h3 style="color:#6A90F1; font-size: 18px;">
-    Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= $contarPacientesUltimoMes ?> pacientes</span> registrados en el último mes
-</h3>
 
-<div class="contenedor-secciones">
 
 <div class="agenda">
-    <div class="div_event3">
-        <h1>Citas del día</h1>
-        <p style="color: #fff;" id="fechaActual"></p>
-        
-        <a href="citas.php" class="add-button">
-    <i class="fas fa-plus"></i> <!-- Icono de suma -->
-</a>
+<?php
+$fecha_actual = new DateTime('now', new DateTimeZone('UTC'));
+$fecha_actual->setTimeZone(new DateTimeZone('America/Lima')); // Cambia a tu zona horaria
 
-        </button>
+$locale = 'es_ES';
+$fmt = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+$fecha_formateada = $fmt->format($fecha_actual);
+
+?>
+    <div class="div_event3">
+        <div>
+            <h3 style="text-align: left;font-size: 16px;">Citas del día</h3>
+            <p style="text-align: left; color: #fff;">Hoy, <?php echo $fecha_formateada; ?></p>
+        </div>
+        <div style="display:flex; align-items: center;">
+            <a href="citas.php">
+                <span style="color: #fff" class="material-symbols-sharp">add_circle</span>
+            </a>
+        </div>
     </div>
 
     <?php
@@ -86,15 +89,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <?php else: ?>
         <p>No hay citas programadas para hoy.</p>
     <?php endif; ?>
-</div>
-<div class="pie-chart" >
-<h3 style="text-align: start; margin:20px 30px;">Pacientes del ultimo mes</h3>
-        <h2>Canal de Atracción</h2>
-        <canvas id="myPieChart"></canvas>
-        <h3  class="h3-dsh">Cita Online</h3>
-        <h3  class="h3-dsh">Referidos</h3>
-        <h3  class="h3-dsh">Marketing Digital</h3>
-    </div>
+
 
     <script>
     // Importa los datos que deseas mostrar en el gráfico de pastel.
@@ -129,7 +124,7 @@ if (isset($_SESSION['NombrePsicologo'])){
             <!--
             <h2>Estadisticas</h2>
             -->
-            <div class="insights"style="color: #49c691; ">  
+            <div class="insights">  
                 
                 <div class="sales">
                     <div class="middle" >
@@ -196,7 +191,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                         <?php if ($datos) : ?>
                             <?php foreach ($datos as $key) : ?>
                                 <div class="message">
-                                    <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?> (<?= $key['CodigoPaciente'] ?>)</b> <?= $key['Edad'] ?> años</p>
+                                    <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?>,</b> <?= $key['Edad'] ?> años</p>
                                     <small class="text-muted">Registrado el: <?= $key['Fecha'] ?></small>
                                     <br>
                                     <small class="text-muted">Hora: <?= $key['Hora'] ?></small>
@@ -209,8 +204,15 @@ if (isset($_SESSION['NombrePsicologo'])){
                 </div>
                 <a href="RegPaciente.php">Agregar Paciente</a>
             </div>
-        </div>
+            <div class="pie-chart" >
+<h3 style="text-align: start; margin:20px 30px;">Pacientes del ultimo mes</h3>
+        <h2>Canal de Atracción</h2>
+        <canvas id="myPieChart"></canvas>
+        <h3  class="h3-dsh">Cita Online</h3>
+        <h3  class="h3-dsh">Referidos</h3>
+        <h3  class="h3-dsh">Marketing Digital</h3>
     </div>
+        </div>
     <script src="../issets/js/Dashboard.js"></script>
 </body>
 </html>
