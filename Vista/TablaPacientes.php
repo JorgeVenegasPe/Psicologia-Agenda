@@ -10,26 +10,20 @@ if (isset($_SESSION['NombrePsicologo'])) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-        <link rel="stylesheet" href="../issets/css/formulario.css">
+        <link rel="stylesheet" href="../issets/css/MainGeneral.css">
         <link rel="icon" href="../Issets/images/contigovoyico.ico">
-        <link rel="stylesheet" href="../issets/css/Dashboard.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <title>Paciente</title>
     </head>
 
     <body>
-
         <?php
-
-
         require("../Controlador/Paciente/ControllerPaciente.php");
         require("../Controlador/Cita/citaControlador.php");
         $obj = new usernameControlerPaciente();
         $objcita = new usernameControlerCita();
         $rowscita = $objcita->contarRegistrosEnPacientes($_SESSION['IdPsicologo']);
-
         $rows = $obj->ver($_SESSION['IdPsicologo']);
         ?>
         <div class="containerTotal">
@@ -41,24 +35,28 @@ if (isset($_SESSION['NombrePsicologo'])) {
                 <?php
                 require_once '../Issets/views/Info.php';
                 ?>
-                <h2>Pacientes del dia</h2>
+                <h2 style="color: #49c691;">Lista de Pacientes</h2>
                 <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
-                    <span style="font-size: 15px;"><b style="font-size: 20px;"><?= $rowscita ?></b> pacientes </span>
+                    <span style="font-size: 15px;color: #6a90f1;"><b style="font-size: 25px;color: #6a90f1;"><?= $rowscita ?></b> pacientes </span>
                     <div class="input-group">
-                        <input type="text" style="background-color: White;" placeholder="Buscar" class="input" required />
+                        <input type="text" style="background-color: White;" placeholder="Buscar" class="input" required></input>
                     </div>
-                    <a class="search" style="padding:10px; font-size:10px;" href="RegPaciente.php">Agregar Paciente</a>
+                    <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php"><span class="material-symbols-sharp">add</span>Agregar Paciente</a>
                 </div>
                 <div class="recent-citas">
                     <table>
                         <thead>
                             <tr>
-                                <th></th>
+
+                                <th>
+                                    <span class="material-symbols-sharp">check_box_outline_blank</span>
+                                </th>
                                 <th>Paciente</th>
                                 <th>Codigo</th>
                                 <th>DNI</th>
                                 <th>Email</th>
                                 <th>Celular</th>
+                                <th>Nueva Cita</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -66,9 +64,8 @@ if (isset($_SESSION['NombrePsicologo'])) {
                             <?php if ($rows) : ?>
                                 <?php foreach ($rows as $row) : ?>
                                     <tr>
-                                        <td><span class="material-symbols-sharp">
-                                                check_box_outline_blank
-                                            </span>
+                                        <td>
+                                            <span class="material-symbols-sharp">check_box_outline_blank</span>
                                         </td>
                                         <td><?= $row[1] ?> <?= $row[2] ?></td>
                                         <td><?= $row[18] ?></td>
@@ -76,15 +73,19 @@ if (isset($_SESSION['NombrePsicologo'])) {
                                         <td><?= $row[12] ?></td>
                                         <td><?= $row[11] ?></td>
                                         <td>
+                                            <a class="button" style="width: 110px; padding:6px; display:flex; font-size:10px;" href="citas.php">
+                                                <span class="material-symbols-sharp">add</span>Crear Cita
+                                            </a>
+                                        </td>
+                                        <td>
                                             <div class="dropdown">
                                                 <button class="dropbtn"><span class="material-symbols-sharp">more_vert</span></button>
                                                 <div class="dropdown-content">
                                                     <a type="button" class="btne" onclick="openModalEliminar('<?= $row[0] ?>')">
-                                                        <span class="material-symbols-outlined">delete</span><p>Eliminar</p>
+                                                        <p style="color: #6a90f1;"><img src="../Issets/images/eliminar.png" style="float:left; width: 20px; height: 20px; ">Eliminar</p>
                                                     </a>
-                                                    <a type="button" id="editBtn" onclick="openModalEditar('<?= $row[0] ?>')">
-
-                                                        <span class="material-symbols-outlined"> edit</span> <p>Editar</p>
+                                                    <a type="button" class="btnm" onclick="openModal('<?= $row[0] ?>')">
+                                                        <p style="color: #6a90f1;"><img src="../Issets/images/editar.png" style="float:left; width: 20px; height: 20px; ">Editar</p>
                                                     </a>
                                                 </div>
                                         </td>
@@ -103,7 +104,7 @@ if (isset($_SESSION['NombrePsicologo'])) {
                                                 <div class="input-group">
                                                     <div>
                                                         <br>
-                                                        <a class="ButtonEliminar" style="margin-left: 18em;" href="../Crud/Cita/eliminarPaciente.php?id=<?= $row[0] ?>">Eliminar</a>
+                                                        <a class="ButtonEliminar" style="float:center;" href="../Crud/Paciente/eliminarPaciente.php?id=<?= $row[0] ?>">Eliminar</a>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -111,9 +112,9 @@ if (isset($_SESSION['NombrePsicologo'])) {
                                         </div>
                                     </div>
                                     <!-- Modal para modificacion -->
-                                    <div id="modalEditar<?= $row[0] ?>" class="modal">
-                                        <div class="containerModalEliminar">
-                                            <a href="#" class="close" style="margin-right:20px" onclick="closeModalEditar('<?= $row[0] ?>')">&times;</a>
+                                    <div id="modal<?= $row[0] ?>" class="modal">
+                                        <div class="containerModal">
+                                            <a href="#" class="close" style="margin-right:20px" onclick="closeModal('<?= $row[0] ?>')">&times;</a>
                                             <form action="../Crud/Paciente/modificarPaciente.php" autocomplete="off" method="post">
                                                 <h2 style="text-align:center">Modificar datos de <?= $user[2] ?> </h2>
                                                 <div class="checkout-information">
@@ -233,7 +234,6 @@ if (isset($_SESSION['NombrePsicologo'])) {
                                             </form>
                                         </div>
                                     </div>
-
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
@@ -242,76 +242,12 @@ if (isset($_SESSION['NombrePsicologo'])) {
             </main>
             <script src="../Issets/js/Dashboard.js"></script>
             <script>
-                $(document).ready(function() {
-                    $('#Departamento').change(function() {
-                        var departamentoId = $(this).find(':selected').data('id');
-                        obtenerProvincias(departamentoId);
-                    });
-
-                    function obtenerProvincias(departamentoId) {
-                        $.ajax({
-                            url: 'Fetch/obtenerProvincias.php',
-                            method: 'POST',
-                            data: {
-                                departamentoId: departamentoId
-                            },
-                            dataType: 'json',
-                            success: function(provincias) {
-                                // Llenar el select de provincias con los datos obtenidos
-                                var selectProvincias = $('#Provincia');
-                                selectProvincias.empty();
-                                selectProvincias.append($('<option>', {
-                                    value: '',
-                                    text: 'Seleccionar'
-                                }));
-                                provincias.forEach(function(provincia) {
-                                    selectProvincias.append($('<option>', {
-                                        value: provincia.id,
-                                        text: provincia.name
-                                    }));
-                                });
-                            }
-                        });
-                    }
-                });
-
-                $('#Provincia').change(function() {
-                    var provinciaId = $(this).val();
-                    obtenerDistritos(provinciaId);
-                });
-
-                function obtenerDistritos(provinciaId) {
-                    $.ajax({
-                        url: 'Fetch/obtenerDistritos.php',
-                        method: 'POST',
-                        data: {
-                            provinciaId: provinciaId
-                        },
-                        dataType: 'json',
-                        success: function(distritos) {
-                            // Llenar el select de distritos con los datos obtenidos
-                            var selectDistritos = $('#Distrito');
-                            selectDistritos.empty();
-                            selectDistritos.append($('<option>', {
-                                value: '',
-                                text: 'Seleccionar'
-                            }));
-                            distritos.forEach(function(distrito) {
-                                selectDistritos.append($('<option>', {
-                                    value: distrito.id,
-                                    text: distrito.name
-                                }));
-                            });
-                        }
-                    });
+                function openModal(id) {
+                    document.getElementById('modal' + id).style.display = 'block';
                 }
 
-                function openModalEditar(id) {
-                    document.getElementById('modalEditar' + id).style.display = 'block';
-                }
-
-                function closeModalEditar(id) {
-                    document.getElementById('modalEditar' + id).style.display = 'block';
+                function closeModal(id) {
+                    document.getElementById('modal' + id).style.display = 'none';
                 }
 
                 function openModalEliminar(id) {
