@@ -15,49 +15,50 @@
         </div>
     </div>
     <div class="sidebar">
-        <a class="active" href="Dashboards.php" >
-            <span class="material-symbols-sharp" translate="no">grid_view</span>
+        <a class="dashboard" href="Dashboards.php" >
+            <span class="material-symbols-sharp" translate="no">dashboard</span>
             <h3>Dashboard</h3>
         </a>
-        <a href="CalendarioCitas.php">
-            <span class="material-symbols-sharp" translate="no">calendar_month</span>
-            <h3>Calendario</h3>
-        </a>
-        <a href="RegDatosPaciente.php">
-            <span class="material-symbols-sharp" translate="no">receipt_long</span>
+        <a class="pacientes" href="TablaPacientes.php">
+            <span class="material-symbols-sharp" translate="no">groups</span>
             <h3>Pacientes</h3>
         </a>
-        <a href="citas.php">
-            <span class="material-symbols-sharp" translate="no">contacts</span>
+        <a class="citas" href="TablaCitas.php">
+            <span class="material-symbols-sharp" translate="no">volunteer_activism</span>
             <h3>Citas</h3>
-        </a>
-        <a href="RegFamiliar.php">
-            <span class="material-symbols-sharp" translate="no">receipt_long</span>
-            <h3>Registro Familiar</h3>
-        </a>
-        <a href="AtenPaciente.php">
-            <span class="material-symbols-sharp" translate="no">receipt_long</span>
-            <h3>Atencion al Paciente</h3>
-        </a>
-        <a href="DatosPaciente.php">
+        </a>        
+        <a class="historial" href="DatosPaciente.php">
             <span class="material-symbols-sharp" translate="no">history</span>
             <h3>Historial</h3>
         </a>
-        <a href="Salir.php">
-            <span class="material-symbols-sharp" translate="no">paid</span>
+        <a class="calendario" href="CalendarioCitas.php">
+            <span class="material-symbols-sharp" translate="no">calendar_month</span>
+            <h3>Calendario</h3>
+        </a>
+        <a class="planes" href="Salir.php">
+            <span class="material-symbols-sharp" translate="no">account_balance_wallet</span>
             <h3>Planes</h3>
         </a>
-        <a href="../issets/views/seguridad">
+        <a class="privacidad" href="Seguridad.php">
             <span class="material-symbols-sharp" translate="no">security</span>
             <h3>Politcas y Privacidad</h3>
         </a>
-        <a href="../issets/views/Salir.php">
-            <span class="material-symbols-sharp" translate="no">logout</span>
-            <h3>Salir</h3>
-        </a>
     </div>
+    <div class="nav-menu-btn"></div>  
 </aside>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const currentPage = window.location.pathname;
 
-    
+    const links = document.querySelectorAll('aside .sidebar a');
+
+    links.forEach(link => {
+      const linkHref = link.getAttribute('href');
+      if (currentPage.includes(linkHref)) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
 </body>
 </html>
