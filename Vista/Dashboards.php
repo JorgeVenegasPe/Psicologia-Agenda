@@ -11,8 +11,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <title>Dashboard</title>    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/formulario.css">
-    <link rel="stylesheet" href="../Issets/css/Dashboard.css" />
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -23,6 +22,11 @@ if (isset($_SESSION['NombrePsicologo'])){
     require_once("../Controlador/Cita/citaControlador.php");
     $PORC=new usernameControlerCita();
     $Pac=new usernameControlerPaciente();
+
+    $totalRegistrosEnCanalAtraccion =$PORC->contarCitasConfirmadasConCanal($_SESSION['IdPsicologo']); 
+    $totalRegistrosEnCanalAtraccion2 =$PORC->contarCitasConfirmadasConCanal2($_SESSION['IdPsicologo']); 
+    $totalRegistrosEnCanalAtraccion3 =$PORC->contarCitasConfirmadasConCanal3($_SESSION['IdPsicologo']); 
+
     $totalRegistrosEnCitas =$PORC->contarRegistrosEnCitas($_SESSION['IdPsicologo']); 
     $totalPacientes =$PORC->contarRegistrosEnPacientes($_SESSION['IdPsicologo']); 
     $totalPacientesRecientes =$PORC->contarPacientesConFechaActual($_SESSION['IdPsicologo']);
@@ -40,92 +44,113 @@ if (isset($_SESSION['NombrePsicologo'])){
         <main class="animate__animated animate__fadeIn">
             <br>
             <!----------- CAmbios NUEVOS DEL DASHBOARDS -------->
-            <div style="text-align: center; max-width: 400px;">
-                 <h4 style=" color:#49c691;">¡Buenos dias, <?=$_SESSION['NombrePsicologo']?>!</h4>
+            <div class="contenedor_dsh" >
 
-                <h3 style="color:#6A90F1; font-size: 18px;">
+                 <h4 style=" color:#49c691; text-align: start; margin-left: 20PX;">¡Buenos dias, <?=$_SESSION['NombrePsicologo']?>!</h4>
+
+                <h3 style="color:#6A90F1; font-size: 18px; text-align: start; margin-left: 20PX; ">
                 Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
-</h3>
-<h3 style="color:#6A90F1; font-size: 18px;">
-    Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= $contarPacientesUltimoMes ?> pacientes</span> registrados en el último mes
-</h3>
-
+                </h3>
 <div class="contenedor-secciones">
-
 <div class="agenda">
-    <div class="div_event3">
-        <h1>Citas del día</h1>
-        <p style="color: #fff;" id="fechaActual"></p>
-        
-        <a href="citas.php" class="add-button">
-    <i class="fas fa-plus"></i> <!-- Icono de suma -->
-</a>
-
-        </button>
-    </div>
-
     <?php
+    $fecha_actual = new DateTime('now', new DateTimeZone('UTC'));
+    $fecha_actual->setTimeZone(new DateTimeZone('America/Lima')); // Cambia a tu zona horaria
+
+    $locale = 'es_ES';
+    $fmt = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+    $fecha_formateada = $fmt->format($fecha_actual);
+
     // Llama a la función para obtener las citas con nombre del paciente, hora y minutos
-    $citasConNombrePacienteHoraMinutos = (new UserModelCita())->obtenerCitasConNombrePacienteHoraMinutos($_SESSION['IdPsicologo']);
-    ?>
+    $citasConNombrePacienteHoraMinutos = (new UserModelCita())->obtenerCitasConNombrePacienteHoraMinutos2($_SESSION['IdPsicologo']);
 
-    <?php if (!empty($citasConNombrePacienteHoraMinutos)): ?>
-        <table>
-            <?php foreach ($citasConNombrePacienteHoraMinutos as $cita): ?>
-                <tr>
-                    <td><?= $cita["HoraMinutos"] ?></td>
-                    <td>
-                        <div class="section-cia">
-                            <span><?= $cita["NomPaciente"] ?></span>
-                            <button class="button3">Botón</button>
-                        </div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php else: ?>
-        <p>No hay citas programadas para hoy.</p>
-    <?php endif; ?>
-</div>
-<div class="pie-chart" >
-<h3 style="text-align: start; margin:20px 30px;">Pacientes del ultimo mes</h3>
-        <h2>Canal de Atracción</h2>
-        <canvas id="myPieChart"></canvas>
-        <h3  class="h3-dsh">Cita Online</h3>
-        <h3  class="h3-dsh">Referidos</h3>
-        <h3  class="h3-dsh">Marketing Digital</h3>
-    </div>
+    // Función de comparación para ordenar citas por hora
+    function compararPorHora($a, $b) {
+        return strtotime($a['HoraMinutos']) - strtotime($b['HoraMinutos']);
+    }
 
-    <script>
-    // Importa los datos que deseas mostrar en el gráfico de pastel.
-    var pacientesUltimoMes = <?= $contarPacientesUltimoMes ?>;
+    // Crear un arreglo con todas las horas desde las 09:00 AM hasta las 12:00 PM
+    $horas_disponibles = array();
+    for ($i = 9; $i <= 12; $i++) {
+        $hora = sprintf('%02d:00 AM', $i);
+        $horas_disponibles[] = $hora;
+    }
 
-    // Configura el gráfico de pastel
-    var ctx = document.getElementById("myPieChart").getContext('2d');
-    var myPieChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ["Pacientes del último mes", "Otros Pacientes"],
-            datasets: [{
-                backgroundColor: ["#8CB7C2", "#f2f2f2"],
-                data: [pacientesUltimoMes, <?= $totalPacientes - $contarPacientesUltimoMes ?>]
-            }]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                display: false
+    // Crear un arreglo para todas las citas (registradas y en blanco)
+    $todas_las_citas = array();
+
+    // Agregar las citas registradas al arreglo
+    if (!empty($citasConNombrePacienteHoraMinutos)) {
+        foreach ($citasConNombrePacienteHoraMinutos as $cita) {
+            $cita["HoraMinutos"] .= " AM"; // Agregar "AM" a la hora de la cita registrada
+            $todas_las_citas[] = array(
+                'HoraMinutos' => $cita['HoraMinutos'],
+                'NomPaciente' => $cita['NomPaciente'],
+            );
+        }
+    }
+
+    // Agregar las citas en blanco al arreglo
+    foreach ($horas_disponibles as $hora) {
+        $cita_en_blanco = array(
+            'HoraMinutos' => $hora,
+            'NomPaciente' => '', // Dejar el nombre del paciente en blanco
+        );
+
+        // Verificar si hay una cita programada con la misma hora
+        $hora_cita_en_blanco = strtotime($hora);
+        $eliminar_cita_en_blanco = false;
+
+        foreach ($todas_las_citas as $cita_programada) {
+            $hora_cita_programada = strtotime($cita_programada['HoraMinutos']);
+            if ($hora_cita_en_blanco === $hora_cita_programada) {
+                $eliminar_cita_en_blanco = true;
+                break; // Salir del bucle al encontrar una coincidencia
             }
         }
-    });
 
-    // Agrega el mensaje "Gráfico del último mes" debajo del gráfico
-    var pieChartMessage = document.createElement("p");
-    pieChartMessage.innerHTML = "Gráfico del último mes";
-    document.querySelector(".pie-chart").appendChild(pieChartMessage);
+        // Agregar la cita en blanco solo si no coincide con una cita programada
+        if (!$eliminar_cita_en_blanco) {
+            $todas_las_citas[] = $cita_en_blanco;
+        }
+    }
 
-</script>
+    // Ordenar todas las citas por hora
+    usort($todas_las_citas, 'compararPorHora');
+    ?>
+
+    <div class="div_event3">
+        <div>
+            <h3 style="text-align: left;font-size: 16px;">Citas del día</h3>
+            <p style="text-align: left; color: #fff;">Hoy, <?php echo $fecha_formateada; ?></p>
+        </div>
+        <div style="display:flex; align-items: center;">
+            <a href="citas.php">
+                <span style="color: #fff" class="material-symbols-sharp">add_circle</span>
+            </a>
+        </div>
+    </div>
+
+    <table style="background-color: #fff;">
+        <?php foreach ($todas_las_citas as $cita): ?>
+            <tr>
+                <td><?= $cita["HoraMinutos"] ?></td>
+                <td>
+                    <div class="section-cia">
+                        <span><?= $cita["NomPaciente"] ?></span>
+                        <button class="button3">Botón</button>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 </div>
+
+
+
+
+
+
             <!--
             <h2>Estadisticas</h2>
             -->
@@ -209,6 +234,57 @@ if (isset($_SESSION['NombrePsicologo'])){
                 </div>
                 <a href="RegPaciente.php">Agregar Paciente</a>
             </div>
+            
+<div class="pie-chart" >
+<h2 style="text-align: start; margin:20px 20px; font-size:20px;">Pacientes del ltimo mes</h2>
+        <div class="grafico">
+            <canvas id="myPieChart"></canvas>
+        </div>
+        <h3  class="h3-dsh">Cita Online: <?= $totalRegistrosEnCanalAtraccion ?> </h3>
+        <h3  class="h3-dsh">Marketing Digital: <?= $totalRegistrosEnCanalAtraccion2 ?></h3>
+        <h3  class="h3-dsh">Referidos: <?= $totalRegistrosEnCanalAtraccion3 ?></h3>
+    </div>
+
+    <script>
+    // Importa los datos que deseas mostrar en el gráfico de pastel.
+    var canalAtraccion1 = <?= $totalRegistrosEnCanalAtraccion ?>;
+    var canalAtraccion2 = <?= $totalRegistrosEnCanalAtraccion2 ?>;
+    var canalAtraccion3 = <?= $totalRegistrosEnCanalAtraccion3 ?>;
+
+    // Define colores personalizados para cada canal de atracción
+    var colores = ["#8CB7C2", "#7999A4", "#27ae60"];
+
+    // Configura el gráfico de pastel
+    var ctx = document.getElementById("myPieChart").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            //labels: ["Cita Online", "Marketing Digital", "Canal Atracción 3"],
+            datasets: [{
+                backgroundColor: colores,
+                data: [canalAtraccion1, canalAtraccion2, canalAtraccion3]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: 'bottom'
+            }
+        }
+    });
+
+    // Agrega el mensaje "Gráfico de Canales de Atracción" debajo del gráfico
+    /*
+    var pieChartMessage = document.createElement("p");
+    pieChartMessage.innerHTML = "Gráfico de Canales de Atracción";
+    document.querySelector(".pie-chart").appendChild(pieChartMessage);
+    */
+</script>
+
+
+
+</div>
         </div>
     </div>
     <script src="../issets/js/Dashboard.js"></script>

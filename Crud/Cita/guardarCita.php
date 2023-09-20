@@ -1,16 +1,13 @@
 <?php
 require_once("C:/xampp/htdocs/Psicologia-Agenda-Clinica-Master/Controlador/Cita/citaControlador.php");
-
 $obj = new usernameControlerCita();
 $FechaInicioCita = $_POST['FechaInicioCita'];
 $HoraInicio = $_POST['HoraInicio'];
 $FechaInicio = $FechaInicioCita . ' ' . $HoraInicio;
-
 $fechaInicioObj = new DateTime($FechaInicio);
-
 $obj->guardar($_POST['IdPaciente'],$_POST['MotivoCita'],$_POST['EstadoCita'],$FechaInicio,$_POST['DuracionCita'],$_POST['FechaFin'],$_POST['TipoCita'], $_POST['ColorFondo'], $_POST['IdPsicologo'], $_POST['CanalCita'], $_POST['EtiquetaCita']);
 
-require_once ('../../vendor/autoload.php'); // if you use Composer
+/* require_once ('../../vendor/autoload.php'); // if you use Composer
 //require_once('ultramsg.class.php'); // if you download ultramsg.class.php
 	
 $token="6701xvlxp8x2vcg7"; // Ultramsg.com token
@@ -31,6 +28,7 @@ Acceso a la Pagina: https://gestion.contigo-voy.com
 
 $api=$client->sendChatMessage($to,$body);
 print_r($api);
+*/
 
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function

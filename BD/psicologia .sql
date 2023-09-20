@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-07-2023 a las 19:08:31
+-- Tiempo de generación: 14-09-2023 a las 23:04:33
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -43,13 +43,6 @@ CREATE TABLE `areafamiliar` (
   `FechaRegistro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `areafamiliar`
---
-
-INSERT INTO `areafamiliar` (`IdFamiliar`, `IdPaciente`, `NomPadre`, `EstadoPadre`, `NomMadre`, `EstadoMadre`, `NomApoderado`, `EstadoApoderado`, `CantHermanos`, `CantHijos`, `IntegracionFamiliar`, `HistorialFamiliar`, `FechaRegistro`) VALUES
-(3, 14, 'jorge', 'Buena', 'liliana', 'Buena', 'Liliana', 'Buena', 2, 2, 'mama', 'amam', '2023-07-19 16:07:51');
-
 -- --------------------------------------------------------
 
 --
@@ -68,13 +61,6 @@ CREATE TABLE `atencionpaciente` (
   `UltimosObjetivos` varchar(500) NOT NULL,
   `FechaRegistro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `atencionpaciente`
---
-
-INSERT INTO `atencionpaciente` (`IdAtencion`, `IdPaciente`, `IdEnfermedad`, `MotivoConsulta`, `FormaContacto`, `Diagnostico`, `Tratamiento`, `Observacion`, `UltimosObjetivos`, `FechaRegistro`) VALUES
-(12, 14, 2, 'saludar', 'nolose', 'esta mal', 'comer', 'arroz', 'ok', '2023-07-19 16:08:26');
 
 -- --------------------------------------------------------
 
@@ -97,6 +83,13 @@ CREATE TABLE `cita` (
   `FechaRegistro` datetime DEFAULT current_timestamp(),
   `FechaFinCita` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`IdCita`, `IdPaciente`, `MotivoCita`, `EstadoCita`, `FechaInicioCita`, `DuracionCita`, `TipoCita`, `ColorFondo`, `IdPsicologo`, `CanalCita`, `EtiquetaCita`, `FechaRegistro`, `FechaFinCita`) VALUES
+(76, 22, 'asda', 'Se requiere confirmacion', '2023-08-30 11:55:00', 90, 'Primera Visita', '#f38238', 1, 'Cita Online', 'Familia Referida', '2023-09-14 11:52:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -2327,7 +2320,7 @@ CREATE TABLE `paciente` (
   `IdPsicologo` int(11) NOT NULL,
   `MedicamentosPrescritos` varchar(50) NOT NULL,
   `FechaRegistro` datetime DEFAULT current_timestamp(),
-  `CodigoPaciente` varchar(6) NOT NULL,
+  `codigopac` varchar(6) NOT NULL,
   `IdProvincia` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `IdDepartamento` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `IdDistrito` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
@@ -2337,8 +2330,12 @@ CREATE TABLE `paciente` (
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`IdPaciente`, `NomPaciente`, `ApPaterno`, `ApMaterno`, `Dni`, `FechaNacimiento`, `Edad`, `GradoInstruccion`, `Ocupacion`, `EstadoCivil`, `Genero`, `Telefono`, `Email`, `Direccion`, `AntecedentesMedicos`, `IdPsicologo`, `MedicamentosPrescritos`, `FechaRegistro`, `CodigoPaciente`, `IdProvincia`, `IdDepartamento`, `IdDistrito`) VALUES
-(14, 'Jorge', 'Venegas', 'Francia', '76466718', '2015-01-02', '8', 'Barbero', 'Barbero', 'casado', 'Masculino', '955828875', 'mariano.venegas.francia@gmail.com', 'Ancon', 'Vicio', 1, 'Jarabe', '2023-07-19 15:57:03', 'PA0014', '0201', '02', '20101');
+INSERT INTO `paciente` (`IdPaciente`, `NomPaciente`, `ApPaterno`, `ApMaterno`, `Dni`, `FechaNacimiento`, `Edad`, `GradoInstruccion`, `Ocupacion`, `EstadoCivil`, `Genero`, `Telefono`, `Email`, `Direccion`, `AntecedentesMedicos`, `IdPsicologo`, `MedicamentosPrescritos`, `FechaRegistro`, `codigopac`, `IdProvincia`, `IdDepartamento`, `IdDistrito`) VALUES
+(22, 'Lopez', 'asd', 'sad', '76466718', '2015-01-17', '8', 'sda', 'sad', 'soltero', 'Femenino', '955828875', 'mariano.venegas.francia@gmail.com', 'Comas', 'sda', 1, 'sad', '2023-09-13 17:51:33', 'PA0022', '0505', '05', '50504'),
+(23, 'Lopez', 'Venegas', 'Francia', '76466717', '2014-09-18', '8', 'asdasd', 'Barbero', 'casado', 'Femenino', '961265623', 'mariano.venegas.@gmail.com', 'Comas', 'Vicio', 1, 'Jarabe', '2023-09-13 21:02:10', 'PA0023', '0303', '03', '30303'),
+(24, 'JORGE', 'Venegas', 'Francia', '76466714', '2003-02-28', '20', 'Barbero', 'Barbero', 'soltero', 'Masculino', '955828871', 'jorge.venegas.francia@gmail.com', 'Ancon', 'asdsda', 1, 'sadsda', '2023-09-14 14:47:23', '', '0202', '02', '20204'),
+(25, 'JORGE', 'Venegas', 'Francia', '76466714', '2003-02-28', '20', 'Barbero', 'Barbero', 'soltero', 'Masculino', '955828871', 'jorge.venegas.francia@gmail.com', 'Ancon', 'asdsda', 1, 'sadsda', '2023-09-14 14:47:54', 'PA0025', '0202', '02', '20204'),
+(26, 'JORGE', 'Venegas', 'Francia', '76466714', '2003-02-07', '20', 'Barbero', 'Barbero', 'soltero', 'Masculino', '955828871', 'jorge.venegas.francia@gmail.com', 'Ancon', 'asdsda', 1, 'sadsda', '2023-09-14 14:48:10', 'PA0026', '0303', '03', '30303');
 
 -- --------------------------------------------------------
 
@@ -2565,16 +2562,18 @@ CREATE TABLE `psicologo` (
   `NombrePsicologo` varchar(30) NOT NULL,
   `Passwords` varchar(50) NOT NULL,
   `FechaRegistro` datetime DEFAULT current_timestamp(),
-  `Usuario` varchar(59) NOT NULL
+  `Usuario` varchar(59) NOT NULL,
+  `celular` int(9) NOT NULL,
+  `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `psicologo`
 --
 
-INSERT INTO `psicologo` (`IdPsicologo`, `NombrePsicologo`, `Passwords`, `FechaRegistro`, `Usuario`) VALUES
-(1, 'jorge', '123456', '2023-06-21 09:22:39', 'Jorge Venegas'),
-(2, 'Mariano', '210403Abril', '2023-07-15 12:15:55', 'Mariano Venegas');
+INSERT INTO `psicologo` (`IdPsicologo`, `NombrePsicologo`, `Passwords`, `FechaRegistro`, `Usuario`, `celular`, `email`) VALUES
+(1, 'jorge', '123456', '2023-06-21 09:22:39', 'Jorge Venegas', 955828875, 'mariano.venegas.francia@gmail.com'),
+(2, 'Mariano', '210403Abril', '2023-07-15 12:15:55', 'Mariano Venegas', 0, '');
 
 --
 -- Índices para tablas volcadas
@@ -2653,19 +2652,19 @@ ALTER TABLE `psicologo`
 -- AUTO_INCREMENT de la tabla `areafamiliar`
 --
 ALTER TABLE `areafamiliar`
-  MODIFY `IdFamiliar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `IdFamiliar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `atencionpaciente`
 --
 ALTER TABLE `atencionpaciente`
-  MODIFY `IdAtencion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `IdAtencion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `IdCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `IdCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermedad`
@@ -2677,7 +2676,7 @@ ALTER TABLE `enfermedad`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `IdPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `IdPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `psicologo`
