@@ -9,12 +9,12 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../issets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../issets/css/MainGeneralB.css">
     <link rel="stylesheet" href="../issets/css/datatables.min.css">
     <link rel="stylesheet" href="../issets/css/bootstrap-clockpicker.css">
     <link rel="stylesheet" href="../issets/fullcalendar/main.css">
-    <link rel="stylesheet" href="../issets/css/calendariocita.css">
+    <link rel="stylesheet" href="../issets/css/calendariocitaO.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../issets/css/Dashboard.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
     <script src="../issets/js/jquery-3.6.0.min.js"></script>
@@ -27,6 +27,8 @@ if (isset($_SESSION['NombrePsicologo'])){
     <title>Calendario</title>
 </head>
 <body>
+  <style>
+  </style>
 <div class="container-calendario">
 <?php
     require_once '../Issets/views/Menu.php';
@@ -40,6 +42,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <div class="container-fluid2">
       <h4 style="text-align:center">Calendario de Citas</h4>
       <div id="Calendario1"></div>
+      
     </div>
 
     <!-- Formulario de Eventos -->
@@ -50,18 +53,25 @@ if (isset($_SESSION['NombrePsicologo'])){
           <div class="modal-body">
             <input type="hidden" id="Id">
               <div class="row g-3">
-                <div class="col-sm">
+                <div class="col-sm" style="display: none;">
                   <label class="form-label">Id Paciente</label>
                 <div class="input-group mb-3">
                   <input type="text" id="IdPaciente" class="form-control">
-                  <button type="button" id="button-addon2"><span style="font-size:2.2em" class="material-symbols-sharp idpaciente">search</span></button>
+                  <button type="button" class="id" id="button-addon2"><span style="font-size:2.2em" class="material-symbols-sharp idpaciente">search</span></button>
+                </div>
+                </div>
+                <div class="col-sm">
+                  <label class="form-label">Codigo Paciente</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="codigopac" class="form-control">
+                  <button type="button" class="cod" id="button-addon2"><span style="font-size:2.2em" class="material-symbols-sharp idpaciente">search</span></button>
                 </div>
                 </div>
                 <div class="col-sm">
                   <label class="form-label">Nombre Paciente</label>
                   <div class="input-group mb-3">
                     <input type="text" class="form-control" id="NomPaciente">
-                    <button type="button" id="button-addon2"><span style="font-size:2.2em" class="material-symbols-sharp nom">search</span></button>
+                    <button type="button" class="nom" id="button-addon2"><span style="font-size:2.2em" class="material-symbols-sharp nom">search</span></button>
                   </div>
                 </div>
               </div>
@@ -188,6 +198,24 @@ if (isset($_SESSION['NombrePsicologo'])){
 
 
     <script src="../issets/js/Dashboard.js"></script>
+<script>
+  // Espera a que el documento HTML se cargue completamente
+document.addEventListener("DOMContentLoaded", function() {
+  // Busca el elemento por su ID "Calendario1"
+  var elementoCalendario = document.getElementById("Calendario1");
+
+  // Comprueba si el elemento se encontró correctamente
+  if (elementoCalendario) {
+    // Elimina el atributo "style" del elemento
+    elementoCalendario.removeAttribute("style");
+  } else {
+    console.log("No se encontró el elemento con ID 'Calendario1'");
+  }
+});
+
+</script>
+
+
     <script>
 document.addEventListener("DOMContentLoaded", function(){
     $('.clockpicker').clockpicker();
@@ -405,32 +433,41 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 
-  // Buscador del paciente según su id
+  //Buscador del paciente segun su id 
   $(document).ready(function() {
-    $('.idpaciente').click(function() {
-      var codigoPaciente = $('#IdPaciente').val();
+    $('.cod').click(function() {
+      var codigopac = $('#codigopac').val();
       var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
 
       // Realizar la solicitud AJAX al servidor
       $.ajax({
         url: 'Fetch/fetch_paciente.php', // Archivo PHP que procesa la solicitud
         method: 'POST',
-        data: { codigoPaciente: codigoPaciente, idPsicologo: idPsicologo },
+        data: { codigopac: codigopac, idPsicologo: idPsicologo },
         success: function(response) {
           if (response.hasOwnProperty('error')) {
             $('#TituloCompleto').val(response.error);
+            $('#IdPaciente').val('');
+            $('#NomPaciente').val('');
+            $('#correo').val('');
           } else {
             $('#TituloCompleto').val(response.nombre);
+            $('#NomPaciente').val(response.nom);
+		        $('#IdPaciente').val(response.id);
+		        $('#correo').val(response.correo);
           }
         },
         error: function() {
           $('#TituloCompleto').val('Error al procesar la solicitud');
+          $('#NomPaciente').val('');
+          $('#IdPaciente').val('');
         }
       });
     });
   });
-  // Buscador paciente segun su nombre 
-  $(document).ready(function() {
+
+// Buscador paciente segun su nombre 
+$(document).ready(function() {
   $('.nom').click(function() {
     var NomPaciente = $('#NomPaciente').val();
     var idPsicologo = <?php echo $_SESSION['IdPsicologo']; ?>;
@@ -444,17 +481,17 @@ document.addEventListener("DOMContentLoaded", function(){
         if (response.hasOwnProperty('error')) {
           $('#TituloCompleto').val(response.error);
           $('#IdPaciente').val('');
-          $('#correo').val('');
+          $('#codigopac').val('');
         } else {
           $('#TituloCompleto').val(response.nombre);
 		      $('#IdPaciente').val(response.id);
-		      $('#correo').val(response.correo);
+		      $('#codigopac').val(response.codigopac);
         }
       },
       error: function() {
-        $('#TituloCompleto').val('Error al procesar la solicitud');
+        $('#Paciente').val('Error al procesar la solicitud');
         $('#IdPaciente').val('');
-        $('#correo').val('');
+        $('#codigopac').val('');
       }
     });
   });

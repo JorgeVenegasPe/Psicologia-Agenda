@@ -10,86 +10,17 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="icon" href="../Issets/images/contigovoyico.ico">
-    <link rel="stylesheet" href="../Issets/css/FormularioDatos.css">
-    <link rel="stylesheet" href="../Issets/css/Dashboard.css"/>
+    <link rel="stylesheet" href="../issets/css/MainGeneralB.css">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
-
-
-    <style>
-/* Estilo para el contenedor de detalles (inicialmente oculto) */
-#detalles {
-    display: none;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-left: 20px; /* Margen izquierdo para el contenedor de detalles */
-    animation: fadeIn 0.5s ease-in-out; /* Animación de aparición */
-}
-
-.detalles {
-            display: none;
-            width: 300px; /* Ancho del contenedor de detalles */
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            padding: 20px;
-            z-index: 10;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-/* Estilo para el botón de cierre */
-.cerrar {
-    cursor: pointer;
-    color: red;
-    float: right;
-
-    
-}
-
-/* Animación de aparición */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.contener {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-         		
-        }
-
-        .izquierda {
-            flex: 1;
-            text-align: left;
-        }
-
-        .derecha {
-            flex: 1;
-            text-align: right;
-        }
-    </style>
-
-
 </head>
 <body>
 <?php
 require_once("../Controlador/Paciente/ControllerPaciente.php");
-require_once("../Controlador/Paciente/ControllerAtencPaciente.php");
-require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
-    $Fam=new usernameControlerAreaFamiliar();
-    $Atenc=new usernameControlerAtencPaciente();
     $Pac=new usernameControlerPaciente();
-    $departamentos = $Pac->MostrarDepartamento();
-    $rows=$Pac->ver($_SESSION['IdPsicologo']);
+    $rows=$Pac->ver($_SESSION['IdPsicologo']);    
 ?>
-
 <div class="containerTotal">
 <?php
     require_once '../issets/views/Menu.php';
@@ -100,97 +31,226 @@ require_once("../Controlador/Paciente/ControllerAtencFamiliar.php");
     require_once '../issets/views/Info.php';
     ?> 
     
-    <div style="display:flex; flex-direction:row; gap:20px; margin-left: 60px;">
-      <h2>Historial de Pacientes</h2>
+    <h2 style="color: #49c691;">Historial de Pacientes</h2>
+    <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
+        <div class="input-group">
+  	        <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
+        </div>
+        <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php">
+            <span class="material-symbols-sharp">add</span>Agregar Paciente
+        </a>
     </div>
-
-
+   
     <!-- Agrega una nueva sección para la vista de tabla -->
+    <div class="ContAtencion">        
+            <div class="CAtencion">
+                <table class="TabAtencion">
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>         
+                    <tbody>
+                        <?php if ($rows) : ?>
+                            <?php foreach ($rows as $row): ?>
+                            <?php
+                            $user = $Pac->show($row[0]);
+                            $AtencsUser = $Pac->showAtenc($row[0]);
+                            // Verifica si los índices existen antes de acceder a ellos
+                            if (isset($AtencsUser[4]) && isset($AtencsUser[7]) && isset($AtencsUser[8]) && isset($AtencsUser[13])) {
+                            ?>
+                            <tr data-paciente-id="<?=$row[0]?>">
+                                <td>
+                                    <p style="cursor: pointer;" class="nombre-paciente"><?=$AtencsUser[4]?></p>
+                                    <p><?=$AtencsUser[9]?> / <?=$AtencsUser[7]?></p>
+                                </td>
 
-    <div class="tableData" style="display: flex;justify-content: center;align-items: stretch;margin: 50px;">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombres</th>
-                    <th>FECHA</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($rows) : ?>
-                  <?php foreach ($rows as $row): ?>
-    <?php
-    $user = $Pac->show($row[0]);
-    $AtencsUser = $Atenc->showAtenc($row[0]);
+                                <td>
+                                    <p><?=$AtencsUser[13]?></p>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="4">No hay pacientes</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>            
+            <div class="contDetalles" style="display:none;">
+                <div class="line"></div>
+                <div class="DetallesVer">
+                    <div class="contentDet">
+                        <div style="margin-bottom: 10px;">
+                        <p style="color: #6A92F4; font-size: 19px; font-weight: bold;" 
+                        id="nombrePaciente"></p>
 
-    // Verifica si los índices existen antes de acceder a ellos
-    if (isset($AtencsUser[4]) && isset($AtencsUser[7]) && isset($AtencsUser[8]) && isset($AtencsUser[10])) {
-    ?>
-    <tr>
-        <td>
-            <p style="color: black; cursor: pointer;" onclick="abrirDetallesDerecha('<?=$AtencsUser[4]?>', '<?=$AtencsUser[7]?>', '<?=$AtencsUser[8]?>', '<?=$AtencsUser[10]?>')" ondblclick="cerrarDetallesDerecha()"><?=$AtencsUser[4]?></p>
-            <p><?=$AtencsUser[7]?> / <?=$AtencsUser[8]?></p>
-        </td>
-    </tr>
-    <?php } else {?>
-    <tr>
-       <td colspan="4">No hay pacientes</td>
-        </tr>
-    <?php } ?>
-<?php endforeach; ?>
-
-
-                
-                <?php endif; ?>
-            </tbody>
-        </table>
-
-        <!-- Contenedor de detalles para mostrar al lado derecho -->
-    <div class="detalles" id="contenedorDetalles">
-        <div class="contener">
-            <div class="izquierda">
-                <!-- Contenido izquierdo -->
-                <p></p> <!-- Aquí mostrarás el nombre -->
-                <p><b>Diagnóstico: </b></p> <!-- Aquí mostrarás el diagnóstico -->
-                <p><b>Tratamiento: </b></p> <!-- Aquí mostrarás el tratamiento -->
-            </div>
-            <div class="derecha">
-                <!-- Contenido derecho -->
-                <p><b>Ultimos Objetivos: </b></p> <!-- Aquí mostrarás los últimos objetivos -->
-            </div>
+                            <p style="color: #6A92F4; font-size: 19px; font-weight: bold;">
+                            NOMBRE DEL PACIENTE</p>
+                            <p>X AÑOS , PRIMERA O ULTIMA CONSULTA</p>
+                            <button type="button" id="butto">Ver Historial Medico</button>
+                        </div>
+                        <div style="margin: 25px 0px 0px 0px;">
+                            <p class="pp2">Diagnóstico</p>
+                            <p class="pp" id="diagnostico"><?=$AtencsUser[9]?>/p>
+                            <p class="pp2">Tratamiento</p>
+                            <p class="pp" id="tratamiento">Escribir Aquí</p>
+                            <p class="pp2">Medicamentos</p>
+                            <p class="pp" id="medicamentos">Escribir Aquí</p>
+                            <p class="pp2">Primera Cita</p>
+                            <p class="pp" id="primeraCita">Escribir Aquí</p>
+                        </div>                         
+                    </div>
+                    <div>
+                        <div class="date">
+                            <h2 style="color: white;" >20/07</h2>
+                            <p style="color: white;" >Próxima Consulta</p>
+                        </div>
+                        <div class="BUT">
+                            <button type="button" id="button2">Nueva Entrada</button>
+                        </div>
+                    </div>                    
+                </div>
+            </div>      
         </div>
     </div>
-    </div>
-</main>
+  </main>
     <script src="../issets/js/Dashboard.js"></script>
 </div>
 </body>
+
 <script>
-var contenedorDetalles = document.getElementById("contenedorDetalles");
-    var detallesAbiertos = null;
+// Agrega un event listener a todas las filas de la tabla
+var tableRows = document.querySelectorAll('table tr');
+tableRows.forEach(function (row) {
+    // Encuentra el elemento de nombre del paciente dentro de la fila
+    var nombrePaciente = row.querySelector('.nombre-paciente');
 
-    // Función para abrir los detalles en la parte derecha
-    function abrirDetallesDerecha(nombre, diagnostico, tratamiento, objetivos) {
-        var contenedorIzquierda = contenedorDetalles.querySelector(".izquierda");
-        var contenedorDerecha = contenedorDetalles.querySelector(".derecha");
+    // Verifica si se encontró un elemento de nombre de paciente
+    if (nombrePaciente) {
+        nombrePaciente.addEventListener('click', function () {
+            // Remueve la clase 'selected' de todas las filas
+            tableRows.forEach(function (r) {
+                r.classList.remove('selected');
+                
+                // Cambia el color del texto de las etiquetas <p> dentro de la fila actual a su color original
+                var paragraphs = r.querySelectorAll('p');
+                paragraphs.forEach(function (p) {
+                    p.style.color = 'black'; // Cambia 'black' al color original deseado
+                });
+            });
 
-        // Mostrar los datos en el contenedor de detalles
-        contenedorIzquierda.innerHTML = "<p><b>Nombre: </b>" + nombre + "</p><p><b>Diagnóstico: </b>" + diagnostico + "</p><p><b>Tratamiento: </b>" + tratamiento + "</p>";
-        contenedorDerecha.innerHTML = "<p><b>Ultimos Objetivos: </b>" + objetivos + "</p>";
+            // Agrega la clase 'selected' a la fila actual
+            row.classList.add('selected');
 
-        // Mostrar el contenedor de detalles en la parte derecha
-        contenedorDetalles.style.display = "block";
-
-        // Actualizar el contenedor de detalles abierto actualmente
-        detallesAbiertos = contenedorDetalles;
+            // Cambia el color del texto de las etiquetas <p> dentro de la fila actual a blanco
+            var paragraphs = row.querySelectorAll('p');
+            paragraphs.forEach(function (p) {
+                p.style.color = 'white';
+            });
+        });
     }
-    // Función para cerrar los detalles en el caso de doble clic
-    function cerrarDetallesDerecha() {
-        if (detallesAbiertos !== null) {
-            detallesAbiertos.style.display = "none";
-            detallesAbiertos = null;
-        }
-    }
-    </script>
+});
+
+</script>
+
+
+<script>
+// // Obtén todos los elementos con la clase "nombre-paciente"
+// const nombresPacientes = document.querySelectorAll('.nombre-paciente');
+
+// // Agrega un controlador de eventos clic a cada nombre de paciente
+// nombresPacientes.forEach((nombrePaciente) => {
+//   nombrePaciente.addEventListener('click', () => {
+//     // Encuentra el elemento padre "tr" para obtener el atributo "data-paciente-id"
+//     const pacienteId = nombrePaciente.closest('tr').getAttribute('data-paciente-id');
+
+//     // Encuentra el contenedor de detalles correspondiente
+//     const contDetalles = document.querySelector('.contDetalles');
+
+//     // Actualiza el contenido del contenedor de detalles según el paciente seleccionado
+//     // Esto podría involucrar una llamada a una función que cargue los detalles del paciente en el contenedor
+
+//     // Muestra el contenedor de detalles
+//     contDetalles.style.display = 'flex';
+
+//     // Establece el estilo "display: block" para los elementos hijos de contDetalles que deben mantenerlo
+//     contDetalles.querySelectorAll('.block-element').forEach((element) => {
+//       element.style.display = 'block';
+//     });
+
+//     // Agrega un controlador de eventos dblclick para cerrar el contenedor al hacer doble clic
+//     nombrePaciente.addEventListener('dblclick', (e) => {
+//       // Evita que el doble clic se propague al contenedor de detalles
+//       e.stopPropagation();
+
+//       // Oculta el contenedor de detalles
+//       contDetalles.style.display = 'none';
+//     });
+//   });
+// });
+
+
+
+
+// Obtén todos los elementos con la clase "nombre-paciente"
+const nombresPacientes = document.querySelectorAll('.nombre-paciente');
+
+// Obtén el contenedor de detalles
+const contDetalles = document.querySelector('.contDetalles');
+
+// Función para abrir el contenedor de detalles
+function abrirDetalles(pacienteId, nombreSeleccionado, diagnostico, tratamiento, medicamentos, primeraCita) {
+    // Actualiza el contenido del nombre en el contenedor de detalles
+    const nombrePacienteDetalle = document.getElementById('nombrePaciente');
+    nombrePacienteDetalle.textContent = nombreSeleccionado;
+
+    // Actualiza otros elementos con los datos del paciente
+    const diagnosticoElement = document.getElementById('diagnostico');
+    diagnosticoElement.textContent = diagnostico;
+
+    const tratamientoElement = document.getElementById('tratamiento');
+    tratamientoElement.textContent = tratamiento;
+
+    const medicamentosElement = document.getElementById('medicamentos');
+    medicamentosElement.textContent = medicamentos;
+
+    const primeraCitaElement = document.getElementById('primeraCita');
+    primeraCitaElement.textContent = primeraCita;
+
+  // Esto podría involucrar una llamada a una función que cargue los detalles del paciente en el contenedor
+
+  // Muestra el contenedor de detalles
+  contDetalles.style.display = 'flex';
+
+  // Establece el estilo "display: block" para los elementos hijos de contDetalles que deben mantenerlo
+  contDetalles.querySelectorAll('.block-element').forEach((element) => {
+    element.style.display = 'block';
+  });
+}
+
+// Agrega un controlador de eventos clic a cada nombre de paciente
+nombresPacientes.forEach((nombrePaciente) => {
+  nombrePaciente.addEventListener('click', () => {
+    // Encuentra el elemento padre "tr" para obtener el atributo "data-paciente-id"
+    const pacienteId = nombrePaciente.closest('tr').getAttribute('data-paciente-id');
+    // Obtén el nombre del paciente seleccionado
+    const nombreSeleccionado = nombrePaciente.textContent;
+    // Abre el contenedor de detalles
+    abrirDetalles(pacienteId, nombreSeleccionado);
+  });
+});
+
+</script>
+
+<script>
+    
+</script>
+
+
 </html>
 <?php
 }else{
