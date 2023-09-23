@@ -130,11 +130,7 @@ b{
     color: var(--color-warning);
 }
 
-table {
-    width: 100%;
-    border-collapse: separate; 
-    border-spacing: 0 10px; 
-}
+
 tr {
     background-color: var(--color-white);
     border-radius: 40px;
@@ -639,15 +635,6 @@ textarea::placeholder{
 
 
 
-
-
-
-
-
-
-
-
-
 /* Estilo para el botón desplegable */
 .dropdown {
     position: relative;
@@ -694,3 +681,183 @@ textarea::placeholder{
 
 
 
+
+
+
+.container-paciente-tabla.active{
+    display: grid;
+    width: 100%;
+    margin: 20px;
+    gap :1rem;
+    grid-template-columns: auto auto ;
+    }
+    .container-paciente-tabla{
+        display: grid;
+        width: 100%;
+        margin: 20px;
+        grid-template-columns: auto 0rem;
+    }
+
+    .patient-details {
+        display: none;
+        width: 1200px;
+        text-align: center;
+        color: #49c691;
+        border-radius: var(--card-border-radius);
+        margin-top: 1rem;
+        box-shadow: var(--box-shadow);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    .hidden {
+        display: none;
+    }
+
+
+    .input-group4{  /*   Modifique esta clase para mi formulario - Hans */
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: space-between; /*Este codigo genera mi espaciado entre mis parrafos */
+        border-bottom: 1px solid rgb(176, 174, 174);  /*Este codigo coloca los bordes entre mis parrafos */
+    }
+    
+    .input-group3{ /*   Añadi esta clase para mi formulario - Hans */
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: space-between;
+    }
+    
+
+
+
+
+
+
+
+/* PAGE DATOS PACIENTE- HISTORIAL */
+
+.ContAtencion{
+    display: flex;
+    background-color: #f6f5f9;
+    padding: 1px;
+    margin: 40px 20px 0px 50px;
+    height: 70%;
+    border-radius: 0px 50px 50px 0px;
+    box-shadow: 2px 4.5px 18px 7px rgba(0, 0, 0, 0.2);
+}
+.CAtencion{
+    width: 95%;
+    height: 80%;
+}
+.TabAtencion{
+    border-collapse: collapse;
+    margin: 25px;
+    width: 100%;
+}
+.TabAtencion tr {
+    background-color: #D5E1EF;
+}
+.TabAtencion tr p{
+    color: #3d3d3d;
+}
+.TabAtencion tr th {
+    background-color: #D5E1EF;
+}
+.TabAtencion tr th:hover {
+    background-color: #6A92F4;
+}
+.TabAtencion tr.selected {
+    background-color: #6A92F4; /* Cambia el color de fondo al hacer clic */
+    color: white;
+}
+.TabAtencion td {
+    padding: 20px;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    border-bottom: 2px solid #BCC5D4;
+}
+.TabAtencion tr:first-child td:first-child {
+    border-top-left-radius: 25px;
+}
+.TabAtencion tr:first-child td:last-child {
+    border-top-right-radius: 1px;
+}
+/* Establece el borde a "none" solo en las últimas celdas td de la última fila tr */
+.TabAtencion  tr:last-child td {
+    border: none;
+}
+
+
+.line{
+    background-color: #6A92F4;
+    height: 100%;
+    width: 5px;
+    margin: 18px 0px 0px 0px;
+}
+.DetallesVer{
+    height: 105%;
+    background-color: #ffffff;
+    border-radius: 0px 20px 20px 0px;
+    width: 560px;
+    margin-right: -1px;
+    box-shadow: 2px 4.5px 18px 7px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+}
+.contDetalles{
+    display: flex;
+    flex-direction: row;
+    margin: -20px 0px 0px 26px;
+    transition: max-height 0.3s ease-in-out;
+
+}
+.contentDet{
+    position: absolute;
+    height: 93%;
+    width: 68%;
+    margin: 15px;
+    padding: 20px;
+}
+
+.date{
+    background-color: #6A92F4;
+    height: 90px;
+    width: 120px;
+    border-radius: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#butto{
+    margin-top: 10px;
+    margin-left: -2px;
+    width: 130px;  height: 30px;
+    border-radius: 30px;
+    font-size: 10.2px;
+    background-color: #52C291;
+    color: white;
+}
+.pp {
+    margin-bottom: 30px; /* Puedes ajustar el valor según tu preferencia */
+  }
+
+.pp2 {
+    color: #A8C3C9;
+    font-size: 15px;
+    font-weight: 500;
+}
+#button2{   
+    width: 130px;  height: 30px;
+    border-radius: 30px;
+    font-size: 10.2px;
+    background-color: #52C291;
+    color: white;
+}
+.BUT {
+    justify-content: flex-end;
+    display: flex;
+}

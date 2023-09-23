@@ -15,6 +15,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Citas</title>
 </head>
+<style>
+    table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
+    max-height: 35%;
+    
+}
+</style>
 <body>
 <?php
     require("../Controlador/Cita/citaControlador.php");
@@ -435,3 +444,7 @@ mostrarPagina(1);
   header("Location: ../Index.php");
 }
 ?>
+
+
+
+

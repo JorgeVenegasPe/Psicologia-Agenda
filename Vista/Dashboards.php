@@ -15,7 +15,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-</head>
+<style>
+    table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
+    max-height: 35%;
+    
+}
+</style>
 <body>
 <?php
     require_once("../Controlador/Paciente/ControllerPaciente.php");
@@ -221,7 +229,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                         <?php if ($datos) : ?>
                             <?php foreach ($datos as $key) : ?>
                                 <div class="message">
-                                    <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?> (<?= $key['CodigoPaciente'] ?>)</b> <?= $key['Edad'] ?> años</p>
+                                    <p><b><?= $key['NomPaciente'] ?> <?= $key['ApPaterno'] ?> <?= $key['ApMaterno'] ?> (<?= $key['codigopac'] ?>)</b> <?= $key['Edad'] ?> años</p>
                                     <small class="text-muted">Registrado el: <?= $key['Fecha'] ?></small>
                                     <br>
                                     <small class="text-muted">Hora: <?= $key['Hora'] ?></small>

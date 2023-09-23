@@ -10,34 +10,79 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../issets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
-    <link rel="stylesheet" href="../Issets/css/formulario.css">
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Datos de Paciente</title>
 </head>
 <style>
-    .ContainerDatos.active{
-        background-color: #49c691;
-        padding:20px 30px;
-        border-radius:10px; 
-        display:none
+    .checkout-information {
+     padding:10px; 
+     width: 102%;
+    height: 105%;
+}
+    .container-paciente-tabla.active{
+        margin: 10px;
+    gap :0.1rem;
     }
-    .ContainerDatos{
-        background-color: #49c691;
-        padding:20px 30px;
-        border-radius:10px; 
+    .container-paciente-tabla{
+        border-radius: var(--card-border-radius);
+        margin-top: 1rem;
+        box-shadow: var(--box-shadow);
+        animation: fadeIn 0.5s ease-in-out;
+        padding: 10px;
+    }
+    tr {
+    background-color: var(--color-info-light);
+    border-radius: 40px;
+}
+.div-hora{
+    display: flex;
+    align-items: center;
+    background-color: #6A92F4;
+    color: white;
+    justify-content: center;
+}
+.visual2{ /*Nueva clase creada para el formulario - Hans */
+    color: #89BEF5; /*Añadi un cambio de color - Hans */
+    font-size: 22px;
+    font-weight: bold;
+}
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 20px;
+    max-height: 55%;
+}
+.patient-details {
+        display: none;
+        width: 100%;
+        min-width: 700px;
+        text-align: center;
+        color: #49c691;
+        border-radius: var(--card-border-radius);
+        margin-top: 1rem;
+        box-shadow: var(--box-shadow);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    .arriba1 {
+        font-size: 24px;
+        font-weight: 700;
+        text-align: start;
+    }
+    .arriba{
+        font-size: 14px;
+        font-weight: 700;
+        text-align: start;
     }
 </style>
 <body>
 <?php
 require_once("../Controlador/Paciente/ControllerPaciente.php");
     $Pac=new usernameControlerPaciente();
-    $departamentos = $Pac->MostrarDepartamento();
-    $rows=$Pac->ver($_SESSION['IdPsicologo']);
-    
+    $patients=$Pac->showCompletoAtencion($_SESSION['IdPsicologo']);    
 ?>
-
 <div class="containerTotal">
 <?php
     require_once '../issets/views/Menu.php';
@@ -57,73 +102,137 @@ require_once("../Controlador/Paciente/ControllerPaciente.php");
             <span class="material-symbols-sharp">add</span>Agregar Paciente
         </a>
     </div>
-    <!-- Agrega una nueva sección para la vista de tabla -->
-        <!-- Agrega una nueva sección para la vista de tabla -->
-
-        <div class="tableData" style="display: flex;justify-content: center;align-items: stretch;margin: 50px;">
+   
+    <div class="container-paciente-tabla">      
         <table>
-            <thead>
-                <tr>
-                    <th>Nombres</th>
-                    <th>FECHA</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($rows) : ?>
-                    <?php foreach ($rows as $row): ?>
-    <?php
-    $user = $Pac->show($row[0]);
-    $AtencsUser = $Pac->showAtenc($row[0]);
-
-    // Verifica si los índices existen antes de acceder a ellos
-    if (isset($AtencsUser[4]) && isset($AtencsUser[7]) && isset($AtencsUser[8]) && isset($AtencsUser[10])) {
-    ?>
-    <tr>
-        <td>
-            <p style="color: black; cursor: pointer;" onclick="abrirDetallesDerecha('<?=$AtencsUser[4]?>', '<?=$AtencsUser[7]?>', '<?=$AtencsUser[8]?>', '<?=$AtencsUser[10]?>')" ondblclick="cerrarDetallesDerecha()"><?=$AtencsUser[4]?></p>
-            <p><?=$AtencsUser[7]?> / <?=$AtencsUser[8]?></p>
-        </td>
-    </tr>
-    <?php } ?>
-<?php endforeach; ?>
-
-
-                <?php else : ?>
-                    <tr>
-                        <td colspan="4">No hay pacientes</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
+            <?php if (!empty($patients)) : ?>
+                <?php foreach ($patients as $patient) : ?>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a style="cursor:pointer"
+                                    class="show-info"
+                                    data-patient-id="<?=$patient[0]?>"
+                                    data-nombres="<?= $patient['NomPaciente'] ?> <?= $patient['ApPaterno'] ?> <?= $patient['ApMaterno']?>"
+                                    data-edad="<?=$patient['Edad']?>"
+                                    data-diagnostico="<?=$patient['Diagnostico']?>"
+                                    data-tratamiento="<?=$patient['Tratamiento']?>"
+                                    data-medicamentosprescritos="<?=$patient['MedicamentosPrescritos']?>"
+                                    data-FechaInicioCita="<?=$patient['FechaInicioCita']?>">
+                                    <p style="cursor: pointer;" class="nombre-paciente"><?=$patient['NomPaciente']?> <?=$patient['ApPaterno']?></p>
+                                    <p><?=$patient['Diagnostico']?> / <?=$patient['MotivoConsulta']?></p> 
+                                </a>
+                            </td>
+                            <td ><?=$patient['FechaInicioCita']?></td>
+                            <td class="additional-column"></td>
+                        </tr>
+                    </tbody>
+                <?php endforeach;?>             
+            <?php endif;?>
         </table>
+        <div style="display: flex; flex-direction:row">
+        <div class="line"></div>
+        <div class="patient-details">
+        
+        </div>
 
-        <!-- Contenedor de detalles para mostrar al lado derecho -->
-    <div class="detalles" id="contenedorDetalles">
-        <div class="contener">
-            <div class="izquierda">
-                <!-- Contenido izquierdo -->
-                <p></p> <!-- Aquí mostrarás el nombre -->
-                <p><b>Diagnóstico: </b></p> <!-- Aquí mostrarás el diagnóstico -->
-                <p><b>Tratamiento: </b></p> <!-- Aquí mostrarás el tratamiento -->
-            </div>
-            <div class="derecha">
-                <!-- Contenido derecho -->
-                <p><b>Ultimos Objetivos: </b></p> <!-- Aquí mostrarás los últimos objetivos -->
-            </div>
         </div>
     </div>
-    </div>
-  </main>
-    <script src="../issets/js/Dashboard.js"></script>
+</main>
 </div>
-</body>
+<script src="../issets/js/Dashboard.js"></script>
 <script>
-    const wrapper = document.querySelector('.ContainerDatos');
-    const loginLink = document.querySelector('.butonActive');
+const showInfoLinks = document.querySelectorAll('.show-info');
+const additionalColumns = document.querySelectorAll('.additional-column');
+const containerpacientetabla = document.querySelector('.container-paciente-tabla');
+const patientDetails = document.querySelector('.patient-details');
+let currentPatientId = null; // Variable para rastrear el paciente actual
 
-    loginLink.onclick = () => {
-       wrapper.classList.remove('active');
-    }
+showInfoLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        // Obtener el ID del paciente desde el atributo data
+        const patientId = link.getAttribute('data-patient-id');
+        
+        if (currentPatientId !== patientId) {
+            // Si se hace clic en un paciente diferente
+
+            // Ocultar las columnas adicionales
+            additionalColumns.forEach(column => {
+                column.classList.add('hidden');
+                containerpacientetabla.classList.add('active');
+            });
+
+            // Obtener los datos del paciente
+            const nombres = link.getAttribute('data-nombres');
+            const edad = link.getAttribute('data-edad');
+            const diagnostico = link.getAttribute('data-diagnostico');
+            const tratamiento = link.getAttribute('data-tratamiento');
+            const medicamentosprescritos = link.getAttribute('data-medicamentosprescritos');
+
+            const FechaInicioCita = link.getAttribute('FechaInicioCita');
+            // Crear el contenido de los detalles del paciente
+            const patientInfoHTML = `
+            
+            <div style="display:grid; flex-direction:row; gap:10px;">
+                <div class="checkout-information">
+                    <div class="input-group3">
+                        <div>
+                            <h2 class="visual2">${nombres}</h2>                        
+                            <p class="arriba">${edad} años, ${FechaInicioCita || 'Aun no hay cita'}</p>
+                            <button type="button" id="butto">Ver Historial Medico</button>                            
+                        </div>
+                        <div class="date">
+                            <h2 style="color: white;" >20/07</h2>
+                            <p style="color: white;" >Próxima Consulta</p>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <h2 class="arriba1" for="#">Diagnostico </h2>
+                        <p class="arriba">${diagnostico || 'Aun no hay cita'}</p>
+                    </div>
+                    <div class="input-group">
+                        <h2 class="arriba1" for="#">Tratamiento </h2>
+                        <p class="arriba">${tratamiento || 'Aun no hay cita'}</p>
+                    </div>
+                    <div class="input-group">
+                        <h2 class="arriba1" for="#">Medicamentos </h2>
+                        <p class="arriba">${medicamentosprescritos || 'Aun no hay cita'}</p>
+                    </div>
+                    <div class="input-group">
+                        <h2 class="arriba1" for="#">Primera cita </h2>
+                        <p class="arriba">${FechaInicioCita || 'Aun no hay cita'}</p>
+                    </div>
+                    <div class="BUT">
+                        <button type="button" id="button2">Nueva Entrada</button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Mostrar la información en el elemento .patient-details
+            patientDetails.innerHTML = patientInfoHTML;
+
+            // Mostrar el cuadro de detalles
+            patientDetails.style.display = 'block';
+
+            currentPatientId = patientId; // Actualizar el ID del paciente actual
+        } else {
+            // Si se hace clic en el mismo paciente nuevamente
+
+            // Restaurar la tabla a su estado original
+            additionalColumns.forEach(column => {
+                column.classList.remove('hidden');
+            });
+            containerpacientetabla.classList.remove('active');
+            // Ocultar el cuadro de detalles
+            patientDetails.style.display = 'none';
+
+            currentPatientId = null; // Restablecer el ID del paciente actual
+        }
+    });
+});
 </script>
+</body>
 </html>
 <?php
 }else{

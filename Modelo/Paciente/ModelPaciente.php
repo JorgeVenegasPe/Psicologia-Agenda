@@ -86,7 +86,39 @@ class userModelPaciente{
         return($statement->execute())? $statement->fetch():false;
 
     }
+
+    // Mostrar datos del paciente seleccionado 
+    public function getAllPatients($IdPsicologo) {
+        $query = "SELECT p.*, af.*, c.FechaInicioCita
+                  FROM paciente p
+                  LEFT JOIN areafamiliar af ON p.IdPaciente = af.IdPaciente
+                  LEFT JOIN cita c ON p.IdPaciente = c.IdPaciente
+                  WHERE p.IdPsicologo = :IdPsicologo";
+        
+        $statement = $this->PDO->prepare($query);
+        $statement->bindParam(":IdPsicologo", $IdPsicologo);
+        $statement->execute();
+        
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
     
+    // Mostrar datos del paciente seleccionado 
+    public function getAllAtencPatients($IdPsicologo) {
+        $query = "SELECT p.*, ate.*, c.FechaInicioCita
+                  FROM paciente p
+                  LEFT JOIN atencionpaciente ate ON p.IdPaciente = ate.IdPaciente
+                  LEFT JOIN cita c ON p.IdPaciente = c.IdPaciente
+                  WHERE p.IdPsicologo = :IdPsicologo";
+        
+        $statement = $this->PDO->prepare($query);
+        $statement->bindParam(":IdPsicologo", $IdPsicologo);
+        $statement->execute();
+        
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
+
     // Elimianr paciente seleccionado
     public function eliminar($IdPaciente){
         $statement=$this->PDO->prepare("DELETE FROM Paciente WHERE IdPaciente=:id;");
@@ -251,5 +283,19 @@ class userModelPaciente{
         $statement->bindParam(":IdPaciente",$IdPaciente);
         return($statement->execute())? $statement->fetch():false;
     }
+    public function showAtenco($IdPaciente){
+        $statement = $this->PDO->prepare("SELECT ap.IdAtencion, ap.IdPaciente, ap.IdEnfermedad, e.Clasificacion, 
+        CONCAT(p.NomPaciente, ' ', p.ApPaterno, ' ', p.ApMaterno) AS NombreCompleto, p.Edad, p.MedicamentosPrescritos, 
+        ap.MotivoConsulta, ap.FormaContacto, ap.Diagnostico, ap.Tratamiento, ap.Observacion, ap.UltimosObjetivos
+
+        FROM AtencionPaciente ap
+        JOIN Enfermedad e ON ap.IdEnfermedad = e.IdEnfermedad
+        JOIN Paciente p ON ap.IdPaciente = p.IdPaciente
+        WHERE p.IdPaciente = :IdPaciente
+        ORDER BY ap.FechaRegistro DESC
+        LIMIT 1 ");
+        $statement->bindParam(":IdPaciente", $IdPaciente);
+        return ($statement->execute()) ? $statement->fetch() : false;
+    }   
 }
 ?>
