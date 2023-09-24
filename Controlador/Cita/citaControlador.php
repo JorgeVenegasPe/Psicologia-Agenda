@@ -96,8 +96,20 @@ class usernameControlerCita{
     public function obtenerCitasConNombrePacienteHoraMinutos($id) {
         return ($this->model->obtenerCitasConNombrePacienteHoraMinutos($id));
     }
+    public function contarCitasConfirmadasConCanal($id) {
+        return ($this->model->contarCitasConfirmadasConCanal($id));
+    }
 
+    public function contarCitasConfirmadasConCanal2($id) {
+        return ($this->model->contarCitasConfirmadasConCanal2($id));
+    }
 
+    public function contarCitasConfirmadasConCanal3($id) {
+        return ($this->model->contarCitasConfirmadasConCanal3($id));
+    }
+    public function contarPacientesUltimoMes($id) {
+        return ($this->model->contarPacientesUltimoMes($id));
+    }
 
 } 
 ?>

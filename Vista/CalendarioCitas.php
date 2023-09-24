@@ -9,11 +9,11 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../issets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../issets/css/MainGeneralB.css">
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
     <link rel="stylesheet" href="../issets/css/datatables.min.css">
     <link rel="stylesheet" href="../issets/css/bootstrap-clockpicker.css">
     <link rel="stylesheet" href="../issets/fullcalendar/main.css">
-    <link rel="stylesheet" href="../issets/css/calendariocitaO.css">
+    <link rel="stylesheet" href="../issets/css/calendariocita.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> 
@@ -42,7 +42,6 @@ if (isset($_SESSION['NombrePsicologo'])){
     <div class="container-fluid2">
       <h4 style="text-align:center">Calendario de Citas</h4>
       <div id="Calendario1"></div>
-      
     </div>
 
     <!-- Formulario de Eventos -->
@@ -198,24 +197,6 @@ if (isset($_SESSION['NombrePsicologo'])){
 
 
     <script src="../issets/js/Dashboard.js"></script>
-<script>
-  // Espera a que el documento HTML se cargue completamente
-document.addEventListener("DOMContentLoaded", function() {
-  // Busca el elemento por su ID "Calendario1"
-  var elementoCalendario = document.getElementById("Calendario1");
-
-  // Comprueba si el elemento se encontró correctamente
-  if (elementoCalendario) {
-    // Elimina el atributo "style" del elemento
-    elementoCalendario.removeAttribute("style");
-  } else {
-    console.log("No se encontró el elemento con ID 'Calendario1'");
-  }
-});
-
-</script>
-
-
     <script>
 document.addEventListener("DOMContentLoaded", function(){
     $('.clockpicker').clockpicker();

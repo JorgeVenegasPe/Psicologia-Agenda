@@ -9,12 +9,48 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/MainGeneralB.css">
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Citas</title>
 </head>
+<style>
+    table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0 10px; 
+    max-height: 35%;
+    
+}
+.blue{
+        background-color: #49c691;
+        width: 40px;
+        height: 40px;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;   
+    background-color: transparent;
+    color: #49c691;
+    cursor: pointer;
+    outline: 1px solid #49c691;
+    transition: color 1s;
+    padding: 0px 0px;
+    font-size: 10px;    
+    border-radius: 20px;
+}
+
+
+</style>
 <body>
 <?php
     require("../Controlador/Cita/citaControlador.php");
@@ -37,9 +73,13 @@ if (isset($_SESSION['NombrePsicologo'])){
         <div class="input-group">
   	        <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
         </div>
-        <a class="button" style="padding:10px 30px; font-size:10px;" href="citas.php">
-            <span class="material-symbols-sharp">add</span>Agregar Cita
-        </a>
+        
+        <a class="button" href="citas.php">
+                <p  class="black" style="padding: 12px 19px 12px 25px; color:#49c691;" >Agregar Cita</p>
+                <div class="blue">
+                    <span class="material-symbols-sharp">add</span>
+                </div>            
+            </a>
     </div>
         <div class="recent-citas">
             <table>
@@ -435,3 +475,7 @@ mostrarPagina(1);
   header("Location: ../Index.php");
 }
 ?>
+
+
+
+

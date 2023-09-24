@@ -9,7 +9,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="../issets/css/MainGeneralB.css">
+    <link rel="stylesheet" href="../issets/css/MainGeneral.css">
     <link rel="icon" href="../Issets/images/contigovoyico.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -17,6 +17,65 @@ if (isset($_SESSION['NombrePsicologo'])){
 </head>
 <style>
     
+table {
+width: 100%;
+border-collapse: separate; 
+border-spacing: 0 10px; 
+max-height: 35%;
+
+}
+
+.table-container3 {
+    max-height: 49%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+/* Oculta la barra de desplazamiento vertical */
+.table-container3::-webkit-scrollbar {
+    width: 0.5em; /* Ancho de la barra de desplazamiento */
+    padding: -10px;
+}
+
+/* Estilo de la barra de desplazamiento (opcional) */
+.table-container3::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Color de fondo del control deslizante de la barra de desplazamiento */
+    border-radius: 4px; /* Radio de esquinas del control deslizante */
+}
+
+/* Estilo del riel de la barra de desplazamiento (opcional) */
+.table-container3::-webkit-scrollbar-track {
+    background-color: transparent; /* Color de fondo del riel de la barra de desplazamiento */
+}
+
+.blue{
+        background-color: #49c691;
+        width: 40px;
+        height: 40px;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;   
+    background-color: transparent;
+    color: #49c691;
+    cursor: pointer;
+    outline: 1px solid #49c691;
+    transition: color 1s;
+    padding: 0px 0px;
+    font-size: 10px;    
+    border-radius: 20px;
+}
+
+
+
 </style>
 <body>
 <?php
@@ -41,74 +100,81 @@ if (isset($_SESSION['NombrePsicologo'])){
             <span style="font-size: 15px;color: #6a90f1;"><b style="font-size: 25px;color: #6a90f1;" ><?= $rowscita ?></b> pacientes </span>
             <div class="input-group">
                 <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
-            </div>
-            <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php"><span class="material-symbols-sharp">add</span>Agregar Paciente</a>
+            </div>            
+
+            <a class="button" href="RegPaciente.php">
+                <p  class="black" style="padding: 12px 13px 12px 20px; color:#49c691;" >Agregar Paciente</p>
+                <div class="blue">
+                    <span class="material-symbols-sharp">add</span>
+                </div>            
+            </a>
         </div>
         <div class="container-paciente-tabla">
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            <span class="material-symbols-sharp">check_box_outline_blank</span>
-                        </th>
-                        <th >Paciente</th>
-                        <th class="additional-column">Codigo</th>
-                        <th class="additional-column">DNI</th>
-                        <th class="additional-column">Email</th>
-                        <th class="additional-column">Celular</th>
-                        <th class="additional-column">Nueva Cita</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <?php if (!empty($patients)) : ?>
-                    <?php foreach ($patients as $patient) : ?>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span class="material-symbols-sharp">check_box_outline_blank</span>
-                                </td>
-                                <td>
-                                    <a style="cursor:pointer"
-                                        class="show-info"
-                                        data-patient-id="<?=$patient[0]?>"
-                                        data-codigo="<?=$patient['codigopac']?>"
-                                        data-nombres="<?= $patient['NomPaciente'] ?> <?= $patient['ApPaterno'] ?> <?= $patient['ApMaterno']?>"
-                                        data-dni="<?=$patient['Dni']?>"
-                                        data-genero="<?=$patient['Genero']?>"
-                                        data-edad="<?=$patient['Edad']?>"
-                                        data-estadocivil="<?=$patient['EstadoCivil']?>"
-                                        data-email="<?=$patient['Email']?>"
-                                        data-celular="<?=$patient['Telefono']?>"
-                                        data-nombre-madre="<?=$patient['NomMadre']?>"
-                                        data-estado-madre="<?=$patient['EstadoMadre']?>"
-                                        data-nombre-padre="<?=$patient['NomPadre']?>"
-                                        data-estado-padre="<?=$patient['EstadoPadre']?>"
-                                        data-cant-hermanos="<?=$patient['CantHermanos']?>"
-                                        data-antecedentes-familiares="<?=$patient['HistorialFamiliar']?>"
-                                        data-FechaInicioCita="<?=$patient['FechaInicioCita']?>">
-                                        <?=$patient['NomPaciente']?> <?=$patient['ApPaterno']?>
-                                    </a>
-                                </td>
-                                <td class="additional-column"><?=$patient['codigopac']?></td>
-                                <td class="additional-column"><?=$patient['Dni']?></td>
-                                <td class="additional-column"><?=$patient['Email']?></td>
-                                <td class="additional-column"><?=$patient['Telefono']?></td>
-                                <td class="additional-column">
-                                    <a class="button" style="width: 110px; padding:6px; font-size:10px;" href="citas.php">
-                                        <span class="material-symbols-sharp">add</span>Crear Cita
-                                    </a>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="dropbtn"><span class="material-symbols-sharp">more_vert</span></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    <?php endforeach;?>             
-                <?php endif;?>
-            </table>
-
+            <div class="table-container3" >
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="material-symbols-sharp">check_box_outline_blank</span>
+                            </th>
+                            <th >Paciente</th>
+                            <th class="additional-column">Codigo</th>
+                            <th class="additional-column">DNI</th>
+                            <th class="additional-column">Email</th>
+                            <th class="additional-column">Celular</th>
+                            <th class="additional-column">Nueva Cita</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <?php if (!empty($patients)) : ?>
+                        <?php foreach ($patients as $patient) : ?>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="material-symbols-sharp">check_box_outline_blank</span>
+                                    </td>
+                                    <td>
+                                        <a style="cursor:pointer"
+                                            class="show-info"
+                                            data-patient-id="<?=$patient[0]?>"
+                                            data-codigo="<?=$patient['codigopac']?>"
+                                            data-nombres="<?= $patient['NomPaciente'] ?> <?= $patient['ApPaterno'] ?> <?= $patient['ApMaterno']?>"
+                                            data-dni="<?=$patient['Dni']?>"
+                                            data-genero="<?=$patient['Genero']?>"
+                                            data-edad="<?=$patient['Edad']?>"
+                                            data-estadocivil="<?=$patient['EstadoCivil']?>"
+                                            data-email="<?=$patient['Email']?>"
+                                            data-celular="<?=$patient['Telefono']?>"
+                                            data-nombre-madre="<?=$patient['NomMadre']?>"
+                                            data-estado-madre="<?=$patient['EstadoMadre']?>"
+                                            data-nombre-padre="<?=$patient['NomPadre']?>"
+                                            data-estado-padre="<?=$patient['EstadoPadre']?>"
+                                            data-cant-hermanos="<?=$patient['CantHermanos']?>"
+                                            data-antecedentes-familiares="<?=$patient['HistorialFamiliar']?>"
+                                            data-FechaInicioCita="<?=$patient['FechaInicioCita']?>">
+                                            <?=$patient['NomPaciente']?> <?=$patient['ApPaterno']?>
+                                        </a>
+                                    </td>
+                                    <td class="additional-column"><?=$patient['codigopac']?></td>
+                                    <td class="additional-column"><?=$patient['Dni']?></td>
+                                    <td class="additional-column"><?=$patient['Email']?></td>
+                                    <td class="additional-column"><?=$patient['Telefono']?></td>
+                                    <td class="additional-column">
+                                        <a class="button" style="width: 110px; padding:6px; font-size:10px;" href="citas.php">
+                                            <span class="material-symbols-sharp">add</span>Crear Cita
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="dropbtn"><span class="material-symbols-sharp">more_vert</span></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        <?php endforeach;?>             
+                    <?php endif;?>
+                </table>
+            </div>
             
             <div class="patient-details">
         

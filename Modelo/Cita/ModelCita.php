@@ -213,6 +213,96 @@ class UserModelCita{
             return array(); // Devolver un arreglo vacío si no se encontraron citas
         }
     }
+    //FUNCION PRA MEJORAR EL ORDEN DE LOS REGISTROS CITA
+    public function obtenerCitasConNombrePacienteHoraMinutos2($id) {
+        $fechaActual = date("Y-m-d");
+        $statement = $this->PDO->prepare("SELECT paciente.IdPaciente, paciente.NomPaciente, 
+            DATE_FORMAT(
+                CASE
+                    WHEN TIME(cita.FechaInicioCita) = '00:00:00' THEN TIME(cita.FechaRegistro)
+                    ELSE TIME(cita.FechaInicioCita)
+                END,
+                '%H:%i'
+            ) as HoraMinutos
+            FROM cita
+            INNER JOIN paciente ON cita.IdPaciente = paciente.IdPaciente
+            WHERE cita.IdPsicologo = :idPsicologo AND DATE(cita.FechaInicioCita) = :fechaActual");
+        $statement->bindParam(":idPsicologo", $id, PDO::PARAM_INT);
+        $statement->bindParam(":fechaActual", $fechaActual, PDO::PARAM_STR);
+        $result = $statement->execute();
+    
+        if ($result) {
+            $citas = array();
+    
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $citas[] = $row;
+            }
+    
+            return $citas;
+        } else {
+            return array(); // Devolver un arreglo vacío si no se encontraron citas
+        }
+    }
+     //Funcion para contar lel tipo de Atraccion:
+     public function contarCitasConfirmadasConCanal($id) {
+        $statement = $this->PDO->prepare("SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo  AND CanalCita = 'Cita Online'");
+        $statement->bindParam(":idPsicologo", $id, PDO::PARAM_INT);
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
+
+    public function contarCitasConfirmadasConCanal2($id) {
+        $statement = $this->PDO->prepare("SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo  AND CanalCita = 'Marketing Directo'");
+        $statement->bindParam(":idPsicologo", $id, PDO::PARAM_INT);
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
+
+    
+    public function contarCitasConfirmadasConCanal3($id) {
+        $statement = $this->PDO->prepare("SELECT COUNT(*) as total FROM cita WHERE IdPsicologo = :idPsicologo  AND CanalCita = 'Referidos'");
+        $statement->bindParam(":idPsicologo", $id, PDO::PARAM_INT);
+        $result = $statement->execute();
+    
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
+    public function contarPacientesUltimoMes($id) {
+        $fechaActual = date("Y-m-d");
+        $fechaHaceUnMes = date("Y-m-d", strtotime("-1 month"));
+        $statement=$this->PDO->prepare("SELECT COUNT(*) as total FROM paciente WHERE IdPsicologo = :idPsicologo AND DATE(FechaRegistro) BETWEEN :fechaHaceUnMes AND :fechaActual");
+        $statement->bindParam(":idPsicologo",$id,PDO::PARAM_INT);
+        $statement->bindParam(":fechaHaceUnMes", $fechaHaceUnMes,PDO::PARAM_STR);
+        $statement->bindParam(":fechaActual",$fechaActual,PDO::PARAM_STR);
+        $result = $statement->execute();
+
+        if ($result) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $total_registros = $row["total"];
+            return $total_registros;
+        } else {
+            return 0;
+        }
+    }
 
 }
 

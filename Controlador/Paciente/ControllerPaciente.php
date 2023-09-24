@@ -30,10 +30,21 @@ class usernameControlerPaciente{
     }
 
     // Mostrar datos del paciente seleccionado
-    public function show($IdPaciente){
-            return ($this->model->show($IdPaciente) != false) ? $this->model->show($IdPaciente):header("Location:../../Vista/DatosPaciente.php");
+    public function showCompleto($IdPsicologo) {
+        $patients = $this->model->getAllPatients($IdPsicologo);
+        return $patients;
     }
 
+    // Mostrar datos del paciente seleccionado
+    public function showCompletoAtencion($IdPsicologo) {
+        $patients = $this->model->getAllAtencPatients($IdPsicologo);
+        return $patients;
+    }
+
+    
+    public function show($IdPaciente){
+        return ($this->model->show($IdPaciente) != false) ? $this->model->show($IdPaciente):header("Location:../../Vista/DatosPaciente.php");
+    }
     // Mostrar 4 paciente reciente 
     public function MostrarPacientesRecientes($idPsicologo) {
         $pacientesRecientes = $this->model->MostrarPacientesRecientes($idPsicologo);
@@ -52,10 +63,6 @@ class usernameControlerPaciente{
         return $pacientesRecientes;
     }
 
-    public function showCompleto($IdPsicologo) {
-        $patients = $this->model->getAllPatients($IdPsicologo);
-        return $patients;
-    }
     // Mostrar departamento 
     public function MostrarDepartamento() {
         return ($this->model->MostrarDepartamento()) ?: false;
