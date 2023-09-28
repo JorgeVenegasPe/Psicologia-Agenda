@@ -130,7 +130,7 @@ require_once("../Controlador/Paciente/ControllerPaciente.php");
                 <?php endforeach;?>             
             <?php endif;?>
         </table>
-        <div style="display: flex; flex-direction:row">
+        <div class="details" style="display: flex; flex-direction:row">
         <div class="line"></div>
         <div class="patient-details">
         
@@ -142,6 +142,51 @@ require_once("../Controlador/Paciente/ControllerPaciente.php");
 </div>
 <script src="../issets/js/Dashboard.js"></script>
 <script>
+
+// Obtén una referencia al elemento con la clase "details"
+const detailsContainer = document.querySelector('.details');
+
+// Agrega un event listener al nombre del paciente
+const nombrePaciente = document.querySelector('.nombre-paciente');
+nombrePaciente.addEventListener('click', function () {
+    // Agrega una clase "open" al contenedor de detalles
+    detailsContainer.classList.add('open');
+});
+
+
+
+// Agrega un event listener a todas las filas de la tabla
+var tableRows = document.querySelectorAll('table tr');
+tableRows.forEach(function (row) {
+    // Encuentra el primer TD dentro de la fila
+    var firstColumn = row.querySelector('td:first-child');
+
+    // Verifica si se encontró el primer TD
+    if (firstColumn) {
+        firstColumn.addEventListener('click', function () {
+            // Remueve la clase 'selected' de todas las filas
+            tableRows.forEach(function (r) {
+                r.classList.remove('selected');
+                
+                // Cambia el color del texto del contenido de las palabras de la fila actual a su color original
+                var textElements = r.querySelectorAll('*');
+                textElements.forEach(function (el) {
+                    el.style.color = 'black'; // Cambia 'black' al color original deseado
+                });
+            });
+
+            // Agrega la clase 'selected' a la fila actual
+            row.classList.add('selected');
+
+            // Cambia el color del texto del contenido de las palabras de la fila actual a blanco
+            var textElements = row.querySelectorAll('*');
+            textElements.forEach(function (el) {
+                el.style.color = 'white';
+            });
+        });
+    }
+});
+
 const showInfoLinks = document.querySelectorAll('.show-info');
 const additionalColumns = document.querySelectorAll('.additional-column');
 const containerpacientetabla = document.querySelector('.container-paciente-tabla');
@@ -152,9 +197,6 @@ showInfoLinks.forEach(link => {
     link.addEventListener('click', () => {
         // Obtener el ID del paciente desde el atributo data
         const patientId = link.getAttribute('data-patient-id');
-        
-        if (currentPatientId !== patientId) {
-            // Si se hace clic en un paciente diferente
 
             // Ocultar las columnas adicionales
             additionalColumns.forEach(column => {
@@ -216,19 +258,7 @@ showInfoLinks.forEach(link => {
             patientDetails.style.display = 'block';
 
             currentPatientId = patientId; // Actualizar el ID del paciente actual
-        } else {
-            // Si se hace clic en el mismo paciente nuevamente
-
-            // Restaurar la tabla a su estado original
-            additionalColumns.forEach(column => {
-                column.classList.remove('hidden');
-            });
-            containerpacientetabla.classList.remove('active');
-            // Ocultar el cuadro de detalles
-            patientDetails.style.display = 'none';
-
-            currentPatientId = null; // Restablecer el ID del paciente actual
-        }
+        
     });
 });
 </script>

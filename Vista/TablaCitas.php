@@ -42,13 +42,15 @@ if (isset($_SESSION['NombrePsicologo'])){
     ?>
     <h2 style="color: #49c691;">Lista de Citas</h2>
     <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
-        <span style="font-size: 15px;color: #6a90f1;"><b style="font-size: 25px;color: #6a90f1;" ><?= $rowscita ?></b> pacientes </span>
+        <span style="font-size: 15px;color: #6a90f1;">
+        <b style="font-size: 25px;color: #6a90f1;"><?= $rowscita ?></b> pacientes </span>
         <div class="input-group">
-  	        <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
+            <input type="text" style="background-color: White;" id="myInput" placeholder="Buscar" class="input" required></input>
         </div>
-        <a class="button" style="padding:10px 30px; font-size:10px;" href="citas.php">
+        <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php">
             <span class="material-symbols-sharp">add</span>Agregar Cita
         </a>
+        <button type="button" class="button-eliminar" id="eliminarSeleccionados" style="display: none;">Eliminar</button>
     </div>
         <div class="recent-citas">
             <table>
@@ -65,7 +67,7 @@ if (isset($_SESSION['NombrePsicologo'])){
                 ?>
                 <thead>
                     <tr>
-                        <th ></th>
+                        <th><input type="checkbox" id="checkboxPrincipal" class="checkbox-principal"></th>
                         <th>Paciente</th>
                         <th>Codigo</th>
                         <th>Motivo</th>
@@ -75,12 +77,12 @@ if (isset($_SESSION['NombrePsicologo'])){
                         <th ></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     <?php if ($rows) :?>
                         <?php foreach ($rows as $row): ?>
                             <tr>
                                 <td>
-                                    <span class="material-symbols-sharp">check_box_outline_blank</span>
+                                    <input type="checkbox" class="checkbox" id="checkbox<?=$row[0]?>" value="<?=$row[0]?>">
                                 </td>
                                 <td style="padding: 20px;"><?=$row[1]?></td>
                                 <td><?=$row[11]?></td>
@@ -88,16 +90,20 @@ if (isset($_SESSION['NombrePsicologo'])){
                                 <td><?=$row[3]?></td>
                                 <td><?=$row[4]?></td>
                                 <td style="color:green"><?=$row[5]?></td>
-                                <td><div class="dropdown">
-                                            <button class="dropbtn"><span class="material-symbols-sharp">more_vert</span></button>
-                                            <div class="dropdown-content">
-                                            <a type="button" class="btne" onclick="openModalEliminar('<?=$row[0]?>')">
-                                            <span class="material-symbols-outlined">delete</span><p>Eliminar</p>
-                                            </a>
-                                                <a type="button" class="btnm" onclick="openModal('<?=$row[0]?>')">
-                                                <span class="material-symbols-outlined"> edit</span> <p>Editar</p>
-                                            </a>
-                                            </div></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="dropbtn"><span class="material-symbols-sharp">more_vert</span></button>
+                                    <div class="dropdown-content">
+                                        <a type="button" class="btne" onclick="openModalEliminar('<?=$row[0]?>')">
+                                            <span class="material-symbols-outlined">delete</span>
+                                            <p>Eliminar</p>
+                                        </a>
+                                        <a type="button" class="btnm" onclick="openModal('<?=$row[0]?>')">
+                                            <span class="material-symbols-outlined"> edit</span>
+                                            <p>Editar</p>
+                                        </a>
+                                    </div>
+                                </td>
                                 <!-- <td class="acct">
                                     <a type="button" class="btne" onclick="openModalEliminar('')">
                                         <span style="color:red" class="material-symbols-sharp">delete</span>
@@ -436,6 +442,7 @@ function mostrarPagina(page) {
 }
 
 mostrarPagina(1);
+
 </script>
 </body>
 </html>

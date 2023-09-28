@@ -77,19 +77,21 @@ if (isset($_SESSION['NombrePsicologo'])){
         ?>
         <h2 style="color: #49c691;">Lista de Pacientes</h2>
         <div class="recent-updates" style="display:flex; flex-direction: row; gap:20px; align-items: center; padding: 10px 0px 0px 10px">
-            <span style="font-size: 15px;color: #6a90f1;"><b style="font-size: 25px;color: #6a90f1;" ><?= $rowscita ?></b> pacientes </span>
+            <span style="font-size: 15px;color: #6a90f1;">
+            <b style="font-size: 25px;color: #6a90f1;"><?= $rowscita ?></b> pacientes </span>
             <div class="input-group">
-                <input type="text" style="background-color: White;" placeholder="Buscar"  class="input" required></input>
+                <input type="text" style="background-color: White;" id="myInput" placeholder="Buscar" class="input" required></input>
             </div>
-            <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php"><span class="material-symbols-sharp">add</span>Agregar Paciente</a>
+            <a class="button" style="padding:10px 30px; font-size:10px;" href="RegPaciente.php">
+                <span class="material-symbols-sharp">add</span>Agregar Paciente
+            </a>
+            <button type="button" class="button-eliminar" id="eliminarSeleccionados" style="display: none;">Eliminar</button>
         </div>
         <div class="container-paciente-tabla">
             <table>
                 <thead>
                     <tr>
-                        <th>
-                            <span class="material-symbols-sharp">check_box_outline_blank</span>
-                        </th>
+                        <th><input type="checkbox" id="checkboxPrincipal" class="checkbox-principal"></th>
                         <th >Paciente</th>
                         <th class="additional-column">Codigo</th>
                         <th class="additional-column">DNI</th>
@@ -98,13 +100,13 @@ if (isset($_SESSION['NombrePsicologo'])){
                         <th class="additional-column">Nueva Cita</th>
                         <th></th>
                     </tr>
-                </thead>
-    <?php if (!empty($patients)) : ?>
-        <?php foreach ($patients as $patient) : ?>
-                        <tbody>
+                </thead >
+                <?php if (!empty($patients)) : ?>
+                    <?php foreach ($patients as $patient) : ?>
+                        <tbody id="myTable">
                             <tr>
                                 <td>
-                                    <span class="material-symbols-sharp">check_box_outline_blank</span>
+                                    <input type="checkbox" class="checkbox" id="checkbox<?=$patient[0]?>" value="<?=$patient[0]?>">
                                 </td>
                                 <td>
                                     <a style="cursor:pointer"
@@ -154,6 +156,7 @@ if (isset($_SESSION['NombrePsicologo'])){
     </main>
 </div>
 <script src="../Issets/js/Dashboard.js"></script>
+<script src="../Issets/js/pacientes.js"></script>
 <script>
     const showInfoLinks = document.querySelectorAll('.show-info');
 const additionalColumns = document.querySelectorAll('.additional-column');

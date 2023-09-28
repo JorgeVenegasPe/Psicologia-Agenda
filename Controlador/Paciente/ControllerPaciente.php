@@ -31,8 +31,7 @@ class usernameControlerPaciente{
 
     // Mostrar datos del paciente seleccionado
     public function showCompleto($IdPsicologo) {
-        $patients = $this->model->getAllPatients($IdPsicologo);
-        return $patients;
+        return ($this->model->getAllPatients($IdPsicologo)) ?: false;
     }
 
     // Mostrar datos del paciente seleccionado

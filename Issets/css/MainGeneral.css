@@ -560,6 +560,62 @@ textarea::placeholder{
 	animation: load 3s 0.25s linear forwards;
 }
 
+/* Estilos para el checkbox*/
+
+.checkbox {
+    position: relative;
+    cursor: pointer;
+    width: 20px; 
+    height: 20px; 
+    background-color: #fff; 
+    border: 2px solid #333; 
+    border-radius: 4px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px; 
+    cursor: pointer;
+}
+
+.checkbox:checked {
+    background-color: #007bff; 
+    border-color: #007bff; 
+}
+
+.checkbox + label {
+    font-size: 16px; /* Tamaño de fuente del texto */
+    vertical-align: middle; /* Alinea verticalmente el texto con el checkbox */
+}
+
+/* Estilo para el checkbox principal */
+.checkbox-principal {
+    cursor: pointer;
+    position: relative;
+    width: 20px; 
+    height: 20px; 
+    background-color: #fff; 
+    border: 2px solid #333; 
+    border-radius: 4px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px; 
+}
+/* Estilo para el checkbox principal cuando está marcado */
+.checkbox-principal:checked {
+    color: red;
+    background-color: red; 
+    border-color: red;
+}
+
+/* Estilo para el tick (✓) dentro de los checkboxes individuales cuando están marcados */
+.checkbox:checked::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+}
+
+
+
 @keyframes fade-in {
 	5% {
 		opacity: 1;
@@ -731,65 +787,6 @@ textarea::placeholder{
 
 
 
-
-
-
-
-/* PAGE DATOS PACIENTE- HISTORIAL */
-
-.ContAtencion{
-    display: flex;
-    background-color: #f6f5f9;
-    padding: 1px;
-    margin: 40px 20px 0px 50px;
-    height: 70%;
-    border-radius: 0px 50px 50px 0px;
-    box-shadow: 2px 4.5px 18px 7px rgba(0, 0, 0, 0.2);
-}
-.CAtencion{
-    width: 95%;
-    height: 80%;
-}
-.TabAtencion{
-    border-collapse: collapse;
-    margin: 25px;
-    width: 100%;
-}
-.TabAtencion tr {
-    background-color: #D5E1EF;
-}
-.TabAtencion tr p{
-    color: #3d3d3d;
-}
-.TabAtencion tr th {
-    background-color: #D5E1EF;
-}
-.TabAtencion tr th:hover {
-    background-color: #6A92F4;
-}
-.TabAtencion tr.selected {
-    background-color: #6A92F4; /* Cambia el color de fondo al hacer clic */
-    color: white;
-}
-.TabAtencion td {
-    padding: 20px;
-    color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 600;
-    border-bottom: 2px solid #BCC5D4;
-}
-.TabAtencion tr:first-child td:first-child {
-    border-top-left-radius: 25px;
-}
-.TabAtencion tr:first-child td:last-child {
-    border-top-right-radius: 1px;
-}
-/* Establece el borde a "none" solo en las últimas celdas td de la última fila tr */
-.TabAtencion  tr:last-child td {
-    border: none;
-}
-
-
 .line{
     background-color: #6A92F4;
     height: 100%;
@@ -860,4 +857,44 @@ textarea::placeholder{
 .BUT {
     justify-content: flex-end;
     display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.details.open {
+    margin-left: -20px;
+}
+
+table tr.selected {
+    background-color: #6A92F4; /* Cambia el color de fondo al hacer clic */
+    color: white;
+}
+
+.button-eliminar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    border-radius: 10px ;
+    border: 0.1em solid red; /* Color del borde */
+    padding: 10px 40px;
+    outline: 1px solid red;
+    transition: color 1s;
+}
+
+.button-eliminar:hover {
+    color: black;
+    cursor: pointer;
+
 }
