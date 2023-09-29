@@ -399,14 +399,19 @@ main .recent-citas a {
 	flex-direction: column;
 	gap: 8px;
 }
-
+.input-group_1 {
+    display: flex;
+    gap: 5%;
+    flex-direction: row;
+    width: 50%;
+}
 .checkout-information {
 	background: var(--color-white);
     width: 100%;
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
     text-align: center;
-    box-shadow: var(--box-shadow);
+    /* box-shadow: var(--box-shadow); */
     transition: all 300ms ease;
 }
 
@@ -560,6 +565,62 @@ textarea::placeholder{
 	animation: load 3s 0.25s linear forwards;
 }
 
+/* Estilos para el checkbox*/
+
+.checkbox {
+    position: relative;
+    cursor: pointer;
+    width: 20px; 
+    height: 20px; 
+    background-color: #fff; 
+    border: 2px solid #333; 
+    border-radius: 4px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px; 
+    cursor: pointer;
+}
+
+.checkbox:checked {
+    background-color: #007bff; 
+    border-color: #007bff; 
+}
+
+.checkbox + label {
+    font-size: 16px; /* Tamaño de fuente del texto */
+    vertical-align: middle; /* Alinea verticalmente el texto con el checkbox */
+}
+
+/* Estilo para el checkbox principal */
+.checkbox-principal {
+    cursor: pointer;
+    position: relative;
+    width: 20px; 
+    height: 20px; 
+    background-color: #fff; 
+    border: 2px solid #333; 
+    border-radius: 4px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    margin-right: 10px; 
+}
+/* Estilo para el checkbox principal cuando está marcado */
+.checkbox-principal:checked {
+    color: red;
+    background-color: red; 
+    border-color: red;
+}
+
+/* Estilo para el tick (✓) dentro de los checkboxes individuales cuando están marcados */
+.checkbox:checked::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+}
+
+
+
 @keyframes fade-in {
 	5% {
 		opacity: 1;
@@ -632,6 +693,9 @@ textarea::placeholder{
         gap: 0;
     }
 }
+
+
+
 /* Estilo para el botón desplegable */
 .dropdown {
     position: relative;
@@ -657,6 +721,7 @@ textarea::placeholder{
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
+
 /* Estilo para los enlaces en el contenido desplegable */
 .dropdown-content a {
     color: black;
@@ -674,10 +739,11 @@ textarea::placeholder{
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 .container-paciente-tabla.active{
     display: grid;
     width: 100%;
-    margin: 20px;
+    margin: 26px 32px;
     gap :1rem;
     grid-template-columns: auto auto ;
     }
@@ -690,17 +756,19 @@ textarea::placeholder{
 
     .patient-details {
         display: none;
-        width: 1200px;
+        width: 95%;
         text-align: center;
         color: #49c691;
         border-radius: var(--card-border-radius);
         margin-top: 1rem;
-        box-shadow: var(--box-shadow);
+        /* box-shadow: var(--box-shadow); */
         animation: fadeIn 0.5s ease-in-out;
     }
     .hidden {
         display: none;
     }
+
+
     .input-group4{  /*   Modifique esta clase para mi formulario - Hans */
         display: flex;
         flex-direction: row;
@@ -714,96 +782,14 @@ textarea::placeholder{
         flex-direction: row;
         gap: 20px;
         justify-content: space-between;
-        /* margin-bottom: 30px; */
     }
-/* PAGE DATOS PACIENTE- HISTORIAL */
+    
 
-.ContAtencion{
-    display: flex;
-    background-color: #f6f5f9;
-    padding: 1px;
-    margin: 40px 20px 0px 50px;
-    height: 70%;
-    border-radius: 0px 50px 50px 0px;
-    box-shadow: 2px 4.5px 18px 7px rgba(0, 0, 0, 0.2);
-}
-.CAtencion{
-    width: 95%;
-    height: 80%;
-    color: white;
-}
 
-.table-container {
-    max-height: 99%;
-    width: 116%;
-    overflow-y: auto;
-}
 
-/* Oculta la barra de desplazamiento vertical */
-.table-container::-webkit-scrollbar {
-    width: 0.5em; /* Ancho de la barra de desplazamiento */
-    padding: -10px;
-}
-
-/* Estilo de la barra de desplazamiento (opcional) */
-.table-container::-webkit-scrollbar-thumb {
-    background-color: transparent; /* Color de fondo del control deslizante de la barra de desplazamiento */
-    border-radius: 4px; /* Radio de esquinas del control deslizante */
-}
-
-/* Estilo del riel de la barra de desplazamiento (opcional) */
-.table-container::-webkit-scrollbar-track {
-    background-color: transparent; /* Color de fondo del riel de la barra de desplazamiento */
-}
-/* Agrega margen izquierdo cuando la clase "open" está presente */
-.details.open {
-    margin-left: -20px;
-}
-.TabAtencion{
-    border-collapse: collapse;
-    margin: 25px;
-    width: 83%;
-}
-.TabAtencion tr {
-    background-color: #D5E1EF;
-}
-.TabAtencion tr p{
-    color: #3d3d3d;
-}
-.TabAtencion tr th {
-    background-color: #D5E1EF;
-}
-.TabAtencion tr th:hover {
-    background-color: #6A92F4;
-}
-.TabAtencion tr.selected {
-    background-color: #6A92F4; /* Cambia el color de fondo al hacer clic */
-    color: white;
-}
-.TabAtencion td {
-    padding: 20px;
-    color: black;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 600;
-    border-bottom: 2px solid #BCC5D4;
-}
-/* Aplicar border-radius al primer td del primer tbody */
-.TabAtencion tbody:first-child tr:first-child td:first-child {
-    border-top-left-radius: 25px;
-}
-
-/* Aplicar border-radius al primer tr del primer tbody */
-.TabAtencion tbody:first-child tr:first-child {
-    border-top-right-radius: 25px;
-}
-
-/* Establecer el borde a "none" solo en las últimas celdas td de la última fila tr del primer tbody */
-.TabAtencion tbody:first-child tr:last-child td {
-    border: none;
-}
 .line{
     background-color: #6A92F4;
-    height: 101%;
+    height: 100%;
     width: 5px;
     margin: 18px 0px 0px 0px;
 }
@@ -815,12 +801,14 @@ textarea::placeholder{
     margin-right: -1px;
     box-shadow: 2px 4.5px 18px 7px rgba(0, 0, 0, 0.2);
     position: relative;
+
 }
 .contDetalles{
     display: flex;
     flex-direction: row;
     margin: -20px 0px 0px 26px;
     transition: max-height 0.3s ease-in-out;
+
 }
 .contentDet{
     position: absolute;
@@ -829,6 +817,7 @@ textarea::placeholder{
     margin: 15px;
     padding: 20px;
 }
+
 .date{
     background-color: #6A92F4;
     height: 90px;
@@ -839,9 +828,10 @@ textarea::placeholder{
     justify-content: center;
     flex-direction: column;
 }
-.buttone{
+
+#butto{
     margin-top: 10px;
-    margin-left: -33px;
+    margin-left: -2px;
     width: 130px;  height: 30px;
     border-radius: 30px;
     font-size: 10.2px;
@@ -868,52 +858,7 @@ textarea::placeholder{
     justify-content: flex-end;
     display: flex;
 }
-.izquierda {
-    flex: 1;
-    text-align: left;
-}
-.derecha {
-    flex: 1;
-    text-align: right;
-}
-.arriba{ /*Nueva clase creada para el formulario - Hans */
-color: #89BEF5; /*Añadi un cambio de color - Hans */
-font-size: 15px;
-font-weight: bold;
-}
-.abajo{ /*Nueva clase creada para el formulario - Hans */
-font-size: 0.90rem;
-color: #89BEF5; /*Añadi un cambio de color - Hans */
-font-weight: normal;
-text-align: center;
-}
-.visual{ /*Nueva clase creada para el forulario - Hans */
-color: #49c691; 
-font-size: 2rem;
-font-weight: bold;
-}
-.input-group30{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-.contis{
-    padding: 0px 0px 0px 15px;
-    display: flex;
-    gap: 47%;
-}
-.visualizar{
-    display: flex;
-    flex-direction: column;
-}
-.datitos{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -922,34 +867,34 @@ font-weight: bold;
         opacity: 1;
     }
 }
-@media (max-width: 1462px) {
-    td {
-        text-align: center;
-        padding: 13px;
-    }
-    .patient-details {
-        width: 97% !important;
-        height: 72%;
-        padding: 9px;
-        background-color: white;
-    }
-    .arriba {          
-        font-size: 12px;
-    }
-    .pie-chart {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
 
-    main .insights > div {
-        padding: 24px 24px;
-        margin-top: 0px;
-        width: 209px;
-        height: 150px;
-    }
-    main .insights {
-        display: flex;            
-        flex-direction: row;
-    }
+.details.open {
+    margin-left: -20px;
+}
+
+table tr.selected {
+    background-color: #6A92F4; /* Cambia el color de fondo al hacer clic */
+    color: white;
+}
+
+.button-eliminar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    border-radius: 10px ;
+    border: 0.1em solid red; /* Color del borde */
+    padding: 10px 40px;
+    outline: 1px solid red;
+    transition: color 1s;
+}
+
+.button-eliminar:hover {
+    color: black;
+    cursor: pointer;
+
 }

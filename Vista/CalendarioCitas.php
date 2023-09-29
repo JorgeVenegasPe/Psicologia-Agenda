@@ -27,8 +27,6 @@ if (isset($_SESSION['NombrePsicologo'])){
     <title>Calendario</title>
 </head>
 <body>
-  <style>
-  </style>
 <div class="container-calendario">
 <?php
     require_once '../Issets/views/Menu.php';

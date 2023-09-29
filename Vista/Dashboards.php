@@ -54,7 +54,7 @@ if (isset($_SESSION['NombrePsicologo'])){
             <!----------- CAmbios NUEVOS DEL DASHBOARDS -------->
             <div class="contenedor_dsh" >
 
-                 <h4 style=" color:#49c691; text-align: start; margin-left: 20PX;">¡Buenos dias, <?=$_SESSION['NombrePsicologo']?>!</h4>
+                 <h4 style=" color:#49c691; text-align: start; margin-left: 20PX;">¡Buenos dias, <?=$_SESSION['NombrePsicologo']?></h4>
 
                 <h3 style="color:#6A90F1; font-size: 18px; text-align: start; margin-left: 20PX; ">
                 Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy

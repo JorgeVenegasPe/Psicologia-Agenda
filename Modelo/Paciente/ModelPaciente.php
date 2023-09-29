@@ -66,12 +66,7 @@ class userModelPaciente{
         return $statement->execute();
     }
 
-    // Ver datos del paciente 
-    public function ver($IdPsicologo) {
-        $statement = $this->PDO->prepare("SELECT * FROM Paciente WHERE IdPsicologo = :IdPsicologo ");
-        $statement->bindValue(':IdPsicologo', $IdPsicologo);
-        return ($statement->execute()) ? $statement->fetchAll() : false;
-    }
+    
     
     // Mostrar datos del paciente seleccionado 
     public function show($IdPaciente){
@@ -86,21 +81,21 @@ class userModelPaciente{
         return($statement->execute())? $statement->fetch():false;
 
     }
-
+// Ver datos del paciente 
+public function ver($IdPsicologo) {
+    $statement = $this->PDO->prepare("SELECT * FROM Paciente WHERE IdPsicologo = :IdPsicologo ");
+    $statement->bindValue(':IdPsicologo', $IdPsicologo);
+    return ($statement->execute()) ? $statement->fetchAll() : false;
+}
     // Mostrar datos del paciente seleccionado 
     public function getAllPatients($IdPsicologo) {
-        $query = "SELECT p.*, af.*, c.FechaInicioCita
-                  FROM paciente p
-                  LEFT JOIN areafamiliar af ON p.IdPaciente = af.IdPaciente
-                  LEFT JOIN cita c ON p.IdPaciente = c.IdPaciente
-                  WHERE p.IdPsicologo = :IdPsicologo";
-        
-        $statement = $this->PDO->prepare($query);
-        $statement->bindParam(":IdPsicologo", $IdPsicologo);
-        $statement->execute();
-        
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results;
+        $statement = $this->PDO->prepare("SELECT p.IdPaciente ,p.*, af.*, c.*
+        FROM paciente p
+        LEFT JOIN areafamiliar af ON p.IdPaciente = af.IdPaciente
+        LEFT JOIN cita c ON p.IdPaciente = c.IdPaciente
+        WHERE p.IdPsicologo = :IdPsicologo");
+        $statement->bindValue(":IdPsicologo", $IdPsicologo);
+        return ($statement->execute()) ? $statement->fetchAll(): false;
     }
     
     // Mostrar datos del paciente seleccionado 
