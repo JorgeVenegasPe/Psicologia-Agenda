@@ -74,25 +74,27 @@ if (isset($_SESSION['NombrePsicologo'])){
     gap: 2px;
 }
 .container-paciente-tabla.active table {
-    width: 100%;
-    border-spacing: 0 10px;
-    margin-top: 0.3rem;
+    width:100%;
+    margin-top: 1rem;
     max-height: 55%;
+    border-spacing: 0;
 }
 table{
     width: 100%;
-    border-spacing: 0 10px;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
     max-height: 55%;
+    border-spacing: 0.5rem;
 }
+.container-paciente-tabla.active table tr.primera-fila td{
+    border-top-left-radius: 20px !important;
+}   
 .container-paciente-tabla.active table td{
-    background-color: #d5e1ef;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    /*border de 1px color var(--danger)*/
+    border-bottom: 1px solid var(--color-warning);
+    border-top: 1px solid var(--color-warning);
 }
-.container-paciente-tabla.active table tr:first-child td:first-child {
-    border-top-left-radius: 10px;
-    background-color: var(--color-warning);
-}
-    
 .patient-details {
         display: none;
         width: auto;
@@ -145,9 +147,9 @@ require_once("../Controlador/Paciente/ControllerPaciente.php");
         <div class="before-details">
         <table>
             <?php if (!empty($patients)) : ?>
-                <?php foreach ($patients as $patient) : ?>
+                <?php foreach ($patients as $index => $patient) : ?>
                     <tbody>
-                        <tr>
+                        <tr <?php if ($index === 0) echo 'class="primera-fila"'; ?>>
                             <td>
                                 <a style="cursor:pointer"
                                     class="show-info"
