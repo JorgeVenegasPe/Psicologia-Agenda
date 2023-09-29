@@ -20,6 +20,7 @@ if (isset($_SESSION['NombrePsicologo'])) {
     </head>
 
     <body>
+
         <?php
         require_once("../Controlador/Paciente/ControllerPaciente.php");
         require_once("../Controlador/Cita/citaControlador.php");
@@ -43,13 +44,14 @@ if (isset($_SESSION['NombrePsicologo'])) {
             <?php
             require_once '../Issets/views/Menu.php';
             ?>
+
             <!----------- end of aside -------->
             <main class="animate__animated animate__fadeIn">
                 <br>
                 <!----------- CAmbios NUEVOS DEL DASHBOARDS -------->
-                <div class="contenedor_dsh">
+                <div class="contenedor_dsh" style=" width: 100%;">
 
-                    <h4 style=" color:#49c691; text-align: start; margin-left: 20PX;">¡Buenos dias, <?= $_SESSION['NombrePsicologo'] ?>!</h4>
+                    <h4 style=" color:#49c691; text-align: start; margin-left: 20px;">¡Buenos dias, <?= $_SESSION['NombrePsicologo'] ?>!</h4>
 
                     <h3 style="color:#6A90F1; font-size: 18px; text-align: start; margin-left: 20PX; ">
                         Tienes <span style="color:#416cd8; font-weight: bold; font-size:20px"><?= count($totalRegistrosEnCitasHora) ?> citas</span> programadas para hoy
@@ -57,28 +59,10 @@ if (isset($_SESSION['NombrePsicologo'])) {
                     <div class="contenedor-secciones">
                         <div class="agenda">
                             <?php
-                            $fecha_actual = new DateTime('now', new DateTimeZone('UTC'));
-                            $fecha_actual->setTimeZone(new DateTimeZone('America/Lima')); // Cambia a tu zona horaria
-
-                            $locale = 'es_ES';
-                            $fmt = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
-                            $fecha_formateada = $fmt->format($fecha_actual);
+                            $fecha_actual = new DateTime('now', new DateTimeZone('America/Lima'));
 
                             // Llama a la función para obtener las citas con nombre del paciente, hora y minutos
                             $citasConNombrePacienteHoraMinutos = (new UserModelCita())->obtenerCitasConNombrePacienteHoraMinutos2($_SESSION['IdPsicologo']);
-
-                            // Función de comparación para ordenar citas por hora
-                            function compararPorHora($a, $b)
-                            {
-                                return strtotime($a['HoraMinutos']) - strtotime($b['HoraMinutos']);
-                            }
-
-                            // Crear un arreglo con todas las horas desde las 09:00 AM hasta las 12:00 PM
-                            $horas_disponibles = array();
-                            for ($i = 9; $i <= 12; $i++) {
-                                $hora = sprintf('%02d:00 AM', $i);
-                                $horas_disponibles[] = $hora;
-                            }
 
                             // Crear un arreglo para todas las citas (registradas y en blanco)
                             $todas_las_citas = array();
@@ -86,12 +70,19 @@ if (isset($_SESSION['NombrePsicologo'])) {
                             // Agregar las citas registradas al arreglo
                             if (!empty($citasConNombrePacienteHoraMinutos)) {
                                 foreach ($citasConNombrePacienteHoraMinutos as $cita) {
-                                    $cita["HoraMinutos"] .= " AM"; // Agregar "AM" a la hora de la cita registrada
+                                    $hora_cita = new DateTime($cita['HoraMinutos']);
                                     $todas_las_citas[] = array(
-                                        'HoraMinutos' => $cita['HoraMinutos'],
+                                        'HoraMinutos' => $hora_cita,
                                         'NomPaciente' => $cita['NomPaciente'],
                                     );
                                 }
+                            }
+
+                            // Crear un arreglo con todas las horas desde las 09:00 AM hasta las 12:00 PM
+                            $horas_disponibles = array();
+                            for ($i = 9; $i <= 12; $i++) {
+                                $hora = new DateTime("$i:00");
+                                $horas_disponibles[] = $hora;
                             }
 
                             // Agregar las citas en blanco al arreglo
@@ -102,12 +93,10 @@ if (isset($_SESSION['NombrePsicologo'])) {
                                 );
 
                                 // Verificar si hay una cita programada con la misma hora
-                                $hora_cita_en_blanco = strtotime($hora);
                                 $eliminar_cita_en_blanco = false;
 
                                 foreach ($todas_las_citas as $cita_programada) {
-                                    $hora_cita_programada = strtotime($cita_programada['HoraMinutos']);
-                                    if ($hora_cita_en_blanco === $hora_cita_programada) {
+                                    if ($cita_programada['HoraMinutos'] == $hora) {
                                         $eliminar_cita_en_blanco = true;
                                         break; // Salir del bucle al encontrar una coincidencia
                                     }
@@ -120,64 +109,89 @@ if (isset($_SESSION['NombrePsicologo'])) {
                             }
 
                             // Ordenar todas las citas por hora
-                            usort($todas_las_citas, 'compararPorHora');
+                            usort($todas_las_citas, function ($a, $b) {
+                                return $a['HoraMinutos'] <=> $b['HoraMinutos'];
+                            });
                             ?>
 
                             <div class="div_event3">
-                                <div>
-                                    <h3 style="text-align: left;font-size: 16px;">Citas del día</h3>
-                                    <p style="text-align: left; color: #fff;">Hoy, <?php echo $fecha_formateada; ?></p>
-                                </div>
+                                <?php
+                                // Obtener la fecha actual
+                                $fecha_actual = new DateTime();
+
+                                // Definir la configuración regional en español
+                                $localidad = 'es_ES';
+
+                                // Crear un formateador de fecha en español para el día y el mes
+                                $formato_fecha = new IntlDateFormatter($localidad, IntlDateFormatter::FULL, IntlDateFormatter::NONE, null, null, 'dd \'de\' MMMM');
+
+                                // Formatear la fecha actual en el formato deseado
+                                $fecha_formateada = $formato_fecha->format($fecha_actual);
+
+                                // Imprimir la fecha
+                                echo "<div>
+    <h3 style='text-align: left; font-size: 16px;'>Citas del día</h3>
+    <p style='text-align: left; color: #fff;'>Hoy, $fecha_formateada</p>
+</div>";
+                                ?>
+
+
                                 <div style="display:flex; align-items: center;">
                                     <a href="citas.php">
                                         <span style="color: #fff" class="material-symbols-sharp">add_circle</span>
                                     </a>
                                 </div>
                             </div>
+                            <div class="contend_table">
 
-                            <table style="background-color: #fff;">
-                                <?php foreach ($todas_las_citas as $cita) : ?>
-                                    <tr>
-                                        <td><?= $cita["HoraMinutos"] ?></td>
-                                        <td>
-                                            <div class="section-cia">
-                                                <span><?= $cita["NomPaciente"] ?></span>
-                                                <button class="button3">Botón</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </table>
+                                <table>
+                                    <?php foreach ($todas_las_citas as $cita) : ?>
+                                        <tr>
+                                            <td><?= $cita['HoraMinutos']->format('H:i A') ?></td>
+                                            <td>
+                                                <div class="section-cia">
+                                                    <span><?= $cita["NomPaciente"] ?></span>
+                                                    <button class="button3">Botón</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>
+
+                            </div>
+
                         </div>
-                        <!--<h2>Estadisticas</h2>-->
-                        <div class="insights" style="color: #49c691; ">
+                    </div>
 
-                            <div class="sales">
-                                <div class="middle">
-                                    <h3 style=" font-size: 14px; ">
-                                        <span style=" font-weight: bold; font-size:40px"><?= $totalPacientes ?></span> <br>Total de pacientes
-                                    </h3>
-                                </div>
-                            </div>
-                            <!------------------- Final del Sales -------------------->
+                    <!--<h2>Estadisticas</h2>-->
+                    <div class="insights" style="color: #49c691; ">
 
-                            <div class="expenses">
-                                <div class="middle">
-                                    <h3 style="font-size: 14px;">
-                                        <span style=" font-weight: bold; font-size:40px"><?= $totalPacientesRecientes ?></span> <br> Nuevos pacientes
-                                    </h3>
-                                </div>
+                        <div class="sales">
+                            <div class="middle">
+                                <h3 class="estadistica_h3">
+                                    <span style=" font-weight: bold; font-size:40px"><?= $totalPacientes ?></span> <br>Total de pacientes
+                                </h3>
                             </div>
-                            <!------------------- Final del expenses -------------------->
-                            <div class="income">
-                                <div class="middle">
-                                    <h3 style="  font-size: 14px; ">
-                                        <span style=" font-weight: bold; font-size:40px"><?= $totalRegistrosEnCitasConfirmado ?></span> <br> Citas Confirmadas
-                                    </h3>
-                                </div>
-                            </div>
-                            <!------------------- Final del income -------------------->
                         </div>
+                        <!------------------- Final del Sales -------------------->
+
+                        <div class="expenses">
+                            <div class="middle">
+                                <h3 class="estadistica_h3">
+                                    <span style=" font-weight: bold; font-size:40px"><?= $totalPacientesRecientes ?></span> <br> Nuevos pacientes
+                                </h3>
+                            </div>
+                        </div>
+                        <!------------------- Final del expenses -------------------->
+                        <div class="income">
+                            <div class="middle">
+                                <h3 class="estadistica_h3">
+                                    <span style=" font-weight: bold; font-size:40px"><?= $totalRegistrosEnCitasConfirmado ?></span> <br> Citas Confirmadas
+                                </h3>
+                            </div>
+                        </div>
+                        <!------------------- Final del income -------------------->
+                    </div>
             </main>
             <!------ End of Main -->
             <div class="right">
@@ -209,6 +223,7 @@ if (isset($_SESSION['NombrePsicologo'])) {
 
                     </a>
                 </div>
+
                 <!----------end of Top------->
                 <div class="recent-updates">
                     <h2 style="background-color: #6A90F1; margin:0px; border-radius: 20px 20px 0px 0px; padding:10px 20px; font-size:25px; color:#fff;">Pacientes Recientes</h2>
@@ -232,13 +247,17 @@ if (isset($_SESSION['NombrePsicologo'])) {
                 </div>
 
                 <div class="pie-chart">
-                    <h2 style="text-align: start; margin:10px 20px; font-size:20px;">Pacientes del último mes</h2>
+                    <h2 style="text-align: start; margin:10px 10px; font-size:16px;">Pacientes del último mes</h2>
                     <div class="grafico">
                         <canvas id="myPieChart"></canvas>
                     </div>
-                    <h3 class="h3-dsh">Cita Online: <?= $totalRegistrosEnCanalAtraccion ?> </h3>
-                    <h3 class="h3-dsh">Marketing Digital: <?= $totalRegistrosEnCanalAtraccion2 ?></h3>
-                    <h3 class="h3-dsh">Referidos: <?= $totalRegistrosEnCanalAtraccion3 ?></h3>
+                    <div style="display: flex; flex-wrap: wrap; width: 100%;">
+                        <h3 class="h3-dsh" style="flex: 1;">Cita Online: <?= $totalRegistrosEnCanalAtraccion ?></h3>
+                        <h3 class="h3-dsh" style="flex: 1;">Marketing Digital: <?= $totalRegistrosEnCanalAtraccion2 ?></h3>
+                        <h3 class="h3-dsh" style="flex: 1;">Referidos: <?= $totalRegistrosEnCanalAtraccion3 ?></h3>
+                    </div>
+
+
                 </div>
 
                 <script>
