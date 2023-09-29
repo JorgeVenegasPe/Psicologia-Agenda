@@ -85,15 +85,28 @@ table{
     max-height: 55%;
     border-spacing: 0.5rem;
 }
-.container-paciente-tabla.active table tr.primera-fila td{
+.container-paciente-tabla.active table tr.primera-fila td:first-child{
     border-top-left-radius: 20px !important;
 }   
 .container-paciente-tabla.active table td{
+    text-align: start;
     padding-bottom: 1rem;
     padding-top: 1rem;
-    /*border de 1px color var(--danger)*/
     border-bottom: 1px solid var(--color-warning);
     border-top: 1px solid var(--color-warning);
+}
+/*verificar por que hay mas de una columna -- pendiente*/
+.container-paciente-tabla.active table tr td:first-child{
+    padding-left: 2rem;
+} 
+
+.container-paciente-tabla.active table tr {
+    background-color: #d5e1ef !important; /* Cambia el color de fondo en modo active */
+}
+
+.container-paciente-tabla.active table tr.selected {
+    background-color: #6A92F4 !important; /* Conserva el color de fondo al hacer clic */
+    color: white;
 }
 .patient-details {
         display: none;
